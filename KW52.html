@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>口語で使えることわざリスト</title>
+  <style>
+    :root {
+      color-scheme: dark light;
+    }
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+        "Helvetica Neue", Arial, "Noto Sans JP", sans-serif;
+      background: #0f172a;
+      color: #e5e7eb;
+      line-height: 1.7;
+    }
+    header {
+      padding: 1.5rem 1rem 1rem;
+      text-align: center;
+      background: linear-gradient(135deg, #111827, #020617);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      border-bottom: 1px solid rgba(148, 163, 184, 0.3);
+    }
+    header h1 {
+      margin: 0;
+      font-size: 1.4rem;
+      letter-spacing: 0.08em;
+    }
+    header p {
+      margin: 0.4rem 0 0;
+      font-size: 0.8rem;
+      color: #9ca3af;
+    }
+    main {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0.8rem 0.7rem 2rem;
+    }
+    .hint {
+      font-size: 0.8rem;
+      color: #9ca3af;
+      margin-bottom: 0.8rem;
+    }
+    .proverb-card {
+      background: rgba(15, 23, 42, 0.96);
+      border-radius: 0.9rem;
+      padding: 0.75rem 0.9rem 0.8rem;
+      margin-bottom: 0.65rem;
+      border: 1px solid rgba(51, 65, 85, 0.9);
+      box-shadow: 0 12px 30px rgba(15, 23, 42, 0.7);
+    }
+    .proverb-header {
+      display: flex;
+      align-items: baseline;
+      gap: 0.5rem;
+      margin-bottom: 0.35rem;
+      flex-wrap: wrap;
+    }
+    .index-badge {
+      font-size: 0.7rem;
+      padding: 0.1rem 0.5rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      color: #9ca3af;
+      white-space: nowrap;
+    }
+    .proverb-title {
+      font-size: 1rem;
+      font-weight: 600;
+    }
+    .reading {
+      font-size: 0.78rem;
+      color: #9ca3af;
+      margin-bottom: 0.1rem;
+    }
+    .sense-zh {
+      font-size: 0.78rem;
+      color: #d1d5db;
+      margin-bottom: 0.4rem;
+    }
+    .modern-label {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: #a5b4fc;
+      margin-bottom: 0.1rem;
+    }
+    ul.modern-list {
+      margin: 0.1rem 0 0.1rem 1.2rem;
+      padding: 0;
+      font-size: 0.85rem;
+    }
+    ul.modern-list li {
+      margin-bottom: 0.15rem;
+    }
+    @media (min-width: 700px) {
+      header h1 {
+        font-size: 1.6rem;
+      }
+      header p {
+        font-size: 0.9rem;
+      }
+      .proverb-card {
+        padding: 0.9rem 1.1rem 1rem;
+      }
+      .proverb-title {
+        font-size: 1.05rem;
+      }
+      .sense-zh {
+        font-size: 0.8rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>口語で使えることわざリスト</h1>
+    <p>ことわざのニュアンス ＋ 現代口語の言い換え例（2〜3文ずつ）</p>
+  </header>
+  <main>
+    <p class="hint">
+      ※ 下の「現代口語の言い換え」は、意味だけを自然な会話で言い直した例です。<br />
+      シチュエーションに合わせて語尾やていねいさを調整して使ってください。
+    </p>
+
+    <!-- 1 -->
+    <section class="proverb-card">
+      <div class="proverb-header">
+        <span class="index-badge">01</span>
+        <div class="proverb-title">雨降って地固まる</div>
+      </div>
+      <div class="reading">あめ ふって じ かたまる</div>
+      <p class="sense-zh">吵完、痛完之後，關係或局面反而更穩固。</p>
+      <div class="modern-label">現代口語の言い換え</div>
+      <ul class="modern-list">
+        <li>ケンカしたけど、前より仲良くなったよね。</li>
+        <li>いろいろあったけど、結果オーライってやつだね。</li>
+        <li>トラブル続きだったけど、その分チームが強くなった気がする。</li>
+      </ul>
+    </section>
+
+    <!-- 2 -->
+    <section class="proverb-card">
+      <div class="proverb-header">
+        <span class="index-badge">02</span>
+        <div class="proverb-title">案ずるより産むが易し</div>
+      </div>
+      <div class="reading">あんずる より うむ が やすし</div>
+      <p class="sense-zh">想像中難得要命，做下去反而沒那麼可怕。</p>
+      <div class="modern-label">現代口語の言い換え</div>
+      <ul class="modern-list">
+        <li>やってみたら、思ったより全然余裕だったわ。</li>
+        <li>考えすぎてただけで、実際はそんなに大したことなかったね。</li>
+        <li>まずは手を動かしたほうが早い、って感じだね。</li>
+      </ul>
+    </section>
+
+    <!-- 3 -->
+    <section class="proverb-card">
+      <div class="proverb-header">
+        <span class="index-badge">03</span>
+        <div class="proverb-title">石橋を叩いて渡る</div>
+      </div>
+      <div class="reading">いしばし を たたいて わたる</div>
+      <p class="sense-zh">小心到有點過頭、確認到爆的穩健派。</p>
+      <div class="modern-label">現代口語の言い換え</div>
+      <ul class="modern-list">
+        <li>心配性すぎて、全部チェックしないと気が済まないタイプだよね。</li>
+        <li>そこまで慎重にいかなくても大丈夫じゃない？ってレベルで用心深い。</li>
+      </ul>
+    </section>
+
+    <!-- 4 -->
+    <section class="proverb-card">
+      <div class="proverb-header">
+        <span class="index-badge">04</span>
+        <div class="proverb-title">嘘から出たまこと</div>
+      </div>
+      <div class="reading">うそ から でた まこと</div>
+      <p class="sense-zh">原本只是說說、開玩笑，結果竟然成真。</p>
+      <div class="modern-label">現代口語の言い換え</div>
+      <ul class="modern-list">
+        <li>冗談で言ってたのに、本当にそうなっちゃったね。</li>
+        <li>ノリで言った話が、まさかガチになるとは思わなかったわ。</li>
+      </ul>
+    </section>
+
+    <!-- 5 -->
+    <section class="proverb-card">
+      <div class="proverb-header">
+        <span class="index-badge">05</span>
+        <div class="proverb-title">馬の耳に念仏</div>
+      </div>
+      <div class="reading">うま の みみ に ねんぶつ</div>
+      <p class="sense-zh">講給聽不進去的人聽，完全白費口舌。</p>
+      <div class="modern-label">現代口語の言い換え</div>
+      <ul class="modern-list">
+        <li>何回言っても全然響いてないよね。</li>
+        <li>言うだけ無駄ってこういうことだなって感じ。</li>
+      </ul>
+    </section>
+
+    <!-- 6 -->
+    <section class="proverb-card">
+      <div class="proverb-header">
+        <span class="index-badge">06</span>
+        <div class="proverb-title">鬼に金棒</div>
+      </div>
+      <div class="reading">おに に かなぼう</div>
+      <p class="sense-zh">已經很強的又拿到超強加成，如虎添翼。</p>
+      <div class="modern-label">現代口語の言い換え</div>
+      <ul class="modern-list">
+        <li>ただでさえ強いのに、その装備は反則でしょ。</li>
+        <li>あの人にそのスキルまで加わったら、もう無敵じゃん。</li>
+      </ul>
+    </section>
+
+    <!-- 7 -->
+    <section class="proverb-card">
+      <div class="proverb-header">
+        <span class="index-badge">07</span>
+        <div class="proverb-title">溺れる者は藁をも掴む</div>
+      </div>
+      <div class="reading">おぼれる もの は わら をも つかむ</div>
+      <p class="sense-zh">急到快沉了，什麼都想抓、什麼希望都想試。</p>
+      <div class="modern-label">現代口語の言い換え</div>
+      <ul class="modern-list">
+        <li>追い詰められすぎて、もう可能性ありそうなもの全部に手出してる感じ。</li>
+        <li>わかるけど、その怪しい情報にまで飛びつくのはさすがに危ないよ。</li>
+      </ul>
+    </section>
+
+    <!-- 8 -->
+    <section class="proverb-card">
+      <div class="proverb-header">
+        <span class="index-badge">08</span>
+        <div class="proverb-title">猿も木から落ちる</div>
+      </div>
+      <div class="reading">さるも き から おちる</div>
+      <p class="sense-zh">再厲害也會失誤，一種溫柔地安慰人的說法。</p>
+      <div class="modern-label">現代口語の言い換え</div>
+      <ul class="modern-list">
+        <li>プロでもミスるときはミスるよ、気にしすぎないほうがいい。</li>
+        <li>いつも完璧なあなたでも、そんな日もあるって。</li>
+      </ul>
+    </section>
+
+    <!-- 9 -->
+    <section class="proverb-card">
+      <div class="proverb-header">
+        <span class="index-badge">09</span>
+        <div class="proverb-title">山椒は小粒でもぴりりと辛い</div>
+      </div>
+      <div class="reading">さんしょう は こつぶ でも ぴりりと からい</div>
+      <p class="sense-zh">個子小、看起來弱，但實力很兇猛。</p>
+      <div class="modern-label">現代口語の言い換え</div>
+      <ul class="modern-list">
+        <li>見た目ちっちゃいのに、マジでキレ味エグいよね。</li>
+        <li>あの子、舐めてかかると一瞬でやられるタイプだわ。</li>
+      </ul>
+    </section>
+
+    <!-- 10 -->
+    <section class="proverb-card">
+      <div class="proverb-header">
+        <span class="index-badge">10</span>
+        <div class="proverb-title">好きこそものの上手なれ</div>
+      </div>
+      <div class="reading">すきこそ ものの じょうず なれ</div>
+      <p class="sense-zh">因為喜歡，所以才會變強、撐得久。</p>
+      <div class="modern-label">現代口語の言い換え</div>
+      <ul class="modern-list">
+        <li>結局、好きなことが一番伸びるんだよね。</li>
+        <li>ハマってるからこそ、勝手に練習量が増えて上手くなる感じ。</li>
+      </ul>
+    </section>
+
+    <!-- 11 -->
+    <section class="proverb-card">
+      <div class="proverb-header">
+        <span class="index-badge">11</span>
+        <div class="proverb-title">棚から牡丹餅</div>
+      </div>
+      <div class="reading">たな から ぼたもち</div>
+      <p class="sense-zh">躺著就掉下來好處，意外之財、意外收穫。</p>
+      <div class="modern-label">現代口語の言い換え</div>
+      <ul class="modern-list">
+        <li>何もしてないのに、ラッキーな話が転がり込んできた。</li>
+        <li>たまたま応募したやつが当たって、思わぬ得しちゃったわ。</li>
+      </ul>
+    </section>
+
+    <!-- 12 -->
+    <section class="proverb-card">
+      <div class="proverb-header">
+        <span class="index-badge">12</span>
+        <div class="proverb-title">虎の威を借る狐</div>
+      </div>
+      <div class="reading">とら の い を かる きつね</div>
+      <p class="sense-zh">靠背後的勢力在那邊擺架子、狐假虎威的人。</p>
+      <div class="modern-label">現代口語の言い換え</div>
+      <ul class="modern-list">
+        <li>自分じゃ何もできないのに、上の権力を盾にしてイキってるタイプだね。</li>
+        <li>後ろに会社の名前がなかったら、絶対あんな態度取れないでしょ。</li>
+      </ul>
+    </section>
+
+    <!-- 13 -->
+    <section class="proverb-card">
+      <div class="proverb-header">
+        <span class="index-badge">13</span>
+        <div class="proverb-title">泣きっ面に蜂</div>
+      </div>
+      <div class="reading">なきっつら に はち</div>
+      <p class="sense-zh">已經很慘了又來一發，禍不單行的衰感。</p>
+      <div class="modern-label">現代口語の言い換え</div>
+      <ul class="modern-list">
+        <li>今日は本当にツイてない日だわ、悪いことが連鎖してる。</li>
+        <li>踏んだり蹴ったりって、まさにこのことだね。</li>
+      </ul>
+    </section>
+
+    <!-- 14 -->
+    <section class="proverb-card">
+      <div class="proverb-header">
+        <span class="index-badge">14</span>
+        <div class="proverb-title">隣の芝生は青い</div>
+      </div>
+      <div class="reading">となり の しばふ は あおい</div>
+      <p class="sense-zh">別人的人生永遠看起來比較好、比較閃。</p>
+      <div class="modern-label">現代口語の言い換え</div>
+      <ul class="modern-list">
+        <li>インスタ見てると、みんな人生楽しそうに見えちゃうよね。</li>
+        <li>他人のキャリアって、実際より三割増しくらいよく見えるもんだよ。</li>
+      </ul>
+    </section>
+
+    <!-- 15 -->
+    <section class="proverb-card">
+      <div class="proverb-header">
+        <span class="index-badge">15</span>
+        <div class="proverb-title">捕らぬ狸の皮算用</div>
+      </div>
+      <div class="reading">とらぬ たぬき の かわざんよう</div>
+      <p class="sense-zh">錢還沒拿到、事情還沒成，就開始盤算用法。</p>
+      <div class="modern-label">現代口語の言い換え</div>
+      <ul class="modern-list">
+        <li>まだ決まってもないボーナスの使い道を真剣に考えてるの笑う。</li>
+        <li>まず契約取ってから、その後の夢見るべきじゃない？</li>
+      </ul>
+    </section>
+
+    <!-- 16 -->
+    <section class="proverb-card">
+      <div class="proverb-header">
+        <span class="index-badge">16</span>
+        <div class="proverb-title">飛んで火にいる夏の虫</div>
+      </div>
+      <div class="reading">とんで ひ に いる なつ の むし</div>
+      <p class="sense-zh">明知道危險，還是自己飛進火坑、自找麻煩。</p>
+      <div class="modern-label">現代口語の言い換え</div>
+      <ul class="modern-list">
+        <li>それ絶対めんどくさいことになるってわかってて、あえて行くのすごいな。</li>
+        <li>また地雷踏みに行ってない？って心配になるレベル。</li>
+      </ul>
+    </section>
+
+    <!-- 17 -->
+    <section class="proverb-card">
+      <div class="proverb-header">
+        <span class="index-badge">17</span>
+        <div class="proverb-title">なくて七癖</div>
+      </div>
+      <div class="reading">なくて ななくせ</div>
+      <p class="sense-zh">每個人多少都有點小怪癖、小毛病，很正常。</p>
+      <div class="modern-label">現代口語の言い換え</div>
+      <ul class="modern-list">
+        <li>完璧な人なんていないし、みんな何かしら変なクセあるよ。</li>
+        <li>それも含めてキャラだから、まあお互い様だよね。</li>
+      </ul>
+    </section>
+
+    <!-- 18 -->
+    <section class="proverb-card">
+      <div class="proverb-header">
+        <span class="index-badge">18</span>
+        <div class="proverb-title">寝耳に水</div>
+      </div>
+      <div class="reading">ねみみ に みず</div>
+      <p class="sense-zh">完全沒料到的消息，像當頭棒喝一樣突然。</p>
+      <div class="modern-label">現代口語の言い換え</div>
+      <ul class="modern-list">
+        <li>そんな話、初耳なんだけど！？</li>
+        <li>いきなりすぎて頭追いつかないんだけど……。</li>
+      </ul>
+    </section>
+
+    <!-- 19 -->
+    <section class="proverb-card">
+      <div class="proverb-header">
+        <span class="index-badge">19</span>
+        <div class="proverb-title">目は口ほどに物を言う</div>
+      </div>
+      <div class="reading">め は くち ほど に もの を いう</div>
+      <p class="sense-zh">眼神什麼都寫在上面，不說話也全暴露。</p>
+      <div class="modern-label">現代口語の言い換え</div>
+      <ul class="modern-list">
+        <li>何も言ってなくても、表情見れば一発でバレバレだよ。</li>
+        <li>その目、完全に「納得してません」って言ってるからね。</li>
+      </ul>
+    </section>
+
+    <!-- 20 -->
+    <section class="proverb-card">
+      <div class="proverb-header">
+        <span class="index-badge">20</span>
+        <div class="proverb-title">藪をつついて蛇を出す</div>
+      </div>
+      <div class="reading">やぶ を つついて へび を だす</div>
+      <p class="sense-zh">不動還好，一動反而挖出更多麻煩、找死。</p>
+      <div class="modern-label">現代口語の言い換え</div>
+      <ul class="modern-list">
+        <li>それ、下手に突っつくと余計面倒なことになるやつだよ。</li>
+        <li>あえて掘らなくていい問題まで掘り返して、自分でしんどくしてない？</li>
+      </ul>
+    </section>
+
+    <!-- 21 -->
+    <section class="proverb-card">
+      <div class="proverb-header">
+        <span class="index-badge">21</span>
+        <div class="proverb-title">来年のことを言えば鬼が笑う</div>
+      </div>
+      <div class="reading">らいねん の こと を いえば おに が わらう</div>
+      <p class="sense-zh">講太遠的未來計畫，其實都很難說、很不穩。</p>
+      <div class="modern-label">現代口語の言い換え</div>
+      <ul class="modern-list">
+        <li>そんな先の話しても、絶対その通りにはならないよね。</li>
+        <li>一年後どうなってるかなんて、誰にもわかんないって。</li>
+      </ul>
+    </section>
+
+    <!-- 22 -->
+    <section class="proverb-card">
+      <div class="proverb-header">
+        <span class="index-badge">22</span>
+        <div class="proverb-title">悪事千里を走る</div>
+      </div>
+      <div class="reading">あくじ せんり を はしる</div>
+      <p class="sense-zh">壞消息傳超快，一下就全世界都知道那種感覺。</p>
+      <div class="modern-label">現代口語の言い換え</div>
+      <ul class="modern-list">
+        <li>炎上するのマジで一瞬だよね。いいことより悪い話のほうが拡散早い。</li>
+        <li>一回やらかすと、秒で社内中に知れ渡るから怖いわ。</li>
+      </ul>
+    </section>
+
+    <!-- 23 -->
+    <section class="proverb-card">
+      <div class="proverb-header">
+        <span class="index-badge">23</span>
+        <div class="proverb-title">石の上にも三年</div>
+      </div>
+      <div class="reading">いし の うえ にも さんねん</div>
+      <p class="sense-zh">先撐住幾年再說，長期蹲點才看得到成果。</p>
+      <div class="modern-label">現代口語の言い換え</div>
+      <ul class="modern-list">
+        <li>最低でも数年は続けないと、結果なんて見えてこないよ。</li>
+        <li>とりあえず三年やってみてから評価しよう、ってやつだね。</li>
+      </ul>
+    </section>
+
+    <!-- 24 -->
+    <section class="proverb-card">
+      <div class="proverb-header">
+        <span class="index-badge">24</span>
+        <div class="proverb-title">急がば回れ</div>
+      </div>
+      <div class="reading">いそがば まわれ</div>
+      <p class="sense-zh">越急越容易搞砸，先穩穩來反而快。</p>
+      <div class="modern-label">現代口語の言い換え</div>
+      <ul class="modern-list">
+        <li>ショートカット狙うより、正攻法で行ったほうが結局早いよ。</li>
+        <li>焦って雑にやると、やり直しで余計時間食うからね。</li>
+      </ul>
+    </section>
+
+    <!-- 25 -->
+    <section class="proverb-card">
+      <div class="proverb-header">
+        <span class="index-badge">25</span>
+        <div class="proverb-title">嘘も方便</div>
+      </div>
+      <div class="reading">うそ も ほうべん</div>
+      <p class="sense-zh">有些善意的小謊，是為了場面好看、避免受傷。</p>
+      <div class="modern-label">現代口語の言い換え</div>
+      <ul class="modern-list">
+        <li>本当のこと言うより、ああ言っといたほうがお互いのためでしょ。</li>
+        <li>正直に全部言ったら修羅場になるから、あれくらいの嘘は許してほしい。</li>
+      </ul>
+    </section>
+
+    <!-- 26 -->
+    <section class="proverb-card">
+      <div class="proverb-header">
+        <span class="index-badge">26</span>
+        <div class="proverb-title">思い立ったが吉日</div>
+      </div>
+      <div class="reading">おもいたった が きちじつ</div>
+      <p class="sense-zh">想到就做，不要拖，現在開始就是最好日子。</p>
+      <div class="modern-label">現代口語の言い換え</div>
+      <ul class="modern-list">
+        <li>やるなら今でしょ、ってやつだね。</li>
+        <li>完璧なタイミングなんて来ないから、とりあえず今日から始めよ。</li>
+      </ul>
+    </section>
+
+    <!-- 27 -->
+    <section class="proverb-card">
+      <div class="proverb-header">
+        <span class="index-badge">27</span>
+        <div class="proverb-title">終わり良ければすべて良し</div>
+      </div>
+      <div class="reading">おわり よければ すべて よし</div>
+      <p class="sense-zh">過程再混亂，只要收尾漂亮，大家就算了。</p>
+      <div class="modern-label">現代口語の言い換え</div>
+      <ul class="modern-list">
+        <li>なんだかんだ、最後うまくまとまったから結果オーライだね。</li>
+        <li>途中はいろいろ事故ってたけど、エンディング勝ちって感じ。</li>
+      </ul>
+    </section>
+
+    <!-- 28 -->
+    <section class="proverb-card">
+      <div class="proverb-header">
+        <span class="index-badge">28</span>
+        <div class="proverb-title">勝って兜の緒を締めよ</div>
+      </div>
+      <div class="reading">かって かぶと の お を しめよ</div>
+      <p class="sense-zh">贏了反而要更小心，別在「勝利餘韻」中翻車。</p>
+      <div class="modern-label">現代口語の言い換え</div>
+      <ul class="modern-list">
+        <li>ここで浮かれてると次やられるから、もう一段ギア入れよう。</li>
+        <li>一回勝ったくらいで油断すると、すぐ足元すくわれるよ。</li>
+      </ul>
+    </section>
+
+    <!-- 29 -->
+    <section class="proverb-card">
+      <div class="proverb-header">
+        <span class="index-badge">29</span>
+        <div class="proverb-title">壁に耳あり障子に目あり</div>
+      </div>
+      <div class="reading">かべ に みみ あり しょうじ に め あり</div>
+      <p class="sense-zh">以為沒人聽，其實到處都有耳朵、有人在看。</p>
+      <div class="modern-label">現代口語の言い換え</div>
+      <ul class="modern-list">
+        <li>その話、ここで大声でしないほうがいいって。どこで誰が聞いてるかわかんないよ。</li>
+        <li>オフレコのつもりでも、スクショ一枚で一瞬で広まる時代だよ。</li>
+      </ul>
+    </section>
+
+    <!-- 30 -->
+    <section class="proverb-card">
+      <div class="proverb-header">
+        <span class="index-badge">30</span>
+        <div class="proverb-title">聞くは一時の恥聞かぬは一生の恥</div>
+      </div>
+      <div class="reading">きく は いっとき の はじ きかぬ は いっしょう の はじ</div>
+      <p class="sense-zh">稍微問一下頂多當場尷尬，不問就會一輩子裝懂。</p>
+      <div class="modern-label">現代口語の言い換え</div>
+      <ul class="modern-list">
+        <li>わからないまま流すほうが、後々めちゃくちゃ恥ずかしいよ。</li>
+        <li>今「それ何ですか？」って聞いといたほうが、将来的には絶対得。</li>
+      </ul>
+    </section>
+
+    <!-- 31 -->
+    <section class="proverb-card">
+      <div class="proverb-header">
+        <span class="index-badge">31</span>
+        <div class="proverb-title">口は禍の元</div>
+      </div>
+      <div class="reading">くち は わざわい の もと</div>
+      <p class="sense-zh">嘴巴沒管好就惹禍上身，講話要有分寸。</p>
+      <div class="modern-label">現代口語の言い換え</div>
+      <ul class="modern-list">
+        <li>それ余計な一言だったね……。ああいうのが炎上の火種になるんだよ。</li>
+        <li>酔ってるときの発言は、本当に気をつけたほうがいいよ。</li>
+      </ul>
+    </section>
+
+    <!-- 32 -->
+    <section class="proverb-card">
+      <div class="proverb-header">
+        <span class="index-badge">32</span>
+        <div class="proverb-title">虎穴に入らずんば虎子を得ず</div>
+      </div>
+      <div class="reading">こけつ に いらずんば こじ を えず</div>
+      <p class="sense-zh">不冒風險就拿不到大獎，No risk, no reward。</p>
+      <div class="modern-label">現代口語の言い換え</div>
+      <ul class="modern-list">
+        <li>安全運転だけしてたら、でかいチャンスは回ってこないよ。</li>
+        <li>怖いのはわかるけど、その一歩踏み出さないと何も変わらない。</li>
+      </ul>
+    </section>
+
+    <!-- 33 -->
+    <section class="proverb-card">
+      <div class="proverb-header">
+        <span class="index-badge">33</span>
+        <div class="proverb-title">転ばぬ先の杖</div>
+      </div>
+      <div class="reading">ころばぬ さき の つえ</div>
+      <p class="sense-zh">預防勝於治療，先準備好才不會摔得很慘。</p>
+      <div class="modern-label">現代口語の言い換え</div>
+      <ul class="modern-list">
+        <li>バックアップ取っておけばよかった、って後悔する前にやっとこ。</li>
+        <li>保険なんて要らないと思ってても、いざというときマジでありがたくなるやつ。</li>
+      </ul>
+    </section>
+
+    <!-- 34 -->
+    <section class="proverb-card">
+      <div class="proverb-header">
+        <span class="index-badge">34</span>
+        <div class="proverb-title">触らぬ神に祟りなし</div>
+      </div>
+      <div class="reading">さわらぬ かみ に たたり なし</div>
+      <p class="sense-zh">不要去碰麻煩人物／麻煩領域，離遠一點最安全。</p>
+      <div class="modern-label">現代口語の言い換え</div>
+      <ul class="modern-list">
+        <li>あの案件には関わらないほうが身のためだよ。</li>
+        <li>その人には深入りしないほうがいい、明らかにトラブルの匂いしかしない。</li>
+      </ul>
+    </section>
+
+    <!-- 35 -->
+    <section class="proverb-card">
+      <div class="proverb-header">
+        <span class="index-badge">35</span>
+        <div class="proverb-title">三人寄れば文殊の知恵</div>
+      </div>
+      <div class="reading">さんにん よれば もんじゅ の ちえ</div>
+      <p class="sense-zh">多幾個頭一起想，會跑出一個人想不到的點子。</p>
+      <div class="modern-label">現代口語の言い換え</div>
+      <ul class="modern-list">
+        <li>一人で悩んでるより、みんなでブレストしたほうが絶対いい案出るよ。</li>
+        <li>視点が増えると、思いつかなかった解決策が出てくるもんだね。</li>
+      </ul>
+    </section>
+
+    <!-- 36 -->
+    <section class="proverb-card">
+      <div class="proverb-header">
+        <span class="index-badge">36</span>
+        <div class="proverb-title">朱に交われば赤くなる</div>
+      </div>
+      <div class="reading">しゅ に まじわれば あかく なる</div>
+      <p class="sense-zh">混什麼圈子就變成那個樣子，環境會染人。</p>
+      <div class="modern-label">現代口語の言い換え</div>
+      <ul class="modern-list">
+        <li>周りがそういう人ばっかりだと、自分もだんだん似てくるよね。</li>
+        <li>いい意味でも悪い意味でも、付き合う人で価値観めっちゃ変わる。</li>
+      </ul>
+    </section>
+
+    <!-- 37 -->
+    <section class="proverb-card">
+      <div class="proverb-header">
+        <span class="index-badge">37</span>
+        <div class="proverb-title">急いては事を仕損じる</div>
+      </div>
+      <div class="reading">せいては こと を しそんじる</div>
+      <p class="sense-zh">太急就會出包，慌慌張張只會讓事情更糟。</p>
+      <div class="modern-label">現代口語の言い換え</div>
+      <ul class="modern-list">
+        <li>焦ってやると、だいたいミスってやり直しになるんだよね。</li>
+        <li>一回深呼吸して、落ち着いてから作業したほうがいいよ。</li>
+      </ul>
+    </section>
+
+    <!-- 38 -->
+    <section class="proverb-card">
+      <div class="proverb-header">
+        <span class="index-badge">38</span>
+        <div class="proverb-title">塵も積もれば山となる</div>
+      </div>
+      <div class="reading">ちり も つもれば やま と なる</div>
+      <p class="sense-zh">小小的努力／金額，累積久了就會變很可觀。</p>
+      <div class="modern-label">現代口語の言い換え</div>
+      <ul class="modern-list">
+        <li>毎日ちょっとずつでも続ければ、気づいたらとんでもない差になるよ。</li>
+        <li>少額でもコツコツ貯めると、あとでマジで効いてくる。</li>
+      </ul>
+    </section>
+
+    <!-- 39 -->
+    <section class="proverb-card">
+      <div class="proverb-header">
+        <span class="index-badge">39</span>
+        <div class="proverb-title">生兵法は大怪我のもと</div>
+      </div>
+      <div class="reading">なまびょうほう は おおけが の もと</div>
+      <p class="sense-zh">半調子的知識最危險，不懂裝懂會出大事。</p>
+      <div class="modern-label">現代口語の言い換え</div>
+      <ul class="modern-list">
+        <li>中途半端な知識で手を出すと、取り返しつかなくなるよ。</li>
+        <li>ググった程度の情報でプロの真似しないほうがいいって。</li>
+      </ul>
+    </section>
+
+    <!-- 40 -->
+    <section class="proverb-card">
+      <div class="proverb-header">
+        <span class="index-badge">40</span>
+        <div class="proverb-title">習うより慣れろ</div>
+      </div>
+      <div class="reading">ならう より なれろ</div>
+      <p class="sense-zh">一直聽課不如直接上手做，做多了自然熟練。</p>
+      <div class="modern-label">現代口語の言い換え</div>
+      <ul class="modern-list">
+        <li>説明聞いてるより、実際に触って覚えたほうが早いよ。</li>
+        <li>場数踏むのが一番の勉強だから、とりあえずやってみよう。</li>
+      </ul>
+    </section>
+
+    <!-- 41 -->
+    <section class="proverb-card">
+      <div class="proverb-header">
+        <span class="index-badge">41</span>
+        <div class="proverb-title">人間万事塞翁が馬</div>
+      </div>
+      <div class="reading">にんげん ばんじ さいおう が うま</div>
+      <p class="sense-zh">好事壞事很難說，也許今天的壞運是明天的好牌。</p>
+      <div class="modern-label">現代口語の言い換え</div>
+      <ul class="modern-list">
+        <li>今は最悪に見えても、後から「あれが転機だった」ってなるパターンあるよ。</li>
+        <li>この結果が本当に損だったかどうかは、もうちょっと先にならないとわかんないね。</li>
+      </ul>
+    </section>
+
+    <!-- 42 -->
+    <section class="proverb-card">
+      <div class="proverb-header">
+        <span class="index-badge">42</span>
+        <div class="proverb-title">二兎を追う者は一兎をも得ず</div>
+      </div>
+      <div class="reading">にと を おう もの は いっと をも えず</div>
+      <p class="sense-zh">同時想抓兩個目標，到頭來一個都拿不到。</p>
+      <div class="modern-label">現代口語の言い換え</div>
+      <ul class="modern-list">
+        <li>欲張ってあれもこれもやろうとすると、結局どれも中途半端になるよ。</li>
+        <li>まずは優先順位決めて、一つずつちゃんと片づけよう。</li>
+      </ul>
+    </section>
+
+    <!-- 43 -->
+    <section class="proverb-card">
+      <div class="proverb-header">
+        <span class="index-badge">43</span>
+        <div class="proverb-title">能ある鷹は爪を隠す</div>
+      </div>
+      <div class="reading">のう ある たか は つめ を かくす</div>
+      <p class="sense-zh">真正有實力的人反而低調，不會一天到晚炫耀。</p>
+      <div class="modern-label">現代口語の言い換え</div>
+      <ul class="modern-list">
+        <li>あの人、黙ってるけど本気出したらエグいよ。</li>
+        <li>やたら自慢しない人ほど、実は一番頼りになったりするんだよね。</li>
+      </ul>
+    </section>
+
+    <!-- 44 -->
+    <section class="proverb-card">
+      <div class="proverb-header">
+        <span class="index-badge">44</span>
+        <div class="proverb-title">残り物には福がある</div>
+      </div>
+      <div class="reading">のこりもの には ふく が ある</div>
+      <p class="sense-zh">剩下的那個看似不怎樣，結果反而是最香的。</p>
+      <div class="modern-label">現代口語の言い換え</div>
+      <ul class="modern-list">
+        <li>最後に残ったやつが、一番当たりだったりするんだよね。</li>
+        <li>みんなが選ばなかった選択肢が、意外と穴場だったりする。</li>
+      </ul>
+    </section>
+
+    <!-- 45 -->
+    <section class="proverb-card">
+      <div class="proverb-header">
+        <span class="index-badge">45</span>
+        <div class="proverb-title">早起きは三文の徳</div>
+      </div>
+      <div class="reading">はやおき は さんもん の とく</div>
+      <p class="sense-zh">早起的人會默默賺到很多小好處與餘裕。</p>
+      <div class="modern-label">現代口語の言い換え</div>
+      <ul class="modern-list">
+        <li>朝ちょっと早く起きるだけで、一日めちゃくちゃ余裕できるよ。</li>
+        <li>早起きすると、通勤も空いてるし、頭もスッキリしてて得した気分になる。</li>
+      </ul>
+    </section>
+
+    <!-- 46 -->
+    <section class="proverb-card">
+      <div class="proverb-header">
+        <span class="index-badge">46</span>
+        <div class="proverb-title">百聞は一見に如かず</div>
+      </div>
+      <div class="reading">ひゃくぶん は いっけん に しかず</div>
+      <p class="sense-zh">聽一百遍不如親眼看一次／自己試一次。</p>
+      <div class="modern-label">現代口語の言い換え</div>
+      <ul class="modern-list">
+        <li>説明聞くより、一回実物見たほうが早いよ。</li>
+        <li>とりあえず体験してみると、印象ぜんぜん変わるから。</li>
+      </ul>
+    </section>
+
+    <!-- 47 -->
+    <section class="proverb-card">
+      <div class="proverb-header">
+        <span class="index-badge">47</span>
+        <div class="proverb-title">仏の顔も三度</div>
+      </div>
+      <div class="reading">ほとけ の かお も さんど</div>
+      <p class="sense-zh">再好脾氣也有底線，一再挑戰就要爆了。</p>
+      <div class="modern-label">現代口語の言い換え</div>
+      <ul class="modern-list">
+        <li>さすがに三回目はもう許せないわ。</li>
+        <li>普段怒らない人をそこまでキレさせるの、逆に才能だと思う。</li>
+      </ul>
+    </section>
+
+    <!-- 48 -->
+    <section class="proverb-card">
+      <div class="proverb-header">
+        <span class="index-badge">48</span>
+        <div class="proverb-title">蒔かぬ種は生えぬ</div>
+      </div>
+      <div class="reading">まかぬ たね は はえぬ</div>
+      <p class="sense-zh">你沒播種就別期待有收成，沒投入就沒結果。</p>
+      <div class="modern-label">現代口語の言い換え</div>
+      <ul class="modern-list">
+        <li>行動ゼロで成果だけ欲しいのは、さすがに虫が良すぎるよ。</li>
+        <li>まずは小さくてもいいから、一歩踏み出さないと何も始まらない。</li>
+      </ul>
+    </section>
+
+    <!-- 49 -->
+    <section class="proverb-card">
+      <div class="proverb-header">
+        <span class="index-badge">49</span>
+        <div class="proverb-title">負けるが勝ち</div>
+      </div>
+      <div class="reading">まける が かち</div>
+      <p class="sense-zh">表面上讓一步輸掉，長期來看反而是贏家。</p>
+      <div class="modern-label">現代口語の言い換え</div>
+      <ul class="modern-list">
+        <li>ここはあえて引いたほうが、トータルで見ると得だよ。</li>
+        <li>言い返したらスッキリするかもだけど、関係壊れるなら黙っといたほうが賢い。</li>
+      </ul>
+    </section>
+
+    <!-- 50 -->
+    <section class="proverb-card">
+      <div class="proverb-header">
+        <span class="index-badge">50</span>
+        <div class="proverb-title">良薬は口に苦し</div>
+      </div>
+      <div class="reading">りょうやく は くち に にがし</div>
+      <p class="sense-zh">真正有用的東西往往不好受、不中聽、很辛苦。</p>
+      <div class="modern-label">現代口語の言い換え</div>
+      <ul class="modern-list">
+        <li>今はキツいけど、この経験が一番自分を成長させてくれるんだと思う。</li>
+        <li>耳の痛いアドバイスほど、後から効いてくるんだよね。</li>
+      </ul>
+    </section>
+
+    <!-- 51 -->
+    <section class="proverb-card">
+      <div class="proverb-header">
+        <span class="index-badge">51</span>
+        <div class="proverb-title">類は友を呼ぶ</div>
+      </div>
+      <div class="reading">るい は とも を よぶ</div>
+      <p class="sense-zh">物以類聚，什麼頻率就會吸來什麼人。</p>
+      <div class="modern-label">現代口語の言い換え</div>
+      <ul class="modern-list">
+        <li>似た者同士って、自然と集まってくるよね。</li>
+        <li>そのコミュニティ見てると、「ああ、この空気感が好きな人たちなんだな」ってわかる。</li>
+      </ul>
+    </section>
+
+    <!-- 52 -->
+    <section class="proverb-card">
+      <div class="proverb-header">
+        <span class="index-badge">52</span>
+        <div class="proverb-title">論より証拠</div>
+      </div>
+      <div class="reading">ろん より しょうこ</div>
+      <p class="sense-zh">嘴巴講再多不如拿出證據、拿出實績來看。</p>
+      <div class="modern-label">現代口語の言い換え</div>
+      <ul class="modern-list">
+        <li>あーだこーだ言う前に、数字とデータ見せてほしい。</li>
+        <li>理屈より、実際どうなったかのほうが説得力あるよね。</li>
+      </ul>
+    </section>
+  </main>
+</body>
+</html>
