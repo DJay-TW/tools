@@ -2,175 +2,134 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>口語高頻諺語 (iOS 優化版)</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>口語高頻諺語 (Google語音優先版)</title>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
     
     <style>
         :root {
-            --primary: #2c3e50;
-            --accent: #3498db;
-            --bg: #f2f2f7; /* iOS 風格背景灰 */
+            --primary: #4285f4; /* Google Blue */
+            --accent: #34a853;  /* Google Green */
+            --bg: #f8f9fa;
             --card-bg: #ffffff;
-            --text-main: #000000;
+            --text-main: #202124;
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Noto Sans JP', sans-serif;
+            font-family: 'Noto Sans JP', sans-serif;
             background-color: var(--bg);
             color: var(--text-main);
             margin: 0;
-            padding: 16px;
-            -webkit-text-size-adjust: 100%;
+            padding: 20px;
         }
 
         header {
+            max-width: 800px;
+            margin: 0 auto 30px auto;
             text-align: center;
-            margin-bottom: 20px;
             background: white;
             padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            border-radius: 16px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
         }
 
-        h1 { margin: 0 0 10px 0; font-size: 1.5rem; }
+        h1 { color: var(--text-main); margin: 0 0 10px 0; font-size: 1.6rem; }
 
-        /* 控制面板優化 */
-        .controls {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            align-items: center;
-        }
-
-        select {
-            font-size: 16px; /* 防止 iOS 縮放 */
-            padding: 10px;
-            width: 100%;
-            max-width: 300px;
-            border-radius: 8px;
-            border: 1px solid #ddd;
-            background-color: #f9f9f9;
-        }
-
-        .btn-group {
-            display: flex;
-            gap: 10px;
-        }
-
-        button {
-            padding: 10px 20px;
-            border-radius: 8px;
-            border: none;
-            background-color: var(--accent);
-            color: white;
+        .status-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
             font-weight: bold;
-            font-size: 14px;
-            cursor: pointer;
+            margin-bottom: 15px;
         }
         
-        button.secondary { background-color: #95a5a6; }
+        .status-success { background: #e6f4ea; color: #1e8e3e; } /* Green */
+        .status-warn { background: #fef7e0; color: #f9ab00; }    /* Yellow */
 
-        /* 卡片設計 */
+        select {
+            padding: 8px 12px;
+            font-size: 1rem;
+            border: 1px solid #dadce0;
+            border-radius: 8px;
+            width: 100%;
+            max-width: 400px;
+            margin-top: 5px;
+        }
+
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 16px;
-            margin-top: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
         .card {
             background: var(--card-bg);
             border-radius: 12px;
             padding: 20px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-            border-left: 5px solid var(--accent);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+            transition: transform 0.2s;
+            border-top: 4px solid var(--primary);
+            position: relative;
         }
 
-        .card-top {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-        }
+        .card:hover { transform: translateY(-3px); box-shadow: 0 4px 8px rgba(0,0,0,0.15); }
 
-        .jp {
-            font-size: 1.3rem;
-            font-weight: 700;
-            margin: 0;
-            line-height: 1.4;
-            color: #333;
-        }
+        .jp-text { font-size: 1.25rem; font-weight: 700; color: #202124; margin: 0 0 5px 0; }
+        .reading { color: #5f6368; font-size: 0.9rem; margin-bottom: 15px; }
 
-        .read {
-            color: #666;
-            font-size: 0.9rem;
-            margin: 5px 0 15px 0;
-        }
-
-        .play-btn {
-            background: #e1f5fe;
-            color: var(--accent);
-            width: 44px; /* iOS 觸控友善大小 */
-            height: 44px;
+        .btn-speak {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: #e8f0fe;
+            color: var(--primary);
+            border: none;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
+            cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 0;
-            flex-shrink: 0;
-            margin-left: 10px;
         }
         
-        .play-btn:active { background: #b3e5fc; transform: scale(0.95); }
-        .play-btn svg { width: 24px; height: 24px; fill: currentColor; }
+        .btn-speak:hover { background: #d2e3fc; }
+        .btn-speak svg { width: 20px; height: 20px; fill: currentColor; }
 
-        .meta {
-            border-top: 1px solid #eee;
-            padding-top: 12px;
-            font-size: 0.95rem;
+        .meta-row {
+            display: flex;
+            margin-top: 10px;
+            font-size: 0.9rem;
+            line-height: 1.5;
         }
-        
-        .row { margin-bottom: 6px; display: flex; }
+
         .tag {
-            background: #eee;
-            padding: 2px 6px;
+            background: #f1f3f4;
+            color: #5f6368;
+            padding: 2px 8px;
             border-radius: 4px;
+            margin-right: 10px;
             font-size: 0.75rem;
-            margin-right: 8px;
-            font-weight: bold;
-            color: #555;
+            font-weight: 700;
             height: fit-content;
             white-space: nowrap;
         }
-        .tag.mod { background: #fff3cd; color: #856404; }
+        .tag.modern { background: #e8f0fe; color: #1967d2; }
 
-        /* Debug 區域 */
-        #debug-log {
-            margin-top: 20px;
-            font-family: monospace;
-            font-size: 10px;
-            color: #888;
-            background: #eee;
-            padding: 10px;
-            border-radius: 8px;
-            white-space: pre-wrap;
-            display: none; /* 預設隱藏 */
-        }
     </style>
 </head>
 <body>
 
 <header>
-    <h1>口語高頻諺語 (iOS 版)</h1>
-    <div class="controls">
-        <select id="voiceSelect">
-            <option value="default">系統預設 (iOS 自動決定)</option>
-        </select>
-        <div class="btn-group">
-            <button onclick="loadVoices(true)">🔄 重新偵測語音</button>
-            <button class="secondary" onclick="toggleDebug()">🐞 顯示/隱藏偵測資訊</button>
-        </div>
-        <div id="debug-log"></div>
+    <h1>口語高頻諺語 (Google 語音優先)</h1>
+    
+    <div id="statusBadge" class="status-badge status-warn">正在搜尋 Google 語音...</div>
+    
+    <div>
+        <select id="voiceSelect"></select>
     </div>
 </header>
 
@@ -234,110 +193,94 @@
 
     const app = document.getElementById('app');
     const voiceSelect = document.getElementById('voiceSelect');
-    const debugLog = document.getElementById('debug-log');
+    const statusBadge = document.getElementById('statusBadge');
     let voices = [];
+    let googleVoice = null;
 
-    // 初始化介面
+    // 渲染卡片
     function init() {
         proverbs.forEach(item => {
             const card = document.createElement('div');
             card.className = 'card';
             card.innerHTML = `
-                <div class="card-top">
-                    <div>
-                        <p class="jp">${item.jp}</p>
-                        <p class="read">${item.read}</p>
-                    </div>
-                    <button class="play-btn" onclick="speak('${item.jp}')">
-                         <svg viewBox="0 0 24 24"><path d="M14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77zm-4 0h-2.5l-5 5v5h5l5 5v-15z"/></svg>
-                    </button>
+                <button class="btn-speak" onclick="speak('${item.jp}')">
+                    <svg viewBox="0 0 24 24"><path d="M14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77zm-4 0h-2.5l-5 5v5h5l5 5v-15z"/></svg>
+                </button>
+                <h2 class="jp-text">${item.jp}</h2>
+                <div class="reading">${item.read}</div>
+                
+                <div class="meta-row">
+                    <span class="tag">意思</span>
+                    <span>${item.mean}</span>
                 </div>
-                <div class="meta">
-                    <div class="row">
-                        <span class="tag">意思</span>
-                        <span>${item.mean}</span>
-                    </div>
-                    <div class="row">
-                        <span class="tag mod">現代</span>
-                        <span>${item.modern}</span>
-                    </div>
+                <div class="meta-row">
+                    <span class="tag modern">現代</span>
+                    <span>${item.modern}</span>
                 </div>
             `;
             app.appendChild(card);
         });
-        
         loadVoices();
     }
 
-    function toggleDebug() {
-        debugLog.style.display = debugLog.style.display === 'none' || debugLog.style.display === '' ? 'block' : 'none';
-    }
-
-    function log(msg) {
-        debugLog.textContent += msg + "\n";
-    }
-
-    // 載入語音
-    function loadVoices(force = false) {
-        // 清空並加入預設選項
-        voiceSelect.innerHTML = '<option value="default">系統預設 (由 iOS 決定)</option>';
-        debugLog.textContent = "偵測語音中...\n";
-        
+    function loadVoices() {
         voices = window.speechSynthesis.getVoices();
-        
-        // 過濾日文
+        if (voices.length === 0) return; // 等待瀏覽器載入
+
+        voiceSelect.innerHTML = '';
         const jpVoices = voices.filter(v => v.lang.includes('ja') || v.lang.includes('JP'));
 
-        log(`偵測到總語音數: ${voices.length}`);
-        log(`偵測到日文語音數: ${jpVoices.length}`);
+        // 1. 優先尋找 Google 語音
+        googleVoice = jpVoices.find(v => v.name.includes('Google') || v.name.includes('日本語'));
 
-        if (jpVoices.length === 0) {
-            log("警告: iOS 尚未釋出語音列表，請點擊「重新偵測」或稍後再試。");
+        // 更新狀態
+        if (googleVoice) {
+            statusBadge.textContent = "已啟用：Google 日本語 (高品質)";
+            statusBadge.className = "status-badge status-success";
+        } else {
+            statusBadge.textContent = "未偵測到 Google 語音，使用系統預設";
+            statusBadge.className = "status-badge status-warn";
         }
 
+        // 2. 建立選單
         jpVoices.forEach(voice => {
             const option = document.createElement('option');
             option.value = voice.name;
-            // 標記 localService (是否為本機語音，通常本機語音較快)
-            const type = voice.localService ? "[本機]" : "[網路]";
-            option.textContent = `${voice.name} ${type}`;
-            voiceSelect.appendChild(option);
+            option.textContent = voice.name + (voice.name.includes('Google') ? ' ★' : '');
             
-            log(`- ${voice.name} (${voice.lang}) Default:${voice.default}`);
+            // 如果是 Google 語音，設為預設選中
+            if (googleVoice && voice.name === googleVoice.name) {
+                option.selected = true;
+            }
+            voiceSelect.appendChild(option);
         });
+
+        // 如果完全沒有日文語音
+        if (jpVoices.length === 0) {
+            const opt = document.createElement('option');
+            opt.text = "未偵測到日文語音";
+            voiceSelect.add(opt);
+        }
     }
 
-    // iOS Safari 的怪癖：需要反覆監聽
     if (speechSynthesis.onvoiceschanged !== undefined) {
-        speechSynthesis.onvoiceschanged = () => {
-            // 只有當列表是空的時候才自動重整，避免使用者選一半被重置
-            if (voices.length === 0) loadVoices();
-        };
+        speechSynthesis.onvoiceschanged = loadVoices;
     }
 
-    // 發音邏輯
     function speak(text) {
         window.speechSynthesis.cancel();
-        
         const utterance = new SpeechSynthesisUtterance(text);
         utterance.lang = 'ja-JP';
-        utterance.rate = 0.85; // iOS 預設語速稍快，調慢一點更有感情
         
+        // 指定選單選中的語音
         const selectedName = voiceSelect.value;
+        const selectedVoice = voices.find(v => v.name === selectedName);
         
-        if (selectedName !== 'default') {
-            // 使用者指定了特定語音 (例如 Kyoko)
-            const selectedVoice = voices.find(v => v.name === selectedName);
-            if (selectedVoice) {
-                utterance.voice = selectedVoice;
-            }
-        } else {
-            // 使用者選「系統預設」
-            // 技巧：不指定 .voice 屬性，只指定 lang
-            // 這會讓 iOS 使用你在「設定 > 輔助使用 > 語音內容 > 聲音」裡設定的預設值
-            // 這有機會叫出高音質 Siri 語音 (視 iOS 版本而定)
+        if (selectedVoice) {
+            utterance.voice = selectedVoice;
         }
 
+        utterance.rate = 0.9;
         window.speechSynthesis.speak(utterance);
     }
 
