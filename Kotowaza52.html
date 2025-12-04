@@ -2,232 +2,181 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>口語高頻諺語 52選 (語音切換版)</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>口語高頻諺語 (iOS 優化版)</title>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
     
     <style>
         :root {
             --primary: #2c3e50;
             --accent: #3498db;
-            --accent-dark: #2980b9;
-            --accent-light: #e8f4fc;
-            --bg: #f8f9fa;
+            --bg: #f2f2f7; /* iOS 風格背景灰 */
             --card-bg: #ffffff;
-            --text-main: #333;
-            --text-sub: #666;
-            --border-radius: 12px;
+            --text-main: #000000;
         }
 
         body {
-            font-family: 'Noto Sans JP', sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Noto Sans JP', sans-serif;
             background-color: var(--bg);
             color: var(--text-main);
             margin: 0;
-            padding: 20px;
-            line-height: 1.6;
+            padding: 16px;
+            -webkit-text-size-adjust: 100%;
         }
 
         header {
             text-align: center;
-            margin-bottom: 30px;
-            padding: 20px 0;
+            margin-bottom: 20px;
             background: white;
-            border-radius: var(--border-radius);
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
         }
 
-        h1 {
-            color: var(--primary);
-            font-size: 1.8rem;
-            margin: 0 0 10px 0;
-        }
+        h1 { margin: 0 0 10px 0; font-size: 1.5rem; }
 
-        /* 語音控制區 */
-        .voice-controls {
-            margin-top: 15px;
-            padding: 15px;
-            background-color: var(--accent-light);
-            border-radius: 8px;
-            display: inline-flex;
+        /* 控制面板優化 */
+        .controls {
+            display: flex;
             flex-direction: column;
-            align-items: center;
             gap: 10px;
+            align-items: center;
         }
 
-        .voice-select-wrapper {
+        select {
+            font-size: 16px; /* 防止 iOS 縮放 */
+            padding: 10px;
+            width: 100%;
+            max-width: 300px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            background-color: #f9f9f9;
+        }
+
+        .btn-group {
             display: flex;
             gap: 10px;
-            align-items: center;
-            flex-wrap: wrap;
-            justify-content: center;
         }
 
-        select#voiceSelect {
-            padding: 8px 12px;
-            border-radius: 6px;
-            border: 1px solid #ccc;
-            font-size: 0.95rem;
-            max-width: 300px;
-            font-family: inherit;
-        }
-
-        button#testVoice {
-            padding: 8px 16px;
+        button {
+            padding: 10px 20px;
+            border-radius: 8px;
+            border: none;
             background-color: var(--accent);
             color: white;
-            border: none;
-            border-radius: 6px;
+            font-weight: bold;
+            font-size: 14px;
             cursor: pointer;
-            font-weight: 500;
         }
-
-        button#testVoice:hover {
-            background-color: var(--accent-dark);
-        }
-
-        /* 網格佈局 */
-        .grid-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 20px;
-            max-width: 1200px;
-            margin: 20px auto;
-        }
+        
+        button.secondary { background-color: #95a5a6; }
 
         /* 卡片設計 */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 16px;
+            margin-top: 20px;
+        }
+
         .card {
             background: var(--card-bg);
-            border-radius: var(--border-radius);
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-            padding: 24px;
-            transition: transform 0.2s, box-shadow 0.2s;
-            position: relative;
-            border-top: 4px solid var(--accent);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            border-left: 5px solid var(--accent);
         }
 
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 15px rgba(0,0,0,0.1);
-        }
-
-        .card-header {
+        .card-top {
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
-            margin-bottom: 15px;
         }
 
-        .idx {
-            font-size: 0.9rem;
-            color: #999;
+        .jp {
+            font-size: 1.3rem;
             font-weight: 700;
-        }
-
-        .jp-text {
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: var(--primary);
-            margin: 5px 0;
+            margin: 0;
             line-height: 1.4;
+            color: #333;
         }
 
-        .reading {
+        .read {
+            color: #666;
             font-size: 0.9rem;
-            color: var(--text-sub);
-            margin-bottom: 15px;
+            margin: 5px 0 15px 0;
         }
 
-        .speak-btn {
-            background: var(--accent-light);
-            border: none;
+        .play-btn {
+            background: #e1f5fe;
+            color: var(--accent);
+            width: 44px; /* iOS 觸控友善大小 */
+            height: 44px;
             border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: var(--accent);
-            transition: all 0.2s;
+            padding: 0;
             flex-shrink: 0;
             margin-left: 10px;
         }
+        
+        .play-btn:active { background: #b3e5fc; transform: scale(0.95); }
+        .play-btn svg { width: 24px; height: 24px; fill: currentColor; }
 
-        .speak-btn:hover {
-            background: var(--accent);
-            color: white;
-        }
-
-        .speak-btn svg {
-            width: 20px;
-            height: 20px;
-            fill: currentColor;
-        }
-
-        .info-block {
-            margin-top: 15px;
-            font-size: 0.95rem;
+        .meta {
             border-top: 1px solid #eee;
-            padding-top: 15px;
+            padding-top: 12px;
+            font-size: 0.95rem;
         }
-
-        .info-row {
-            margin-bottom: 8px;
-            display: flex;
-            align-items: baseline;
-        }
-
-        .label {
-            display: inline-block;
-            font-size: 0.75rem;
-            font-weight: 700;
+        
+        .row { margin-bottom: 6px; display: flex; }
+        .tag {
+            background: #eee;
             padding: 2px 6px;
             border-radius: 4px;
+            font-size: 0.75rem;
             margin-right: 8px;
-            color: white;
-            min-width: 35px;
-            text-align: center;
+            font-weight: bold;
+            color: #555;
+            height: fit-content;
+            white-space: nowrap;
         }
+        .tag.mod { background: #fff3cd; color: #856404; }
 
-        .label.mean { background-color: #34495e; }
-        .label.modern { background-color: #e67e22; }
-
-        .info-content {
-            flex: 1;
-        }
-
-        @media (max-width: 600px) {
-            h1 { font-size: 1.5rem; }
-            .grid-container { grid-template-columns: 1fr; }
-            .voice-select-wrapper { flex-direction: column; width: 100%; }
-            select#voiceSelect { width: 100%; max-width: none; }
+        /* Debug 區域 */
+        #debug-log {
+            margin-top: 20px;
+            font-family: monospace;
+            font-size: 10px;
+            color: #888;
+            background: #eee;
+            padding: 10px;
+            border-radius: 8px;
+            white-space: pre-wrap;
+            display: none; /* 預設隱藏 */
         }
     </style>
 </head>
 <body>
 
 <header>
-    <h1>口語高頻諺語 52選</h1>
-    <div class="voice-controls">
-        <label for="voiceSelect" style="font-size: 0.9rem; font-weight: bold; color: var(--primary);">選擇語音包 (TTS):</label>
-        <div class="voice-select-wrapper">
-            <select id="voiceSelect">
-                <option value="">載入中...</option>
-            </select>
-            <button id="testVoice" onclick="testVoice()">試聽語音</button>
+    <h1>口語高頻諺語 (iOS 版)</h1>
+    <div class="controls">
+        <select id="voiceSelect">
+            <option value="default">系統預設 (iOS 自動決定)</option>
+        </select>
+        <div class="btn-group">
+            <button onclick="loadVoices(true)">🔄 重新偵測語音</button>
+            <button class="secondary" onclick="toggleDebug()">🐞 顯示/隱藏偵測資訊</button>
         </div>
-        <small style="color: #666; margin-top:5px;">※ 建議選擇 "Google 日本語" 或 "Microsoft" 開頭的語音</small>
+        <div id="debug-log"></div>
     </div>
 </header>
 
-<main id="app" class="grid-container">
-    </main>
+<div id="app" class="grid"></div>
 
 <script>
-    // 資料來源
     const proverbs = [
         { id: 1, jp: "雨降って地固まる", read: "あめ ふって じ かたまる", mean: "經歷波折後關係反而更好", modern: "結果オーライ / 逆に仲良くなった" },
         { id: 2, jp: "案ずるより産むが易し", read: "あんずる より うむが やすし", mean: "實際做比想像中容易", modern: "取り越し苦労 / やってみたら余裕" },
@@ -285,109 +234,114 @@
 
     const app = document.getElementById('app');
     const voiceSelect = document.getElementById('voiceSelect');
+    const debugLog = document.getElementById('debug-log');
     let voices = [];
-    let selectedVoice = null;
 
-    // 初始化：渲染卡片
+    // 初始化介面
     function init() {
         proverbs.forEach(item => {
-            const card = document.createElement('article');
+            const card = document.createElement('div');
             card.className = 'card';
             card.innerHTML = `
-                <div class="card-header">
+                <div class="card-top">
                     <div>
-                        <span class="idx">#${String(item.id).padStart(2, '0')}</span>
-                        <h2 class="jp-text">${item.jp}</h2>
+                        <p class="jp">${item.jp}</p>
+                        <p class="read">${item.read}</p>
                     </div>
-                    <button class="speak-btn" onclick="speak('${item.jp}')" title="播放發音">
-                        <svg viewBox="0 0 24 24"><path d="M14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77zm-4 0h-2.5l-5 5v5h5l5 5v-15z"/></svg>
+                    <button class="play-btn" onclick="speak('${item.jp}')">
+                         <svg viewBox="0 0 24 24"><path d="M14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77zm-4 0h-2.5l-5 5v5h5l5 5v-15z"/></svg>
                     </button>
                 </div>
-                <div class="reading">${item.read}</div>
-                <div class="info-block">
-                    <div class="info-row">
-                        <span class="label mean">意思</span>
-                        <span class="info-content">${item.mean}</span>
+                <div class="meta">
+                    <div class="row">
+                        <span class="tag">意思</span>
+                        <span>${item.mean}</span>
                     </div>
-                    <div class="info-row">
-                        <span class="label modern">現代</span>
-                        <span class="info-content">${item.modern}</span>
+                    <div class="row">
+                        <span class="tag mod">現代</span>
+                        <span>${item.modern}</span>
                     </div>
                 </div>
             `;
             app.appendChild(card);
         });
+        
+        loadVoices();
     }
 
-    // 語音載入邏輯
-    function populateVoices() {
+    function toggleDebug() {
+        debugLog.style.display = debugLog.style.display === 'none' || debugLog.style.display === '' ? 'block' : 'none';
+    }
+
+    function log(msg) {
+        debugLog.textContent += msg + "\n";
+    }
+
+    // 載入語音
+    function loadVoices(force = false) {
+        // 清空並加入預設選項
+        voiceSelect.innerHTML = '<option value="default">系統預設 (由 iOS 決定)</option>';
+        debugLog.textContent = "偵測語音中...\n";
+        
         voices = window.speechSynthesis.getVoices();
         
-        // 過濾出日文語音，以及一些可能支援日文的多語系語音
-        const jpVoices = voices.filter(voice => voice.lang.includes('ja') || voice.lang.includes('JP'));
+        // 過濾日文
+        const jpVoices = voices.filter(v => v.lang.includes('ja') || v.lang.includes('JP'));
 
-        voiceSelect.innerHTML = '';
+        log(`偵測到總語音數: ${voices.length}`);
+        log(`偵測到日文語音數: ${jpVoices.length}`);
 
         if (jpVoices.length === 0) {
-            const option = document.createElement('option');
-            option.textContent = "未偵測到專用日語語音 (將使用系統預設)";
-            voiceSelect.appendChild(option);
-            return;
+            log("警告: iOS 尚未釋出語音列表，請點擊「重新偵測」或稍後再試。");
         }
 
-        jpVoices.forEach((voice, index) => {
+        jpVoices.forEach(voice => {
             const option = document.createElement('option');
-            // 使用語音名稱作為識別，避免 index 跑掉
             option.value = voice.name;
-            option.textContent = `${voice.name} (${voice.lang})`;
+            // 標記 localService (是否為本機語音，通常本機語音較快)
+            const type = voice.localService ? "[本機]" : "[網路]";
+            option.textContent = `${voice.name} ${type}`;
             voiceSelect.appendChild(option);
-
-            // 嘗試自動選擇品質較好的語音 (Google 或 Microsoft)
-            if (!selectedVoice && (voice.name.includes('Google') || voice.name.includes('Microsoft'))) {
-                selectedVoice = voice;
-                option.selected = true;
-            }
+            
+            log(`- ${voice.name} (${voice.lang}) Default:${voice.default}`);
         });
-
-        // 如果沒有自動選到，就預設第一個
-        if (!selectedVoice && jpVoices.length > 0) {
-            selectedVoice = jpVoices[0];
-        }
     }
 
-    // 當使用者切換選單時
-    voiceSelect.addEventListener('change', (e) => {
-        const selectedName = e.target.value;
-        selectedVoice = voices.find(voice => voice.name === selectedName);
-    });
-
-    // 瀏覽器載入語音通常是異步的
+    // iOS Safari 的怪癖：需要反覆監聽
     if (speechSynthesis.onvoiceschanged !== undefined) {
-        speechSynthesis.onvoiceschanged = populateVoices;
+        speechSynthesis.onvoiceschanged = () => {
+            // 只有當列表是空的時候才自動重整，避免使用者選一半被重置
+            if (voices.length === 0) loadVoices();
+        };
     }
-    
-    // 立即嘗試執行一次 (為了某些已經載入好的瀏覽器)
-    populateVoices();
-    init();
 
-    // 播放功能
+    // 發音邏輯
     function speak(text) {
-        window.speechSynthesis.cancel(); // 停止當前語音
+        window.speechSynthesis.cancel();
+        
         const utterance = new SpeechSynthesisUtterance(text);
         utterance.lang = 'ja-JP';
-        utterance.rate = 0.9; // 語速
-
-        if (selectedVoice) {
-            utterance.voice = selectedVoice;
+        utterance.rate = 0.85; // iOS 預設語速稍快，調慢一點更有感情
+        
+        const selectedName = voiceSelect.value;
+        
+        if (selectedName !== 'default') {
+            // 使用者指定了特定語音 (例如 Kyoko)
+            const selectedVoice = voices.find(v => v.name === selectedName);
+            if (selectedVoice) {
+                utterance.voice = selectedVoice;
+            }
+        } else {
+            // 使用者選「系統預設」
+            // 技巧：不指定 .voice 屬性，只指定 lang
+            // 這會讓 iOS 使用你在「設定 > 輔助使用 > 語音內容 > 聲音」裡設定的預設值
+            // 這有機會叫出高音質 Siri 語音 (視 iOS 版本而定)
         }
 
         window.speechSynthesis.speak(utterance);
     }
 
-    // 試聽按鈕
-    function testVoice() {
-        speak("こんにちは、この声で読み上げます。");
-    }
+    init();
 </script>
 
 </body>
