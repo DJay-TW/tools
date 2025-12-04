@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>口語高頻諺語 52選</title>
+    <title>口語高頻諺語 52選 (語音切換版)</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
@@ -12,6 +12,7 @@
         :root {
             --primary: #2c3e50;
             --accent: #3498db;
+            --accent-dark: #2980b9;
             --accent-light: #e8f4fc;
             --bg: #f8f9fa;
             --card-bg: #ffffff;
@@ -31,19 +32,60 @@
 
         header {
             text-align: center;
-            margin-bottom: 40px;
+            margin-bottom: 30px;
             padding: 20px 0;
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
         }
 
         h1 {
             color: var(--primary);
-            font-size: 2rem;
-            margin-bottom: 10px;
+            font-size: 1.8rem;
+            margin: 0 0 10px 0;
         }
 
-        p.subtitle {
-            color: var(--text-sub);
-            font-size: 1rem;
+        /* 語音控制區 */
+        .voice-controls {
+            margin-top: 15px;
+            padding: 15px;
+            background-color: var(--accent-light);
+            border-radius: 8px;
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .voice-select-wrapper {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        select#voiceSelect {
+            padding: 8px 12px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            font-size: 0.95rem;
+            max-width: 300px;
+            font-family: inherit;
+        }
+
+        button#testVoice {
+            padding: 8px 16px;
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        button#testVoice:hover {
+            background-color: var(--accent-dark);
         }
 
         /* 網格佈局 */
@@ -52,7 +94,7 @@
             grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
             gap: 20px;
             max-width: 1200px;
-            margin: 0 auto;
+            margin: 20px auto;
         }
 
         /* 卡片設計 */
@@ -98,7 +140,6 @@
             margin-bottom: 15px;
         }
 
-        /* 發音按鈕 */
         .speak-btn {
             background: var(--accent-light);
             border: none;
@@ -126,10 +167,17 @@
             fill: currentColor;
         }
 
-        /* 內容區塊 */
         .info-block {
             margin-top: 15px;
             font-size: 0.95rem;
+            border-top: 1px solid #eee;
+            padding-top: 15px;
+        }
+
+        .info-row {
+            margin-bottom: 8px;
+            display: flex;
+            align-items: baseline;
         }
 
         .label {
@@ -138,28 +186,24 @@
             font-weight: 700;
             padding: 2px 6px;
             border-radius: 4px;
-            margin-right: 6px;
+            margin-right: 8px;
             color: white;
-            background-color: #95a5a6;
+            min-width: 35px;
+            text-align: center;
         }
 
         .label.mean { background-color: #34495e; }
-        .label.modern { background-color: #e67e22; } /* 橘色強調現代口語 */
-
-        .info-row {
-            margin-bottom: 8px;
-            display: flex;
-            align-items: baseline;
-        }
+        .label.modern { background-color: #e67e22; }
 
         .info-content {
             flex: 1;
         }
 
-        /* 響應式調整 */
         @media (max-width: 600px) {
             h1 { font-size: 1.5rem; }
             .grid-container { grid-template-columns: 1fr; }
+            .voice-select-wrapper { flex-direction: column; width: 100%; }
+            select#voiceSelect { width: 100%; max-width: none; }
         }
     </style>
 </head>
@@ -167,16 +211,25 @@
 
 <header>
     <h1>口語高頻諺語 52選</h1>
-    <p class="subtitle">點擊喇叭圖示聆聽發音 · 附現代口語替代講法</p>
+    <div class="voice-controls">
+        <label for="voiceSelect" style="font-size: 0.9rem; font-weight: bold; color: var(--primary);">選擇語音包 (TTS):</label>
+        <div class="voice-select-wrapper">
+            <select id="voiceSelect">
+                <option value="">載入中...</option>
+            </select>
+            <button id="testVoice" onclick="testVoice()">試聽語音</button>
+        </div>
+        <small style="color: #666; margin-top:5px;">※ 建議選擇 "Google 日本語" 或 "Microsoft" 開頭的語音</small>
+    </div>
 </header>
 
 <main id="app" class="grid-container">
     </main>
 
 <script>
-    // 資料來源 (包含原文、讀音、意思、現代口語)
+    // 資料來源
     const proverbs = [
-        { id: 1, jp: "雨降って地固まる", read: "あめ ふって じ かたまる", mean: "經歷波折後關係反而更好", modern: "結果オーライ / 逆に絆深まった" },
+        { id: 1, jp: "雨降って地固まる", read: "あめ ふって じ かたまる", mean: "經歷波折後關係反而更好", modern: "結果オーライ / 逆に仲良くなった" },
         { id: 2, jp: "案ずるより産むが易し", read: "あんずる より うむが やすし", mean: "實際做比想像中容易", modern: "取り越し苦労 / やってみたら余裕" },
         { id: 3, jp: "石橋を叩いて渡る", read: "いしばし を たたいて わたる", mean: "過於謹慎、小心求穩", modern: "超慎重派 / ビビりすぎ" },
         { id: 4, jp: "嘘から出たまこと", read: "うそ から でた まこと", mean: "弄假成真", modern: "瓢箪（ひょうたん）から駒 / マジになった" },
@@ -231,55 +284,109 @@
     ];
 
     const app = document.getElementById('app');
+    const voiceSelect = document.getElementById('voiceSelect');
+    let voices = [];
+    let selectedVoice = null;
 
-    // 渲染卡片
-    proverbs.forEach(item => {
-        const card = document.createElement('article');
-        card.className = 'card';
-        card.innerHTML = `
-            <div class="card-header">
-                <div>
-                    <span class="idx">#${String(item.id).padStart(2, '0')}</span>
-                    <h2 class="jp-text">${item.jp}</h2>
+    // 初始化：渲染卡片
+    function init() {
+        proverbs.forEach(item => {
+            const card = document.createElement('article');
+            card.className = 'card';
+            card.innerHTML = `
+                <div class="card-header">
+                    <div>
+                        <span class="idx">#${String(item.id).padStart(2, '0')}</span>
+                        <h2 class="jp-text">${item.jp}</h2>
+                    </div>
+                    <button class="speak-btn" onclick="speak('${item.jp}')" title="播放發音">
+                        <svg viewBox="0 0 24 24"><path d="M14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77zm-4 0h-2.5l-5 5v5h5l5 5v-15z"/></svg>
+                    </button>
                 </div>
-                <button class="speak-btn" onclick="speak('${item.jp}')" title="播放發音">
-                    <svg viewBox="0 0 24 24"><path d="M14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77zm-4 0h-2.5l-5 5v5h5l5 5v-15z"/></svg>
-                </button>
-            </div>
-            <div class="reading">${item.read}</div>
-            
-            <div class="info-block">
-                <div class="info-row">
-                    <span class="label mean">意思</span>
-                    <span class="info-content">${item.mean}</span>
+                <div class="reading">${item.read}</div>
+                <div class="info-block">
+                    <div class="info-row">
+                        <span class="label mean">意思</span>
+                        <span class="info-content">${item.mean}</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="label modern">現代</span>
+                        <span class="info-content">${item.modern}</span>
+                    </div>
                 </div>
-                <div class="info-row">
-                    <span class="label modern">現代</span>
-                    <span class="info-content">${item.modern}</span>
-                </div>
-            </div>
-        `;
-        app.appendChild(card);
+            `;
+            app.appendChild(card);
+        });
+    }
+
+    // 語音載入邏輯
+    function populateVoices() {
+        voices = window.speechSynthesis.getVoices();
+        
+        // 過濾出日文語音，以及一些可能支援日文的多語系語音
+        const jpVoices = voices.filter(voice => voice.lang.includes('ja') || voice.lang.includes('JP'));
+
+        voiceSelect.innerHTML = '';
+
+        if (jpVoices.length === 0) {
+            const option = document.createElement('option');
+            option.textContent = "未偵測到專用日語語音 (將使用系統預設)";
+            voiceSelect.appendChild(option);
+            return;
+        }
+
+        jpVoices.forEach((voice, index) => {
+            const option = document.createElement('option');
+            // 使用語音名稱作為識別，避免 index 跑掉
+            option.value = voice.name;
+            option.textContent = `${voice.name} (${voice.lang})`;
+            voiceSelect.appendChild(option);
+
+            // 嘗試自動選擇品質較好的語音 (Google 或 Microsoft)
+            if (!selectedVoice && (voice.name.includes('Google') || voice.name.includes('Microsoft'))) {
+                selectedVoice = voice;
+                option.selected = true;
+            }
+        });
+
+        // 如果沒有自動選到，就預設第一個
+        if (!selectedVoice && jpVoices.length > 0) {
+            selectedVoice = jpVoices[0];
+        }
+    }
+
+    // 當使用者切換選單時
+    voiceSelect.addEventListener('change', (e) => {
+        const selectedName = e.target.value;
+        selectedVoice = voices.find(voice => voice.name === selectedName);
     });
 
-    // 語音合成功能
+    // 瀏覽器載入語音通常是異步的
+    if (speechSynthesis.onvoiceschanged !== undefined) {
+        speechSynthesis.onvoiceschanged = populateVoices;
+    }
+    
+    // 立即嘗試執行一次 (為了某些已經載入好的瀏覽器)
+    populateVoices();
+    init();
+
+    // 播放功能
     function speak(text) {
-        // 取消當前正在播放的語音（避免連點重疊）
-        window.speechSynthesis.cancel();
-
+        window.speechSynthesis.cancel(); // 停止當前語音
         const utterance = new SpeechSynthesisUtterance(text);
-        utterance.lang = 'ja-JP'; // 設定為日語
-        utterance.rate = 0.9;     // 語速稍慢一點點，更清楚
-        utterance.pitch = 1;
+        utterance.lang = 'ja-JP';
+        utterance.rate = 0.9; // 語速
 
-        // 嘗試獲取高品質的日語語音 (依瀏覽器而定)
-        const voices = window.speechSynthesis.getVoices();
-        const jpVoice = voices.find(voice => voice.lang === 'ja-JP' || voice.lang === 'ja_JP');
-        if (jpVoice) {
-            utterance.voice = jpVoice;
+        if (selectedVoice) {
+            utterance.voice = selectedVoice;
         }
 
         window.speechSynthesis.speak(utterance);
+    }
+
+    // 試聽按鈕
+    function testVoice() {
+        speak("こんにちは、この声で読み上げます。");
     }
 </script>
 
