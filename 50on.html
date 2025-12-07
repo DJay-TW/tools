@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>動詞活用小卡：音便 × 派生規則</title>
+    <style>
+        :root {
+            --bg-color: #121212;
+            --card-bg: #1e1e1e;
+            --text-primary: #e0e0e0;
+            --text-secondary: #a0a0a0;
+            --accent-color: #cfb53b;
+            --accent-hover: #eecf5b;
+            --border-color: #333;
+            --font-main: "Helvetica Neue", Helvetica, "PingFang TC",
+                         "Hiragino Sans GB", "Microsoft JhengHei", Arial, sans-serif;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            font-family: var(--font-main);
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 32px;
+            padding-top: 10px;
+        }
+
+        h1 {
+            font-size: 2rem;
+            color: var(--accent-color);
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        /* chips row */
+        .chip-row {
+            max-width: 900px;
+            margin: 0 auto 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: center;
+        }
+
+        .chip {
+            font-size: 0.8rem;
+            padding: 4px 10px;
+            border-radius: 999px;
+            border: 1px solid var(--border-color);
+            background-color: #181818;
+            color: var(--text-secondary);
+            white-space: nowrap;
+        }
+
+        /* Grid Layout */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 20px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        /* Card Style */
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.25);
+            border-color: var(--accent-color);
+        }
+
+        .card-header {
+            margin-bottom: 16px;
+            z-index: 1;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 10px;
+        }
+
+        .japanese-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--accent-color);
+            margin-bottom: 4px;
+        }
+
+        .reading {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 4px;
+        }
+
+        .chinese-meaning {
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: #fff;
+        }
+
+        .section {
+            margin-bottom: 14px;
+            z-index: 1;
+        }
+
+        .section-title {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+            border-left: 3px solid var(--accent-color);
+            padding-left: 8px;
+            margin-bottom: 6px;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .section-content {
+            font-size: 0.9rem;
+            color: #ccc;
+        }
+
+        .section-content ul {
+            padding-left: 20px;
+            margin: 0;
+        }
+
+        .section-content li {
+            margin-bottom: 4px;
+        }
+
+        .note {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-top: 6px;
+        }
+
+        @media (max-width: 600px) {
+            .grid-container { grid-template-columns: 1fr; }
+            h1 { font-size: 1.6rem; }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>動詞活用小卡</h1>
+    <div class="subtitle">音便規則 × 不規則動詞 × 五段・一段派生（手機版）</div>
+</header>
+
+<div class="chip-row">
+    <span class="chip">u → i：連用・ます形</span>
+    <span class="chip">u → a：否定／受身／使役</span>
+    <span class="chip">u → e：假定／可能</span>
+    <span class="chip">u → o：意向形</span>
+</div>
+
+<div class="grid-container">
+
+    <!-- Card 1: 音便 -->
+    <div class="card">
+        <div class="card-header">
+            <div class="japanese-title">音便總表（て／た）</div>
+            <div class="reading">五段動詞的 て形／た形 ＋ 行く例外</div>
+            <div class="chinese-meaning">看到終止形「u」，即可推導。</div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">規則</div>
+            <div class="section-content">
+                <ul>
+                    <li>う・つ・る → <b>って／った</b></li>
+                    <li>む・ぶ・ぬ → <b>んで／んだ</b></li>
+                    <li>く → <b>いて／いた</b>（例外：行く → 行って）</li>
+                    <li>ぐ → <b>いで／いだ</b></li>
+                    <li>す → <b>して／した</b></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">補充</div>
+            <div class="section-content">
+                <p>「る」：一段 → て ／ 五段 → って</p>
+                <p>「ある」否定：<b>ない</b></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Card 2: 不規則動詞 -->
+    <div class="card">
+        <div class="card-header">
+            <div class="japanese-title">不規則動詞</div>
+            <div class="reading">する／来る（くる）的完整活用</div>
+            <div class="chinese-meaning">兩大魔王一次理解。</div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">する</div>
+            <div class="section-content">
+                <ul>
+                    <li>終止：する</li>
+                    <li>丁寧：します</li>
+                    <li>否定：しない</li>
+                    <li>て形／た形：して／した</li>
+                    <li>假定：すれば</li>
+                    <li>意向：しよう</li>
+                    <li>命令：しろ</li>
+                    <li>可能：できる</li>
+                    <li>受身：される</li>
+                    <li>使役：させる</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">来る（くる）</div>
+            <div class="section-content">
+                <ul>
+                    <li>終止：来る（くる）</li>
+                    <li>丁寧：来ます（きます）</li>
+                    <li>否定：来ない（こない）</li>
+                    <li>て形／た形：来て／来た</li>
+                    <li>假定：来れば（くれば）</li>
+                    <li>意向：来よう（こよう）</li>
+                    <li>命令：来い（こい）</li>
+                    <li>受身：来られる</li>
+                    <li>使役：来させる</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Card 3: 五段動詞派生 -->
+    <div class="card">
+        <div class="card-header">
+            <div class="japanese-title">五段動詞：派生活用完整表</div>
+            <div class="reading">u → a／i／u／e／o 五母音展開</div>
+            <div class="chinese-meaning">所有派生以「終止形 u」為核心。</div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">基礎變化</div>
+            <div class="section-content">
+                <ul>
+                    <li>a 段：未然（否定／受身／使役）</li>
+                    <li>i 段：連用・ます形</li>
+                    <li>u 段：終止形</li>
+                    <li>e 段：假定形＋ば、可能形</li>
+                    <li>o 段：意向形（＋う）</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">派生</div>
+            <div class="section-content">
+                <p>可能形：<code>e段＋る</code></p>
+                <p>受身形：<code>a段＋れる</code></p>
+                <p>使役形：<code>a段＋せる</code></p>
+                <p>使役受身：<code>a段＋される</code></p>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">完整示例（書く）</div>
+            <div class="section-content">
+                <ul>
+                    <li>未然：書か</li>
+                    <li>連用：書き</li>
+                    <li>終止：書く</li>
+                    <li>假定：書けば</li>
+                    <li>命令：書け</li>
+                    <li>意向：書こう</li>
+                    <li>可能：書ける</li>
+                    <li>受身：書かれる</li>
+                    <li>使役：書かせる</li>
+                    <li>使役受身：書かされる</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Card 4: 一段動詞派生 -->
+    <div class="card">
+        <div class="card-header">
+            <div class="japanese-title">一段動詞：派生活用完整表</div>
+            <div class="reading">語幹固定，靠接尾詞派生</div>
+            <div class="chinese-meaning">前音為 い／え段 → 一段。</div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">基礎變化</div>
+            <div class="section-content">
+                <ul>
+                    <li>未然：語幹＋ない</li>
+                    <li>連用：語幹＋ます</li>
+                    <li>終止：語幹＋る</li>
+                    <li>假定：語幹＋れば</li>
+                    <li>命令：語幹＋ろ</li>
+                    <li>意向：語幹＋よう</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">派生</div>
+            <div class="section-content">
+                <p>可能：語幹＋られる（口語 れる）</p>
+                <p>受身：語幹＋られる</p>
+                <p>使役：語幹＋させる</p>
+                <p>使役受身：語幹＋させられる</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">完整示例（食べる）</div>
+            <div class="section-content">
+                <ul>
+                    <li>未然：食べない</li>
+                    <li>連用：食べます</li>
+                    <li>終止：食べる</li>
+                    <li>假定：食べれば</li>
+                    <li>命令：食べろ</li>
+                    <li>意向：食べよう</li>
+                    <li>可能：食べられる（食べれる）</li>
+                    <li>受身：食べられる</li>
+                    <li>使役：食べさせる</li>
+                    <li>使役受身：食べさせられる</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>
