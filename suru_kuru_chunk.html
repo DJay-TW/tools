@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>する／来る 系列：高頻句尾 Chunk</title>
+    <style>
+        :root {
+            --bg-color: #121212;
+            --card-bg: #1e1e1e;
+            --text-primary: #e0e0e0;
+            --text-secondary: #a0a0a0;
+            --accent-color: #cfb53b;
+            --accent-hover: #eecf5b;
+            --border-color: #333;
+            --font-main: "Helvetica Neue", Helvetica, "PingFang TC",
+                         "Hiragino Sans GB", "Microsoft JhengHei", Arial, sans-serif;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            font-family: var(--font-main);
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 24px;
+            padding-top: 10px;
+        }
+
+        h1 {
+            font-size: 2rem;
+            color: var(--accent-color);
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        /* Tag chips (tabs) */
+        .chip-row {
+            max-width: 900px;
+            margin: 16px auto 24px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: center;
+        }
+
+        .chip {
+            font-size: 0.85rem;
+            padding: 6px 14px;
+            border-radius: 999px;
+            border: 1px solid var(--border-color);
+            background-color: #181818;
+            color: var(--text-secondary);
+            white-space: nowrap;
+            cursor: pointer;
+            user-select: none;
+            transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
+        }
+
+        .chip:hover {
+            background-color: #222;
+            transform: translateY(-1px);
+        }
+
+        .chip.active {
+            background-color: var(--accent-color);
+            color: #000;
+            border-color: var(--accent-color);
+        }
+
+        /* Grid Layout：兩個 grid 透過 active 切換顯示 */
+        .grid-container {
+            display: none;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 20px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .grid-container.active {
+            display: grid;
+        }
+
+        /* Card Style */
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 18px 20px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.25);
+            border-color: var(--accent-color);
+        }
+
+        .card-header {
+            margin-bottom: 14px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 8px;
+        }
+
+        .japanese-title {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: var(--accent-color);
+            margin-bottom: 4px;
+        }
+
+        .reading {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-bottom: 4px;
+        }
+
+        .chinese-meaning {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #fff;
+        }
+
+        .section {
+            margin-top: 10px;
+        }
+
+        .section-title {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+            border-left: 3px solid var(--accent-color);
+            padding-left: 8px;
+            margin-bottom: 6px;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .section-content {
+            font-size: 0.9rem;
+            color: #ccc;
+        }
+
+        .section-content ul {
+            padding-left: 18px;
+            margin: 0;
+        }
+
+        .section-content li {
+            margin-bottom: 4px;
+            list-style-type: "• ";
+        }
+
+        .chunk-form {
+            font-weight: 600;
+            color: #fff;
+        }
+
+        .chunk-sense {
+            color: var(--text-secondary);
+        }
+
+        @media (max-width: 600px) {
+            .grid-container {
+                grid-template-columns: 1fr;
+            }
+
+            h1 {
+                font-size: 1.6rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+<header>
+    <h1>する／来る 系列：高頻句尾 Chunk</h1>
+    <div class="subtitle">原形（丁寧形） × 語感小卡（無例句版）</div>
+</header>
+
+<div class="chip-row">
+    <span class="chip active" data-target="suru-grid">する 系列</span>
+    <span class="chip" data-target="kuru-grid">来る 系列</span>
+</div>
+
+<!-- する 系列 -->
+<div id="suru-grid" class="grid-container active">
+
+    <!-- Card 1 -->
+    <div class="card">
+        <div class="card-header">
+            <div class="japanese-title">① 進行・狀態（する 系列）</div>
+            <div class="reading">進行中／持續狀態</div>
+            <div class="chinese-meaning">描寫「正在做」或「一直處於某種狀態」。</div>
+        </div>
+        <div class="section">
+            <div class="section-title">原形（丁寧形）／語感</div>
+            <div class="section-content">
+                <ul>
+                    <li><span class="chunk-form">している（しています）</span> — <span class="chunk-sense">正在做、持續進行中</span></li>
+                    <li><span class="chunk-form">していた（していました）</span> — <span class="chunk-sense">當時一直在做、過去進行中</span></li>
+                    <li><span class="chunk-form">していて（していて）</span> — <span class="chunk-sense">正在做，並且…／保持那個狀態而…</span></li>
+                    <li><span class="chunk-form">していく（していきます）</span> — <span class="chunk-sense">今後持續這樣做下去</span></li>
+                    <li><span class="chunk-form">してきた（してきました）</span> — <span class="chunk-sense">一直以來都在做（到現在為止）</span></li>
+                    <li><span class="chunk-form">していない（していません）</span> — <span class="chunk-sense">現在沒有在做</span></li>
+                    <li><span class="chunk-form">していなかった（していませんでした）</span> — <span class="chunk-sense">那時候並沒有在做過</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Card 2 -->
+    <div class="card">
+        <div class="card-header">
+            <div class="japanese-title">② 完成・結果（する 系列）</div>
+            <div class="reading">事前準備／結果狀態</div>
+            <div class="chinese-meaning">事情「已經做好了」並維持那個狀態。</div>
+        </div>
+        <div class="section">
+            <div class="section-title">原形（丁寧形）／語感</div>
+            <div class="section-content">
+                <ul>
+                    <li><span class="chunk-form">してある（してあります）</span> — <span class="chunk-sense">已經事先做好並處於完成狀態</span></li>
+                    <li><span class="chunk-form">してあった（してありました）</span> — <span class="chunk-sense">之前就已經做好並維持到那時</span></li>
+                    <li><span class="chunk-form">しておく（しておきます）</span> — <span class="chunk-sense">預先做、先處理好</span></li>
+                    <li><span class="chunk-form">しておいた（しておきました）</span> — <span class="chunk-sense">已經先做完、備妥了</span></li>
+                    <li><span class="chunk-form">しておいて（しておいてください）</span> — <span class="chunk-sense">請先做／做完再…</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Card 3 -->
+    <div class="card">
+        <div class="card-header">
+            <div class="japanese-title">③ 經驗・可能性（する 系列）</div>
+            <div class="reading">做過沒／能不能做</div>
+            <div class="chinese-meaning">表示有無經驗，或能力上的「能不能」。</div>
+        </div>
+        <div class="section">
+            <div class="section-title">原形（丁寧形）／語感</div>
+            <div class="section-content">
+                <ul>
+                    <li><span class="chunk-form">したことがある（したことがあります）</span> — <span class="chunk-sense">曾經做過、有那種經驗</span></li>
+                    <li><span class="chunk-form">したことがない（したことがありません）</span> — <span class="chunk-sense">從來沒做過</span></li>
+                    <li><span class="chunk-form">できる（できます）</span> — <span class="chunk-sense">能夠做、有能力做到</span></li>
+                    <li><span class="chunk-form">できなかった（できませんでした）</span> — <span class="chunk-sense">沒能做到、辦不到</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Card 4 -->
+    <div class="card">
+        <div class="card-header">
+            <div class="japanese-title">④ 強調・遺憾（する 系列）</div>
+            <div class="reading">不小心／徹底／懊惱</div>
+            <div class="chinese-meaning">帶有「做得太徹底」「不小心就…」的情緒。</div>
+        </div>
+        <div class="section">
+            <div class="section-title">原形（丁寧形）／語感</div>
+            <div class="section-content">
+                <ul>
+                    <li><span class="chunk-form">してしまう（してしまいます）</span> — <span class="chunk-sense">不小心就做了、做到底了</span></li>
+                    <li><span class="chunk-form">してしまった（してしまいました）</span> — <span class="chunk-sense">已經做完了／搞砸了（帶後悔感）</span></li>
+                    <li><span class="chunk-form">してしまいそう（してしまいそうです）</span> — <span class="chunk-sense">好像快要不小心做下去了</span></li>
+                    <li><span class="chunk-form">されてしまった（されてしまいました）</span> — <span class="chunk-sense">（不幸地）被這樣對待了</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Card 5 -->
+    <div class="card">
+        <div class="card-header">
+            <div class="japanese-title">⑤ 試探・嘗試（する 系列）</div>
+            <div class="reading">先做做看</div>
+            <div class="chinese-meaning">帶有「試看看」「先試一把」的語氣。</div>
+        </div>
+        <div class="section">
+            <div class="section-title">原形（丁寧形）／語感</div>
+            <div class="section-content">
+                <ul>
+                    <li><span class="chunk-form">してみる（してみます）</span> — <span class="chunk-sense">試著做做看</span></li>
+                    <li><span class="chunk-form">してみた（してみました）</span> — <span class="chunk-sense">實際試著做過了</span></li>
+                    <li><span class="chunk-form">してみよう（してみましょう）</span> — <span class="chunk-sense">來試試看吧</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Card 6 -->
+    <div class="card">
+        <div class="card-header">
+            <div class="japanese-title">⑥ 命令・請求（する 系列）</div>
+            <div class="reading">請幫我做／拜託你做</div>
+            <div class="chinese-meaning">請求別人替自己做某事，敬語層級不同。</div>
+        </div>
+        <div class="section">
+            <div class="section-title">原形（丁寧形）／語感</div>
+            <div class="section-content">
+                <ul>
+                    <li><span class="chunk-form">してください</span> — <span class="chunk-sense">請做、麻煩你做（標準敬語）</span></li>
+                    <li><span class="chunk-form">してくれる（してくれます）</span> — <span class="chunk-sense">（願不願意）幫我做？／對我做這件事</span></li>
+                    <li><span class="chunk-form">してもらう（してもらいます）</span> — <span class="chunk-sense">請某人幫我做、由對方替我做</span></li>
+                    <li><span class="chunk-form">していただく（していただきます）</span> — <span class="chunk-sense">拜託您幫我做（對上位者）</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Card 7 -->
+    <div class="card">
+        <div class="card-header">
+            <div class="japanese-title">⑦ 被動・使役（する 系列）</div>
+            <div class="reading">被做／讓做／被迫做</div>
+            <div class="chinese-meaning">把「做」改成「被做」「讓做」「被迫做」。</div>
+        </div>
+        <div class="section">
+            <div class="section-title">原形（丁寧形）／語感</div>
+            <div class="section-content">
+                <ul>
+                    <li><span class="chunk-form">される（されます）</span> — <span class="chunk-sense">被做、受到那樣的處置</span></li>
+                    <li><span class="chunk-form">されている（されています）</span> — <span class="chunk-sense">正被這樣做、處於被動狀態</span></li>
+                    <li><span class="chunk-form">されていた（されていました）</span> — <span class="chunk-sense">曾經被那樣對待</span></li>
+                    <li><span class="chunk-form">させる（させます）</span> — <span class="chunk-sense">讓某人做／逼他做</span></li>
+                    <li><span class="chunk-form">させてもらう（させてもらいます）</span> — <span class="chunk-sense">蒙允許得以去做（帶感謝）</span></li>
+                    <li><span class="chunk-form">させられる（させられます）</span> — <span class="chunk-sense">被迫做，不得不做</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Card 8 -->
+    <div class="card">
+        <div class="card-header">
+            <div class="japanese-title">⑧ 條件・假設（する 系列）</div>
+            <div class="reading">如果做了／沒做的話</div>
+            <div class="chinese-meaning">「做／不做」當作條件的各種說法。</div>
+        </div>
+        <div class="section">
+            <div class="section-title">原形（丁寧形）／語感</div>
+            <div class="section-content">
+                <ul>
+                    <li><span class="chunk-form">したら</span> — <span class="chunk-sense">如果做了…就…</span></li>
+                    <li><span class="chunk-form">すれば</span> — <span class="chunk-sense">如果去做的話</span></li>
+                    <li><span class="chunk-form">しても</span> — <span class="chunk-sense">即使做了也…</span></li>
+                    <li><span class="chunk-form">しなければ</span> — <span class="chunk-sense">如果不做的話</span></li>
+                    <li><span class="chunk-form">しなかったら</span> — <span class="chunk-sense">如果沒做的話</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Card 9 -->
+    <div class="card">
+        <div class="card-header">
+            <div class="japanese-title">⑨ 意志・推測（する 系列）</div>
+            <div class="reading">打算做／大概會做</div>
+            <div class="chinese-meaning">講自己的打算，或推測某人會不會做。</div>
+        </div>
+        <div class="section">
+            <div class="section-title">原形（丁寧形）／語感</div>
+            <div class="section-content">
+                <ul>
+                    <li><span class="chunk-form">しよう（しましょう）</span> — <span class="chunk-sense">打算做吧／一起做吧</span></li>
+                    <li><span class="chunk-form">するだろう（するでしょう）</span> — <span class="chunk-sense">大概會做吧</span></li>
+                    <li><span class="chunk-form">するつもり（するつもりです）</span> — <span class="chunk-sense">打算要做、計畫去做</span></li>
+                    <li><span class="chunk-form">するはず（するはずです）</span> — <span class="chunk-sense">理論上應該會做</span></li>
+                    <li><span class="chunk-form">するに違いない（するに違いありません）</span> — <span class="chunk-sense">一定會做、十之八九會做</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Card 10 -->
+    <div class="card">
+        <div class="card-header">
+            <div class="japanese-title">⑩ 情緒・口語（する 系列）</div>
+            <div class="reading">口語縮約＋情緒色彩</div>
+            <div class="chinese-meaning">把前面幾種語尾再縮短成口語版。</div>
+        </div>
+        <div class="section">
+            <div class="section-title">原形（丁寧形）／語感</div>
+            <div class="section-content">
+                <ul>
+                    <li><span class="chunk-form">しちゃう（しちゃいます）</span> — <span class="chunk-sense">就這樣做了／忍不住就做了</span></li>
+                    <li><span class="chunk-form">しちゃった（しちゃいました）</span> — <span class="chunk-sense">啊做下去了…（帶點懊悔或無奈）</span></li>
+                    <li><span class="chunk-form">しとく（しときます）</span> — <span class="chunk-sense">先做一下、先處理好</span></li>
+                    <li><span class="chunk-form">しなきゃ（しなきゃいけません）</span> — <span class="chunk-sense">非做不可、得做才行</span></li>
+                    <li><span class="chunk-form">すんじゃう（すんじゃいます）</span> — <span class="chunk-sense">大概會做吧／搞不好就做了（するのではないか 的口語）</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- 来る 系列 -->
+<div id="kuru-grid" class="grid-container">
+
+    <!-- Card 1 -->
+    <div class="card">
+        <div class="card-header">
+            <div class="japanese-title">① 進行・狀態（来る 系列）</div>
+            <div class="reading">已經來／正在這裡</div>
+            <div class="chinese-meaning">描述「來到、在這裡」的持續狀態。</div>
+        </div>
+        <div class="section">
+            <div class="section-title">原形（丁寧形）／語感</div>
+            <div class="section-content">
+                <ul>
+                    <li><span class="chunk-form">来ている（来ています）</span> — <span class="chunk-sense">已經來了、正在這裡</span></li>
+                    <li><span class="chunk-form">来ていた（来ていました）</span> — <span class="chunk-sense">當時人在這裡／以前曾經來過</span></li>
+                    <li><span class="chunk-form">来ていて（来ていて）</span> — <span class="chunk-sense">來了，並且一直在這裡而…</span></li>
+                    <li><span class="chunk-form">来ていない（来ていません）</span> — <span class="chunk-sense">還沒來、不在這裡</span></li>
+                    <li><span class="chunk-form">来ていなかった（来ていませんでした）</span> — <span class="chunk-sense">那時候並沒有來過</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Card 2 -->
+    <div class="card">
+        <div class="card-header">
+            <div class="japanese-title">② 完成・結果（来る 系列）</div>
+            <div class="reading">事前來一趟</div>
+            <div class="chinese-meaning">帶有「先過來一次」「先來處理」的感覺。</div>
+        </div>
+        <div class="section">
+            <div class="section-title">原形（丁寧形）／語感</div>
+            <div class="section-content">
+                <ul>
+                    <li><span class="chunk-form">来ておく（来ておきます）</span> — <span class="chunk-sense">先來一趟、事先過來</span></li>
+                    <li><span class="chunk-form">来ておいた（来ておきました）</span> — <span class="chunk-sense">已經先來過、先到場過</span></li>
+                    <li><span class="chunk-form">来ておいて（来ておいてください）</span> — <span class="chunk-sense">請先過來、先到這裡</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Card 3 -->
+    <div class="card">
+        <div class="card-header">
+            <div class="japanese-title">③ 經驗・可能性（来る 系列）</div>
+            <div class="reading">來過沒／能不能來</div>
+            <div class="chinese-meaning">問對方有沒有來過、能不能來。</div>
+        </div>
+        <div class="section">
+            <div class="section-title">原形（丁寧形）／語感</div>
+            <div class="section-content">
+                <ul>
+                    <li><span class="chunk-form">来たことがある（来たことがあります）</span> — <span class="chunk-sense">曾經來過這裡、有來訪經驗</span></li>
+                    <li><span class="chunk-form">来たことがない（来たことがありません）</span> — <span class="chunk-sense">一次也沒來過</span></li>
+                    <li><span class="chunk-form">来られる（来られます）</span> — <span class="chunk-sense">能來、有辦法過來</span></li>
+                    <li><span class="chunk-form">来られなかった（来られませんでした）</span> — <span class="chunk-sense">沒能來、抽不出身</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Card 4 -->
+    <div class="card">
+        <div class="card-header">
+            <div class="japanese-title">④ 強調・遺憾（来る 系列）</div>
+            <div class="reading">不知不覺就來了</div>
+            <div class="chinese-meaning">「結果還是來了」「有點懊惱地來了」。</div>
+        </div>
+        <div class="section">
+            <div class="section-title">原形（丁寧形）／語感</div>
+            <div class="section-content">
+                <ul>
+                    <li><span class="chunk-form">来てしまう（来てしまいます）</span> — <span class="chunk-sense">結果就來了、忍不住就來了</span></li>
+                    <li><span class="chunk-form">来てしまった（来てしまいました）</span> — <span class="chunk-sense">不知不覺就跑來了／來了有點後悔</span></li>
+                    <li><span class="chunk-form">来てしまいそう（来てしまいそうです）</span> — <span class="chunk-sense">好像快要不小心就會來</span></li>
+                    <li><span class="chunk-form">来られてしまった（来られてしまいました）</span> — <span class="chunk-sense">（其實不希望的人）還是來了</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Card 5 -->
+    <div class="card">
+        <div class="card-header">
+            <div class="japanese-title">⑤ 試探・嘗試（来る 系列）</div>
+            <div class="reading">先來看看</div>
+            <div class="chinese-meaning">「來看一下再說」「來試著看看」。</div>
+        </div>
+        <div class="section">
+            <div class="section-title">原形（丁寧形）／語感</div>
+            <div class="section-content">
+                <ul>
+                    <li><span class="chunk-form">来てみる（来てみます）</span> — <span class="chunk-sense">來看看、來試試看</span></li>
+                    <li><span class="chunk-form">来てみた（来てみました）</span> — <span class="chunk-sense">實際來看過／來試過了</span></li>
+                    <li><span class="chunk-form">来てみよう（来てみましょう）</span> — <span class="chunk-sense">來去看看吧、試著來看看</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Card 6 -->
+    <div class="card">
+        <div class="card-header">
+            <div class="japanese-title">⑥ 命令・請求（来る 系列）</div>
+            <div class="reading">請過來／來幫忙</div>
+            <div class="chinese-meaning">請別人「來這邊」「來幫我」。</div>
+        </div>
+        <div class="section">
+            <div class="section-title">原形（丁寧形）／語感</div>
+            <div class="section-content">
+                <ul>
+                    <li><span class="chunk-form">来てください</span> — <span class="chunk-sense">請過來、麻煩你來</span></li>
+                    <li><span class="chunk-form">来てくれる（来てくれます）</span> — <span class="chunk-sense">你會過來嗎？願意來幫忙嗎？</span></li>
+                    <li><span class="chunk-form">来てもらう（来てもらいます）</span> — <span class="chunk-sense">請某人過來、讓對方來這裡</span></li>
+                    <li><span class="chunk-form">来ていただく（来ていただきます）</span> — <span class="chunk-sense">請您撥冗過來（敬語）</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Card 7 -->
+    <div class="card">
+        <div class="card-header">
+            <div class="japanese-title">⑦ 被動・使役（来る 系列）</div>
+            <div class="reading">能來／讓來／被迫來</div>
+            <div class="chinese-meaning">把「來」做成「能來」「叫他來」「被迫來」。</div>
+        </div>
+        <div class="section">
+            <div class="section-title">原形（丁寧形）／語感</div>
+            <div class="section-content">
+                <ul>
+                    <li><span class="chunk-form">来られる（来られます）</span> — <span class="chunk-sense">能來、也可解讀為「被來訪」</span></li>
+                    <li><span class="chunk-form">来られている（来られています）</span> — <span class="chunk-sense">（有人）正在來訪／被來拜訪的狀態</span></li>
+                    <li><span class="chunk-form">来られていた（来られていました）</span> — <span class="chunk-sense">之前曾被來訪過</span></li>
+                    <li><span class="chunk-form">来させる（来させます）</span> — <span class="chunk-sense">讓某人來、叫他過來</span></li>
+                    <li><span class="chunk-form">来させてもらう（来させてもらいます）</span> — <span class="chunk-sense">蒙允許得以過來</span></li>
+                    <li><span class="chunk-form">来させられる（来させられます）</span> — <span class="chunk-sense">被迫來、被叫來</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Card 8 -->
+    <div class="card">
+        <div class="card-header">
+            <div class="japanese-title">⑧ 條件・假設（来る 系列）</div>
+            <div class="reading">如果來了／沒來的話</div>
+            <div class="chinese-meaning">以「來／不來」作為條件句的骨架。</div>
+        </div>
+        <div class="section">
+            <div class="section-title">原形（丁寧形）／語感</div>
+            <div class="section-content">
+                <ul>
+                    <li><span class="chunk-form">来たら</span> — <span class="chunk-sense">如果來了／來的話</span></li>
+                    <li><span class="chunk-form">来れば</span> — <span class="chunk-sense">如果會來的話</span></li>
+                    <li><span class="chunk-form">来ても</span> — <span class="chunk-sense">即使來了也…</span></li>
+                    <li><span class="chunk-form">来なければ</span> — <span class="chunk-sense">如果不來的話</span></li>
+                    <li><span class="chunk-form">来なかったら</span> — <span class="chunk-sense">如果沒來的話</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Card 9 -->
+    <div class="card">
+        <div class="card-header">
+            <div class="japanese-title">⑨ 意志・推測（来る 系列）</div>
+            <div class="reading">打算來／應該會來</div>
+            <div class="chinese-meaning">談自己「要不要來」或推測對方會不會來。</div>
+        </div>
+        <div class="section">
+            <div class="section-title">原形（丁寧形）／語感</div>
+            <div class="section-content">
+                <ul>
+                    <li><span class="chunk-form">来よう（来ましょう）</span> — <span class="chunk-sense">打算來、一起來吧</span></li>
+                    <li><span class="chunk-form">来るだろう（来るでしょう）</span> — <span class="chunk-sense">大概會來吧</span></li>
+                    <li><span class="chunk-form">来るつもり（来るつもりです）</span> — <span class="chunk-sense">打算要來、計畫會來</span></li>
+                    <li><span class="chunk-form">来るはず（来るはずです）</span> — <span class="chunk-sense">照理說應該會來</span></li>
+                    <li><span class="chunk-form">来るに違いない（来るに違いありません）</span> — <span class="chunk-sense">一定會來、幾乎確定</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Card 10 -->
+    <div class="card">
+        <div class="card-header">
+            <div class="japanese-title">⑩ 情緒・口語（来る 系列）</div>
+            <div class="reading">口語縮約＋情緒</div>
+            <div class="chinese-meaning">把來る的各種說法再口語化、情緒化。</div>
+        </div>
+        <div class="section">
+            <div class="section-title">原形（丁寧形）／語感</div>
+            <div class="section-content">
+                <ul>
+    <li><span class="chunk-form">来ちゃう（来ちゃいます）</span> — <span class="chunk-sense">就跑來了、忍不住來</span></li>
+    <li><span class="chunk-form">来ちゃった（来ちゃいました）</span> — <span class="chunk-sense">結果還是來了／不自覺就來了</span></li>
+    <li><span class="chunk-form">来とく（来ときます）</span> — <span class="chunk-sense">先來一下、預先來著（来ておく 的口語）</span></li>
+    <li><span class="chunk-form">来なきゃ（来なきゃいけません）</span> — <span class="chunk-sense">非來不可、得來</span></li>
+    <li><span class="chunk-form">来れる（来れます）</span> — <span class="chunk-sense">能來、過得來（省去ら的口語可能形）</span></li>
+    <li><span class="chunk-form">来れない（来れません）</span> — <span class="chunk-sense">不能來、沒辦法來（省去ら的口語可能形）</span></li>
+</ul>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // Tab 切換邏輯
+    const chips = document.querySelectorAll('.chip[data-target]');
+    const grids = {
+        'suru-grid': document.getElementById('suru-grid'),
+        'kuru-grid': document.getElementById('kuru-grid')
+    };
+
+    chips.forEach(chip => {
+        chip.addEventListener('click', () => {
+            const targetId = chip.getAttribute('data-target');
+
+            // 更新 chip 樣式
+            chips.forEach(c => c.classList.remove('active'));
+            chip.classList.add('active');
+
+            // 切換 grid 顯示
+            Object.keys(grids).forEach(id => {
+                if (id === targetId) {
+                    grids[id].classList.add('active');
+                } else {
+                    grids[id].classList.remove('active');
+                }
+            });
+        });
+    });
+</script>
+
+</body>
+</html>
