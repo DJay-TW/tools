@@ -1,0 +1,5906 @@
+
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>JLPT 實用文法</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-body: #0f172a;
+            --bg-card: #1e293b;
+            --bg-glass: rgba(30, 41, 59, 0.7);
+            --border-glass: rgba(255, 255, 255, 0.08);
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+
+            /* 語意色 */
+            --color-fire: #f43f5e;   /* 必學 */
+            --color-fire-bg: rgba(244, 63, 94, 0.15);
+            --color-ok: #38bdf8;     /* 理解 */
+            --color-ok-bg: rgba(56, 189, 248, 0.15);
+            --color-low: #fbbf24;    /* 低頻 */
+            --color-low-bg: rgba(251, 191, 36, 0.15);
+            --color-no: #64748b;     /* 不用 */
+            --color-no-bg: rgba(100, 116, 139, 0.15);
+
+            --tag-bg: #334155;
+            --accent: #8b5cf6;
+        }
+
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Inter', 'Noto Sans JP', sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-primary);
+            margin: 0;
+            padding: 0;
+            padding-bottom: 80px; /* 底部留白 */
+        }
+
+        /* --- Header & Controls (Sticky + 可收合) --- */
+        .sticky-header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(15, 23, 42, 0.9);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-glass);
+            padding: 10px 16px 8px 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            transition: padding 0.2s ease;
+        }
+
+        .header-top-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        .app-title {
+            font-size: 1.05rem;
+            font-weight: 700;
+            margin: 0;
+            letter-spacing: 0.5px;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .app-title-badge {
+            font-size: 0.7rem;
+            padding: 2px 6px;
+            border-radius: 999px;
+            border: 1px solid var(--border-glass);
+            color: var(--text-muted);
+        }
+
+        .toggle-filters-btn {
+            border: 1px solid var(--border-glass);
+            background: rgba(15,23,42,0.8);
+            color: var(--text-secondary);
+            border-radius: 999px;
+            padding: 4px 10px;
+            font-size: 0.75rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        .toggle-filters-btn span {
+            font-size: 0.8rem;
+        }
+
+        .header-controls {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .sticky-header.collapsed {
+            padding-bottom: 6px;
+        }
+        .sticky-header.collapsed .header-controls {
+            display: none;
+        }
+
+        .sticky-header.collapsed .app-title {
+            font-size: 1rem;
+        }
+
+        .sticky-header.collapsed .toggle-filters-btn {
+            background: transparent;
+        }
+
+        .search-box {
+            position: relative;
+            width: 100%;
+        }
+
+        .search-box input {
+            width: 100%;
+            background: var(--bg-card);
+            border: 1px solid var(--border-glass);
+            padding: 10px 14px 10px 36px;
+            border-radius: 12px;
+            color: white;
+            font-size: 0.95rem;
+            transition: all 0.2s ease;
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        .filter-section {
+            margin-top: 2px;
+        }
+
+        .filter-label {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            margin-bottom: 3px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .filter-scroll {
+            display: flex;
+            gap: 6px;
+            overflow-x: auto;
+            padding-bottom: 4px;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+        .filter-scroll::-webkit-scrollbar {
+            display: none;
+        }
+
+        .filter-pill {
+            flex: 0 0 auto;
+            padding: 4px 11px;
+            border-radius: 999px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            background: var(--bg-card);
+            border: 1px solid var(--border-glass);
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+
+        .filter-pill.active {
+            background: var(--text-primary);
+            color: var(--bg-body);
+            border-color: var(--text-primary);
+        }
+
+        /* --- Grid Layout --- */
+        .container {
+            padding: 16px;
+            max-width: 900px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 14px;
+        }
+
+        @media (min-width: 640px) {
+            .container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* --- Grammar Card --- */
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-glass);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: transform 0.15s cubic-bezier(0.25, 0.8, 0.25, 1),
+                        box-shadow 0.15s ease;
+            position: relative;
+        }
+
+        .card:active {
+            transform: scale(0.98);
+        }
+
+        .card-main {
+            padding: 14px 14px 18px 14px;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .card-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 4px;
+        }
+
+        .term {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #fff;
+            line-height: 1.3;
+        }
+
+        .badges {
+            display: flex;
+            gap: 4px;
+            flex-shrink: 0;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+        }
+
+        .badge {
+            font-size: 0.7rem;
+            padding: 2px 6px;
+            border-radius: 6px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Level Badges */
+        .badge.n1 { background: #334155; color: #e2e8f0; }
+        .badge.n2 { background: #334155; color: #e2e8f0; }
+        .badge.n3 { background: #334155; color: #e2e8f0; }
+        .badge.n4 { background: #334155; color: #e2e8f0; }
+        .badge.n5 { background: #334155; color: #e2e8f0; }
+        .badge.p  { background: #334155; color: #e2e8f0; }
+
+        .status-text {
+            font-size: 0.75rem;
+            padding: 2px 8px;
+            border-radius: 999px;
+            font-weight: 600;
+            display: inline-block;
+            align-self: flex-start;
+            margin-bottom: 2px;
+        }
+
+        /* Dynamic Status Styling */
+        .card[data-type="fire"] {
+            border-left: 4px solid var(--color-fire);
+        }
+        .card[data-type="fire"] .status-text {
+            color: var(--color-fire);
+            background: var(--color-fire-bg);
+        }
+
+        .card[data-type="ok"] {
+            border-left: 4px solid var(--color-ok);
+        }
+        .card[data-type="ok"] .status-text {
+            color: var(--color-ok);
+            background: var(--color-ok-bg);
+        }
+
+        .card[data-type="low"] {
+            border-left: 4px solid var(--color-low);
+        }
+        .card[data-type="low"] .status-text {
+            color: var(--color-low);
+            background: var(--color-low-bg);
+        }
+
+        .card[data-type="no"] {
+            border-left: 4px solid var(--color-no);
+            opacity: 0.8;
+        }
+        .card[data-type="no"] .status-text {
+            color: var(--color-no);
+            background: var(--color-no-bg);
+        }
+
+        .meaning {
+            font-size: 0.92rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        /* --- Expanded Content --- */
+        .card-details {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.25s ease, padding 0.25s ease;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 0 14px;
+        }
+
+        .card.expanded .card-details {
+            border-top: 1px solid var(--border-glass);
+            padding: 10px 14px 12px 14px;
+        }
+
+        .detail-section {
+            margin-bottom: 10px;
+        }
+
+        .detail-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .section-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+            font-weight: 600;
+        }
+
+        .connect-wrapper {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .connect-chip {
+            background: var(--tag-bg);
+            color: var(--text-primary);
+            padding: 3px 8px;
+            border-radius: 6px;
+            font-size: 0.82rem;
+            font-family: monospace;
+            border: 1px solid transparent;
+        }
+
+        .connect-chip span {
+            color: var(--accent);
+            font-weight: bold;
+        }
+
+        .example-box {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 9px 10px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            color: #e2e8f0;
+            border-left: 2px solid var(--text-muted);
+            white-space: pre-line;
+        }
+
+        .expand-icon {
+            position: absolute;
+            right: 10px;
+            bottom: 10px;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            transition: transform 0.25s;
+        }
+
+        .card.expanded .expand-icon {
+            transform: rotate(180deg);
+        }
+
+        /* 小小的件數顯示 */
+        .result-info {
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="sticky-header" id="stickyHeader">
+        <div class="header-top-row">
+            <div class="app-title">
+                <span class="app-title-badge">BETA</span>
+                <span>JLPT實用文法</span>
+            </div>
+            <button class="toggle-filters-btn" id="toggleFiltersBtn" type="button">
+                <span>收合篩選</span>
+                <span id="toggleIcon">▲</span>
+            </button>
+        </div>
+
+        <div class="header-controls">
+            <div class="search-box">
+                <span class="search-icon">🔍</span>
+                <input type="text" id="searchInput" placeholder="搜尋文法（例如：あげく、と思う、N1…）">
+            </div>
+
+            <!-- 熟練度分類：必學 / 理解 / 低頻 / 不用 -->
+            <div class="filter-section">
+                <div class="filter-label">熟練度</div>
+                <div class="filter-scroll" id="typeFilterRow">
+                    <div class="filter-pill active" data-group="type" data-filter="all" onclick="filterByType('all', this)">全部</div>
+                    <div class="filter-pill" data-group="type" data-filter="fire" onclick="filterByType('fire', this)">🔥 必學</div>
+                    <div class="filter-pill" data-group="type" data-filter="ok" onclick="filterByType('ok', this)">◎ 理解</div>
+                    <div class="filter-pill" data-group="type" data-filter="low" onclick="filterByType('low', this)">△ 低頻</div>
+                    <div class="filter-pill" data-group="type" data-filter="no" onclick="filterByType('no', this)">✖ 不用</div>
+                </div>
+            </div>
+
+            <!-- 等級分類：N1〜N5 + P -->
+            <div class="filter-section">
+                <div class="filter-label">等級 / 分區</div>
+                <div class="filter-scroll" id="levelFilterRow">
+                    <div class="filter-pill active" data-group="level" data-filter="all" onclick="filterByLevel('all', this)">全部等級</div>
+                    <div class="filter-pill" data-group="level" data-filter="N1" onclick="filterByLevel('N1', this)">N1</div>
+                    <div class="filter-pill" data-group="level" data-filter="N2" onclick="filterByLevel('N2', this)">N2</div>
+                    <div class="filter-pill" data-group="level" data-filter="N3" onclick="filterByLevel('N3', this)">N3</div>
+                    <div class="filter-pill" data-group="level" data-filter="N4" onclick="filterByLevel('N4', this)">N4</div>
+                    <div class="filter-pill" data-group="level" data-filter="N5" onclick="filterByLevel('N5', this)">N5</div>
+                    <div class="filter-pill" data-group="level" data-filter="P" onclick="filterByLevel('P', this)">Plus</div>
+                </div>
+            </div>
+
+            <div class="result-info" id="resultInfo">
+                <!-- 這裡會顯示「共 X 條」＋目前篩選摘要 -->
+            </div>
+        </div>
+    </div>
+
+    <div id="grid" class="container"></div>
+
+    <script>
+        // 資料結構：
+        // level: 'N1' | 'N2' | 'N3' | 'N4' | 'N5' | 'P'
+        // type : 'fire' | 'ok' | 'low' | 'no'
+        // connection: 用「普通形 + 〜」等描述，若有多種接續可用 / 分隔
+        // example: 允許使用 \n 斷行
+
+        const grammarData = [
+            { 
+  level: 'N1',
+  term: '〜がてら',
+  type: 'fire',
+  meaning: '做A的同時順便做B（A是主要行為，B是順便）',
+  connection: 'N(する) / Vます',
+  suffix: 'がてら',
+  example: '散歩がてら、コンビニでコーヒーを買ってきた。\n(順便去散步，在便利商店買了咖啡回來。)'
+},
+
+{ 
+  level: 'N1',
+  term: '〜かと思いきや',
+  type: 'fire',
+  meaning: '原以為是A，結果卻是B（和預想相反）',
+  connection: '普通形（Na・Nだ）',
+  suffix: 'かと思いきや',
+  example: '渋滞かと思いきや、意外とすぐ着いた。\n(還以為會塞車，結果意外很快就到了。)'
+},
+
+{ 
+  level: 'N1',
+  term: '〜かたわら',
+  type: 'fire',
+  meaning: '一邊做A，同時也做B（本業＋兼職／副業感）',
+  connection: 'V辞書形 / Nの',
+  suffix: 'かたわら',
+  example: '彼は会社員として働くかたわら、小説も書いている。\n(他一方面是上班族，同時也在寫小說。)'
+},
+
+{ 
+  level: 'N1',
+  term: '〜た分だけ',
+  type: 'fire',
+  meaning: '做到多少，就有相應程度的結果／回報',
+  connection: '普通形(過去) + 分だけ',
+  suffix: 'た分だけ',
+  example: '努力した分だけ、結果はついてくる。\n(付出多少努力，就會有相應的成果。)'
+},
+
+{ 
+  level: 'N1',
+  term: '〜たら〜たで',
+  type: 'fire',
+  meaning: '就算是A也是A那樣的麻煩／各有各的問題',
+  connection: 'VたらVたで / AかったらAかったで',
+  suffix: 'たら〜たで',
+  example: '暇があったらあったで、何もしないで一日が終わってしまう。\n(有空的話也有空的困擾，一天就那樣啥也不做地過去了。)'
+},
+
+{ 
+  level: 'N1',
+  term: '〜であれ',
+  type: 'fire',
+  meaning: '不論是A也好B也好／即使是...',
+  connection: 'N / 疑問詞 + であれ',
+  suffix: 'であれ',
+  example: '学生であれ社会人であれ、学び続けることが大事だ。\n(無論是學生還是社會人士，持續學習都很重要。)'
+},
+
+{ 
+  level: 'N1',
+  term: '〜ときたら',
+  type: 'fire',
+  meaning: '說到A就...(多半帶吐槽、抱怨色彩)',
+  connection: 'N + ときたら',
+  suffix: 'ときたら',
+  example: 'うちの弟ときたら、いつも部屋を片付けない。\n(說到我弟啊，房間永遠不收。)'
+},
+
+{ 
+  level: 'N1',
+  term: '〜ながら（逆接）',
+  type: 'fire',
+  meaning: '明明是A卻B（逆接：雖然...但是）',
+  connection: 'Vます / Aい / Na(であり) / N(であり) + ながら',
+  suffix: 'ながら',
+  example: '残念ながら、今回はお手伝いできません。\n(很遺憾，這次幫不上忙。)'
+},
+
+{ 
+  level: 'N1',
+  term: '〜なくしては',
+  type: 'fire',
+  meaning: '如果沒有A，就B不了（A不可或缺）',
+  connection: 'N + なくしては / Vること + なくしては',
+  suffix: 'なくしては',
+  example: '努力なくしては、成功はあり得ない。\n(沒有努力就不可能成功。)'
+},
+
+{ 
+  level: 'N1',
+  term: '〜なくもない',
+  type: 'fire',
+  meaning: '也不是完全不...(委婉肯定、勉強算是)',
+  connection: 'Vない / Aくない / Naでない / Nでない + なくもない',
+  suffix: 'なくもない',
+  example: '分からなくもないけど、やっぱり納得できない。\n(也不是不能理解，但還是無法認同。)'
+},
+
+{ 
+  level: 'N1',
+  term: '〜なしに／なしで',
+  type: 'fire',
+  meaning: '沒有A就...／不A就...（省略前提）',
+  connection: 'N + なしに / なしで / Vること + なしに',
+  suffix: 'なしに／なしで',
+  example: '連絡なしに遅刻するのはよくない。\n(遲到卻不事先聯絡是不好的。)'
+},
+
+{ 
+  level: 'N1',
+  term: '〜ならでは',
+  type: 'fire',
+  meaning: '只有A才有的...／A獨有的特點',
+  connection: 'N + ならでは（のN）',
+  suffix: 'ならでは',
+  example: 'この景色は田舎ならではだね。\n(這種風景只有鄉下才看得到。)'
+},
+
+{ 
+  level: 'N1',
+  term: '〜ないまでも',
+  type: 'fire',
+  meaning: '雖然達不到A程度，但至少B',
+  connection: 'Vない + までも',
+  suffix: 'ないまでも',
+  example: '毎日とはいかないまでも、週に三回は運動したい。\n(雖然做不到每天，但至少想一週運動三次。)'
+},
+
+{ 
+  level: 'N1',
+  term: '〜なりに',
+  type: 'fire',
+  meaning: '以各自相應的方式／風格去做',
+  connection: 'N / V / A',
+  suffix: 'なりに',
+  example: '子どもなりに一生懸命考えている。\n(小孩也有他自己方式在拼命思考。)'
+},
+
+{ 
+  level: 'N1',
+  term: '〜に限ったことではない',
+  type: 'fire',
+  meaning: '並不只限於A（不只是A有這情況）',
+  connection: 'N + に限ったことではない',
+  suffix: 'に限ったことではない',
+  example: 'この問題は日本に限ったことではない。\n(這個問題並不只限於日本。)'
+},
+
+{ 
+  level: 'N1',
+  term: '〜にもほどがある',
+  type: 'fire',
+  meaning: '也要有個限度吧／太過分了',
+  connection: 'Vる / Aい / Na / N + にもほどがある',
+  suffix: 'にもほどがある',
+  example: '冗談にもほどがあるよ。\n(就算是開玩笑也太超過了吧。)'
+},
+
+{ 
+  level: 'N1',
+  term: '〜ねばならない',
+  type: 'fire',
+  meaning: '必須...（〜なければならない的文語版）',
+  connection: 'Vねばならない（する→せねばならない）',
+  suffix: 'ねばならない',
+  example: '時間を守らねばならない。\n(一定要守時間。)'
+},
+
+{ 
+  level: 'N1',
+  term: '〜はおろか',
+  type: 'fire',
+  meaning: '別說A，就連B也...（B通常比A更出乎意料）',
+  connection: 'NはおろかBも／さえ',
+  suffix: 'はおろか',
+  example: '漢字はおろか、ひらがなさえ読めない。\n(別說漢字了，連平假名都不會讀。)'
+},
+
+{ 
+  level: 'N1',
+  term: '〜も同然だ',
+  type: 'fire',
+  meaning: '幾乎等同於...／跟...沒兩樣',
+  connection: 'Nも同然だ / Vたも同然だ',
+  suffix: 'も同然だ',
+  example: 'この部屋は私の家も同然だ。\n(這個房間對我來說就跟家一樣。)'
+},
+
+{ 
+  level: 'N1',
+  term: '〜ようによっては',
+  type: 'fire',
+  meaning: '要看怎麼做／看用什麼方式（方式不同結果不同）',
+  connection: 'Vます + ようによっては',
+  suffix: 'ようによっては',
+  example: '使いようによっては、SNSもすごく便利だ。\n(看怎麼用，社群網路也可以非常方便。)'
+},
+// --- N1 ◎ 理解即可（閱讀・新聞多，口語少） ---
+
+{
+  level: 'N1',
+  term: '〜いかんだ',
+  type: 'ok',
+  meaning: '取決於… / 視…而定（正式書面語）',
+  connection: 'N + いかんだ',
+  suffix: 'いかんだ',
+  example: '成功するかどうかは努力のいかんだ。\n(能否成功取決於努力。)'
+},
+
+{
+  level: 'N1',
+  term: '〜いかんでは',
+  type: 'ok',
+  meaning: '看情況而… / 視…如何',
+  connection: 'N + いかんでは',
+  suffix: 'いかんでは',
+  example: '結果いかんでは、計画を見直す必要がある。\n(視結果情況，可能需要重新檢討計畫。)'
+},
+
+{
+  level: 'N1',
+  term: '〜いかんに関わらず',
+  type: 'ok',
+  meaning: '無論…都…（完全不受左右）',
+  connection: 'N + いかんに関わらず／いかんによらず',
+  suffix: 'いかんに関わらず',
+  example: '天候のいかんに関わらず、試合は行われる。\n(無論天氣如何，賽事都會照常舉行。)'
+},
+
+{
+  level: 'N1',
+  term: '〜いかんによらず',
+  type: 'ok',
+  meaning: '不論… / 不受…影響',
+  connection: 'N + いかんによらず',
+  suffix: 'いかんによらず',
+  example: '理由のいかんによらず、返金はできません。\n(無論理由為何，都無法退款。)'
+},
+
+{
+  level: 'N1',
+  term: '〜からある',
+  type: 'ok',
+  meaning: '高達…（表示數量龐大）',
+  connection: '数量詞 + からある',
+  suffix: 'からある',
+  example: '彼は千万円からある借金を抱えている。\n(他背負著高達一千萬日圓的債務。)'
+},
+
+{
+  level: 'N1',
+  term: '〜からする',
+  type: 'ok',
+  meaning: '(金額) 高達…',
+  connection: '金額 + からする',
+  suffix: 'からする',
+  example: 'このバッグは十万円からする。\n(這包包價格高達十萬日圓起跳。)'
+},
+
+{
+  level: 'N1',
+  term: '〜からの',
+  type: 'ok',
+  meaning: '多達…（用於距離、重量等）',
+  connection: '数量詞 + からの + N',
+  suffix: 'からの',
+  example: '百キロからの道のりを歩いた。\n(走了長達百公里以上的路程。)'
+},
+
+{
+  level: 'N1',
+  term: '〜ずくめ',
+  type: 'ok',
+  meaning: '全是…／淨是…（比喻“滿滿都是”）',
+  connection: 'N + ずくめ',
+  suffix: 'ずくめ',
+  example: '今日はいいことずくめだ。\n(今天全都是好事。)'
+},
+
+{
+  level: 'N1',
+  term: '〜始末だ',
+  type: 'ok',
+  meaning: '結果竟然…（負面）',
+  connection: 'V辞書形 + 始末だ',
+  suffix: '始末だ',
+  example: '借金を返せず逃げる始末だ。\n(連債務都還不出，最後竟落得逃跑的下場。)'
+},
+
+{
+  level: 'N1',
+  term: '〜すら',
+  type: 'ok',
+  meaning: '連…都…（比「さえ」更正式、強調）',
+  connection: 'N + すら',
+  suffix: 'すら',
+  example: '忙しすぎて昼ご飯すら食べられない。\n(忙到連午餐都吃不了。)'
+},
+
+{
+  level: 'N1',
+  term: '〜たところで',
+  type: 'ok',
+  meaning: '即使…也不…（徒勞）',
+  connection: 'Vた + ところで',
+  suffix: 'たところで',
+  example: '今さら謝ったところで許されない。\n(事到如今就算道歉也不會被原諒。)'
+},
+
+{
+  level: 'N1',
+  term: '〜たまでだ',
+  type: 'ok',
+  meaning: '只是…罷了（謙遜、淡化）',
+  connection: 'Vた + までだ',
+  suffix: 'までだ',
+  example: '困っているから助けたまでだ。\n(只是因為你困難，所以我才幫忙罷了。)'
+},
+
+{
+  level: 'N1',
+  term: '〜たら最後',
+  type: 'ok',
+  meaning: '一旦…就完了／後果很嚴重',
+  connection: 'Vたら最後 / たが最後',
+  suffix: 'たら最後',
+  example: '彼に秘密を話したら最後、すぐに広まる。\n(一旦跟他說秘密，就會立刻傳開。)'
+},
+
+{
+  level: 'N1',
+  term: '〜であれ〜であれ',
+  type: 'ok',
+  meaning: '不管是A還是B都…',
+  connection: 'N + であれ + N + であれ',
+  suffix: 'であれ〜であれ',
+  example: '金持ちであれ貧乏であれ、人は平等だ。\n(無論富有或貧窮，人都是平等的。)'
+},
+
+{
+  level: 'N1',
+  term: '〜てからというもの',
+  type: 'ok',
+  meaning: '自從…之後就一直…',
+  connection: 'Vて + からというもの',
+  suffix: 'てからというもの',
+  example: '子供が生まれてからというもの、生活が一変した。\n(自從孩子出生後，生活完全改變了。)'
+},
+
+{
+  level: 'N1',
+  term: '〜と相まって',
+  type: 'ok',
+  meaning: '和…相互作用／相加成效果',
+  connection: 'N + と相まって',
+  suffix: 'と相まって',
+  example: '美しい景色と相まって、料理がさらにおいしく感じる。\n(在美景加持下，料理更顯美味。)'
+},
+
+{
+  level: 'N1',
+  term: '〜とあれば',
+  type: 'ok',
+  meaning: '如果是…這種情況（那就…）',
+  connection: 'N / 普通形 + とあれば',
+  suffix: 'とあれば',
+  example: '子供のためとあれば、どんな苦労もいとわない。\n(如果是為了孩子，什麼辛苦都不怕。)'
+},
+
+{
+  level: 'N1',
+  term: '〜といい〜といい',
+  type: 'ok',
+  meaning: '不論A也好B也好…都…（整體評價）',
+  connection: 'N + といい + N + といい',
+  suffix: 'といい〜といい',
+  example: '景色といい料理といい、最高の旅だった。\n(景色也好、料理也好，都是極致的旅程。)'
+},
+
+{
+  level: 'N1',
+  term: '〜とはいえ',
+  type: 'ok',
+  meaning: '雖說…但…（逆接）',
+  connection: '普通形（Na・N だ） + とはいえ',
+  suffix: 'とはいえ',
+  example: 'まだ四月とはいえ、かなり暑い。\n(雖然還是四月，但已經很熱了。)'
+},
+
+{
+  level: 'N1',
+  term: '〜ともなると',
+  type: 'ok',
+  meaning: '一旦到了…時候／身為…就…',
+  connection: 'N + ともなると／ともなれば',
+  suffix: 'ともなると',
+  example: '社会人ともなると、責任が重くなる。\n(一旦成為社會人士，責任就變重。)'
+},
+
+{
+  level: 'N1',
+  term: '〜に言わせれば',
+  type: 'ok',
+  meaning: '依…來說／在…看來（多用於評論）',
+  connection: 'N + に言わせれば',
+  suffix: 'に言わせれば',
+  example: '彼に言わせれば、これは大した問題ではない。\n(照他說法，這不算什麼大問題。)'
+},
+
+{
+  level: 'N1',
+  term: '〜に関わる',
+  type: 'ok',
+  meaning: '與…有重大關係（影響層面大）',
+  connection: 'N + に関わる',
+  suffix: 'に関わる',
+  example: '命に関わる問題だ。\n(這是性命攸關的問題。)'
+},
+
+{
+  level: 'N1',
+  term: '〜にかこつけて',
+  type: 'ok',
+  meaning: '藉口…（真正理由另有其事）',
+  connection: 'N + にかこつけて',
+  suffix: 'にかこつけて',
+  example: '出張にかこつけて遊びに行った。\n(假藉出差之名去玩。)'
+},
+
+{
+  level: 'N1',
+  term: '〜にかまけて',
+  type: 'ok',
+  meaning: '因忙於…而忽略…（負面）',
+  connection: 'N + にかまけて',
+  suffix: 'にかまけて',
+  example: '仕事にかまけて家族をほったらかしにしている。\n(因為忙於工作而冷落家人。)'
+},
+
+{
+  level: 'N1',
+  term: '〜にして',
+  type: 'ok',
+  meaning: '即使…（也只能…）／連…都…',
+  connection: 'N + にして',
+  suffix: 'にして',
+  example: '彼にして初めて、この問題を解決できた。\n(連他這種能力的人，也好不容易才解決。)'
+},
+
+{
+  level: 'N1',
+  term: '〜に即して',
+  type: 'ok',
+  meaning: '依照…（根據基準）',
+  connection: 'N + に即して／に則して',
+  suffix: 'に即して',
+  example: '事実に即して判断する。\n(根據事實來判斷。)'
+},
+
+{
+  level: 'N1',
+  term: '〜にとどまらず',
+  type: 'ok',
+  meaning: '不只侷限於…（範圍擴大）',
+  connection: 'N + にとどまらず',
+  suffix: 'にとどまらず',
+  example: '影響は国内にとどまらず、海外にも広がった。\n(影響不只侷限國內，也擴散到國外。)'
+},
+
+{
+  level: 'N1',
+  term: '〜には及ばない',
+  type: 'ok',
+  meaning: '不必…／用不著…',
+  connection: 'Vる + には及ばない / N + には及ばない',
+  suffix: 'には及ばない',
+  example: 'わざわざ来ていただくには及びません。\n(不用特地來。)'
+},
+
+{
+  level: 'N1',
+  term: '〜にひきかえ',
+  type: 'ok',
+  meaning: '與…相較之下（反差強烈）',
+  connection: 'N + にひきかえ',
+  suffix: 'にひきかえ',
+  example: '兄にひきかえ、弟は社交的だ。\n(和兄長相反，弟弟很外向。)'
+},
+
+{
+  level: 'N1',
+  term: '〜にもまして',
+  type: 'ok',
+  meaning: '比…更…',
+  connection: 'N + にもまして',
+  suffix: 'にもまして',
+  example: '今年は去年にもまして暑い。\n(今年比去年更熱。)'
+},
+
+{
+  level: 'N1',
+  term: '〜に〜を重ねて',
+  type: 'ok',
+  meaning: '反覆地…／一再…',
+  connection: 'N + に + N + を重ねて',
+  suffix: 'に〜を重ねて',
+  example: '彼は努力に努力を重ねて成功した。\n(他把努力一再疊加，終於成功。)'
+},
+
+{
+  level: 'N1',
+  term: '〜の至り',
+  type: 'ok',
+  meaning: '…之至（極致的心情表達）',
+  connection: 'N + の至り',
+  suffix: 'の至り',
+  example: '光栄の至りです。\n(實在是無比光榮。)'
+},
+
+{
+  level: 'N1',
+  term: '〜の極み',
+  type: 'ok',
+  meaning: '…之極（通常負面，也可正面）',
+  connection: 'N + の極み',
+  suffix: 'の極み',
+  example: '失礼の極みだ。\n(無禮至極。)'
+},
+
+{
+  level: 'N1',
+  term: '〜ばそれまでだ',
+  type: 'ok',
+  meaning: '…的話就完了／這樣就沒救了',
+  connection: 'Vたらそれまでだ / Vばそれまでだ',
+  suffix: 'ばそれまでだ',
+  example: '諦めてしまえばそれまでだ。\n(一旦放棄就結束了。)'
+},
+
+{
+  level: 'N1',
+  term: '〜ほどのことではない',
+  type: 'ok',
+  meaning: '不值得大驚小怪／沒什麼大不了',
+  connection: 'Vる / N + ほどのことではない',
+  suffix: 'ほどのことではない',
+  example: '心配するほどのことではない。\n(不用到需要擔心的程度。)'
+},
+
+{
+  level: 'N1',
+  term: '〜までだ',
+  type: 'ok',
+  meaning: '只是…罷了／最多就…',
+  connection: 'V辞書形 + までだ',
+  suffix: 'までだ',
+  example: 'できることをやるまでだ。\n(我就只是做我能做的。)'
+},
+
+{
+  level: 'N1',
+  term: '〜まみれ',
+  type: 'ok',
+  meaning: '滿是…／沾滿…（表面覆蓋）',
+  connection: 'N + まみれ',
+  suffix: 'まみれ',
+  example: '泥まみれになった。\n(全身沾滿泥巴。)'
+},
+
+{
+  level: 'N1',
+  term: '〜もさることながら',
+  type: 'ok',
+  meaning: 'A固然如此，但B更…（B重點）',
+  connection: 'N + もさることながら',
+  suffix: 'もさることながら',
+  example: '味もさることながら、見た目も素晴らしい。\n(味道固然好，外觀更是出色。)'
+},
+
+{
+  level: 'N1',
+  term: '〜ゆえに',
+  type: 'ok',
+  meaning: '因為…（正式書面語）',
+  connection: 'N + ゆえに / 普通形 + ゆえに',
+  suffix: 'ゆえに',
+  example: '未熟ゆえに失敗した。\n(因為不成熟所以失敗了。)'
+},
+
+{
+  level: 'N1',
+  term: '〜ようが',
+  type: 'ok',
+  meaning: '無論…都…',
+  connection: 'Vようが / Aかろうが / Naだろうが / Nだろうが',
+  suffix: 'ようが',
+  example: '雨が降ろうが行きます。\n(不管下雨我都會去。)'
+},
+
+{
+  level: 'N1',
+  term: '〜ようと',
+  type: 'ok',
+  meaning: '無論…都…（ようが 的替換）',
+  connection: 'Vようと / Aかろうと / Naだろうと / Nだろうと',
+  suffix: 'ようと',
+  example: '誰が何と言おうと、決めたことだ。\n(不管誰說什麼，我的決定不變。)'
+},
+
+{
+  level: 'N1',
+  term: '〜ようにも〜ない',
+  type: 'ok',
+  meaning: '想…也不能…（受限於某事）',
+  connection: 'Vようにも + Vない',
+  suffix: 'ようにも〜ない',
+  example: '電話番号が分からなくて、連絡しようにもできない。\n(因為不知道電話號碼，想聯絡也無法。)'
+},
+
+{
+  level: 'N1',
+  term: '〜より（特殊構文）',
+  type: 'ok',
+  meaning: '與其…不如…（古風，但新聞仍見）',
+  connection: 'Vる + より（〜ほうが〜）',
+  suffix: 'より',
+  example: '待つより帰ったほうがいい。\n(與其等著，不如回去比較好。)'
+},
+
+{
+  level: 'N1',
+  term: '〜わ〜わで',
+  type: 'ok',
+  meaning: '又…又…（抱怨語氣）',
+  connection: 'Vるわ + Vるわで',
+  suffix: 'わ〜わで',
+  example: '仕事は多いわ時間はないわで大変だ。\n(又是工作多、又是時間不夠，真麻煩。)'
+},
+
+{
+  level: 'N1',
+  term: '〜を押して',
+  type: 'ok',
+  meaning: '克服…仍…／冒著…也…',
+  connection: 'N + を押して / を押し切って',
+  suffix: 'を押して',
+  example: '反対を押して実行した。\n(不顧反對仍然執行。)'
+},
+
+{
+  level: 'N1',
+  term: '〜を顧みず',
+  type: 'ok',
+  meaning: '不顧…／無視…',
+  connection: 'N + を顧みず',
+  suffix: 'を顧みず',
+  example: '危険を顧みず救助に向かった。\n(不顧危險前往救援。)'
+},
+
+{
+  level: 'N1',
+  term: '〜を限りに',
+  type: 'ok',
+  meaning: '以…為最後／自…起停止',
+  connection: 'N + を限りに',
+  suffix: 'を限りに',
+  example: '今日を限りに禁煙する。\n(以今天為限戒菸。)'
+},
+
+{
+  level: 'N1',
+  term: '〜を兼ねて',
+  type: 'ok',
+  meaning: '兼作…／兼任…',
+  connection: 'N + を兼ねて',
+  suffix: 'を兼ねて',
+  example: '散歩を兼ねて買い物に行く。\n(順便散步去買東西。)'
+},
+
+{
+  level: 'N1',
+  term: '〜を皮切りに',
+  type: 'ok',
+  meaning: '以A為開端（正式書面語）',
+  connection: 'N + を皮切りに／を皮切りとして',
+  suffix: 'を皮切りに',
+  example: '東京を皮切りに全国ツアーが始まった。\n(以東京為開端，全國巡演開始了。)'
+},
+
+{
+  level: 'N1',
+  term: '〜を境に',
+  type: 'ok',
+  meaning: '以A為分界點／從A之後…',
+  connection: 'N + を境に',
+  suffix: 'を境に',
+  example: '出産を境に生活が変わった。\n(以生產為分界點，生活改變了。)'
+},
+
+{
+  level: 'N1',
+  term: '〜をよそに',
+  type: 'ok',
+  meaning: '無視…／不顧…（旁觀者樣態）',
+  connection: 'N + をよそに',
+  suffix: 'をよそに',
+  example: '家族の心配をよそに、彼は冒険に出た。\n(不顧家人的擔心，他踏上冒險旅程。)'
+},
+
+{
+  level: 'N1',
+  term: '〜を踏まえて',
+  type: 'ok',
+  meaning: '基於…／根據…做好判斷',
+  connection: 'N + を踏まえて',
+  suffix: 'を踏まえて',
+  example: '結果を踏まえて計画を修正する。\n(根據結果修正計劃。)'
+},
+
+{
+  level: 'N1',
+  term: '〜を経て',
+  type: 'ok',
+  meaning: '經過…（正式書面語）',
+  connection: 'N + を経て',
+  suffix: 'を経て',
+  example: '長い交渉を経て、合意に至った。\n(經過漫長的協商，終於達成共識。)'
+},
+
+{
+  level: 'N1',
+  term: '〜を余儀なくされる',
+  type: 'ok',
+  meaning: '被迫…／不得不…（常用於新聞）',
+  connection: 'N + を余儀なくされる',
+  suffix: 'を余儀なくされる',
+  example: '事故で休業を余儀なくされた。\n(因事故被迫停業。)'
+},
+// --- N1 △ 低頻（文語氣重、小說才出現） ---
+
+{
+  level: 'N1',
+  term: '〜きらいがある',
+  type: 'low',
+  meaning: '有…的傾向（多用於批評、負面評價）',
+  connection: 'V辞書形 / N + の + きらいがある',
+  suffix: 'きらいがある',
+  example: '彼は物事を悲観的に考えるきらいがある。\n(他有把事情往悲觀方向想的傾向。)'
+},
+
+{
+  level: 'N1',
+  term: '〜た弾みに',
+  type: 'low',
+  meaning: '在…的瞬間／趁著…的勢頭（常帶偶發性）',
+  connection: 'Vた + 弾みに',
+  suffix: 'た弾みに',
+  example: '立ち上がった弾みに頭をぶつけた。\n(起身的那一瞬間撞到頭。)'
+},
+
+{
+  level: 'N1',
+  term: '〜た拍子に',
+  type: 'low',
+  meaning: '就在…的瞬間／因為一個動作的節奏引發後事',
+  connection: 'Vた + 拍子に',
+  suffix: 'た拍子に',
+  example: '転んだ拍子に財布を落とした。\n(摔倒的瞬間把錢包掉了。)'
+},
+
+{
+  level: 'N1',
+  term: '〜なり',
+  type: 'low',
+  meaning: '一…就…（舊文體，多寫作「〜するなり」）',
+  connection: 'V辞書形 + なり',
+  suffix: 'なり',
+  example: '彼は帰るなり寝てしまった。\n(他一回到家就睡著了。)'
+},
+
+{
+  level: 'N1',
+  term: '〜なりとも',
+  type: 'low',
+  meaning: '哪怕只是…也好（讓步語氣，古風）',
+  connection: 'N + なりとも',
+  suffix: 'なりとも',
+  example: '少しなりとも力になれれば幸いだ。\n(哪怕只是一點點，也希望能幫上忙。)'
+},
+
+{
+  level: 'N1',
+  term: '〜なり〜なり',
+  type: 'low',
+  meaning: 'A也好B也好…（提出選擇，但多帶妥協感）',
+  connection: 'N + なり + N + なり',
+  suffix: 'なり〜なり',
+  example: '手紙なり電話なりで連絡してほしい。\n(用信件也好、電話也好，希望你能聯絡我。)'
+},
+
+// --- N2 🔥 必學（第 1 批） ---
+
+{
+  level: 'N2',
+  term: '〜あげく',
+  type: 'fire',
+  meaning: '折騰了半天，結果卻…（多半負面）',
+  connection: 'Vた / Nの + あげく',
+  suffix: 'あげく',
+  example: '悩んだあげく、結局やめることにした。\n(煩惱了半天，結果最後還是決定放棄。)'
+},
+
+{
+  level: 'N2',
+  term: '〜あまり',
+  type: 'fire',
+  meaning: '因為過度…而…（常用於情緒或狀態）',
+  connection: 'Nの + あまり / Vる + あまり',
+  suffix: 'あまり',
+  example: '心配のあまり、眠れなかった。\n(過度擔心，以致睡不著。)'
+},
+
+{
+  level: 'N2',
+  term: 'あまりの〜に',
+  type: 'fire',
+  meaning: '因為太過…以至於…',
+  connection: 'あまりの + N + に',
+  suffix: 'あまりの〜に',
+  example: 'あまりの美しさに言葉を失った。\n(因為太美而說不出話。)'
+},
+
+{
+  level: 'N2',
+  term: '〜以上は',
+  type: 'fire',
+  meaning: '既然…就…（強烈義務／必然）',
+  connection: '普通形 + 以上は',
+  suffix: '以上は',
+  example: '引き受けた以上は、最後までやるべきだ。\n(既然接下了，就應該做到最後。)'
+},
+
+{
+  level: 'N2',
+  term: '〜一方で',
+  type: 'fire',
+  meaning: '一方面…另一方面…（對比）',
+  connection: '普通形 + 一方で',
+  suffix: '一方で',
+  example: '便利な一方で、問題点も多い。\n(雖然便利，但也有很多問題。)'
+},
+
+{
+  level: 'N2',
+  term: '〜以来',
+  type: 'fire',
+  meaning: '自從…以來一直…',
+  connection: 'N + 以来 / Vて以来',
+  suffix: '以来',
+  example: '卒業して以来、彼に会っていない。\n(自從畢業後就沒再見過他。)'
+},
+
+{
+  level: 'N2',
+  term: '〜上で（目的）',
+  type: 'fire',
+  meaning: '在…方面／為了…（目的性強）',
+  connection: 'V辞書形 + 上で / Nの + 上で',
+  suffix: '上で',
+  example: '仕事をする上で大事なことだ。\n(在工作上很重要的事情。)'
+},
+
+{
+  level: 'N2',
+  term: '〜上は',
+  type: 'fire',
+  meaning: '既然…就不得不…（強烈決心）',
+  connection: '普通形 + 上は',
+  suffix: '上は',
+  example: 'やると決めた上は、全力で頑張る。\n(既然決定要做，就會全力以赴。)'
+},
+
+{
+  level: 'N2',
+  term: '〜得る',
+  type: 'fire',
+  meaning: '有可能…（可能性存在）',
+  connection: 'Vます + 得る（うる／える）',
+  suffix: '得る',
+  example: '起こり得るミスを事前に防ぐべきだ。\n(應該事先防止可能發生的錯誤。)'
+},
+
+{
+  level: 'N2',
+  term: '〜かいがあって / 〜かいもなく',
+  type: 'fire',
+  meaning: '〜かいがあって：努力值得了／〜かいもなく：努力白費了',
+  connection: 'Vた + かいがあって / Vた + かいもなく',
+  suffix: 'かいがあって',
+  example: '努力したかいがあって、合格できた。\n(努力沒有白費，終於及格了。)'
+},
+
+{
+  level: 'N2',
+  term: '〜かと思うと / 〜かと思ったら',
+  type: 'fire',
+  meaning: '剛…就…（突然變化）',
+  connection: 'Vた + かと思うと / かと思ったら',
+  suffix: 'かと思うと',
+  example: '雨が降ったかと思うと、すぐ晴れた。\n(剛下雨一下子就放晴了。)'
+},
+
+{
+  level: 'N2',
+  term: '〜かねない',
+  type: 'fire',
+  meaning: '有可能…（負面可能性）',
+  connection: 'Vます + かねない',
+  suffix: 'かねない',
+  example: 'そんなことをすれば、誤解されかねない。\n(那樣做很可能會被誤會。)'
+},
+
+// --- N2 🔥 必學（第 2 批） ---
+
+{
+  level: 'N2',
+  term: '〜かのようだ',
+  type: 'fire',
+  meaning: '彷彿…（比喻狀態）',
+  connection: '普通形 + かのようだ',
+  suffix: 'かのようだ',
+  example: '彼は何も知らないかのようだ。\n(他彷彿什麼都不知道一樣。)'
+},
+
+{
+  level: 'N2',
+  term: '〜かのように',
+  type: 'fire',
+  meaning: '彷彿…般地（比喻修飾動作）',
+  connection: '普通形 + かのように',
+  suffix: 'かのように',
+  example: '雪が舞うかのように花びらが散った。\n(花瓣像雪一樣飄散。)'
+},
+
+{
+  level: 'N2',
+  term: '〜からいうと',
+  type: 'fire',
+  meaning: '從…來看／就…而言',
+  connection: 'N + からいうと',
+  suffix: 'からいうと',
+  example: '能力からいうと、彼が一番適任だ。\n(從能力來看，他最適合。)'
+},
+
+{
+  level: 'N2',
+  term: '〜からいって',
+  type: 'fire',
+  meaning: '從…判斷／依…來說',
+  connection: 'N + からいって',
+  suffix: 'からいって',
+  example: '成績からいって進学は難しい。\n(從成績來看，升學很困難。)'
+},
+
+{
+  level: 'N2',
+  term: '〜からいえば',
+  type: 'fire',
+  meaning: '從…說起／從…角度來說',
+  connection: 'N + からいえば',
+  suffix: 'からいえば',
+  example: '立場からいえば、反対せざるを得ない。\n(從立場來說，只能反對。)'
+},
+
+{
+  level: 'N2',
+  term: '〜からして',
+  type: 'fire',
+  meaning: '光從…就…（帶評價）',
+  connection: 'N + からして',
+  suffix: 'からして',
+  example: '服装からして彼はプロではない。\n(光看穿著就知道他不是專家。)'
+},
+
+{
+  level: 'N2',
+  term: '〜からすると',
+  type: 'fire',
+  meaning: '依…來看／從…推斷',
+  connection: 'N + からすると',
+  suffix: 'からすると',
+  example: 'この様子からすると、明日は雨だろう。\n(從這樣的情況看來，明天可能會下雨。)'
+},
+
+{
+  level: 'N2',
+  term: '〜からといって',
+  type: 'fire',
+  meaning: '雖說…但…（否定 =「不能因為A就覺得B」）',
+  connection: '普通形 + からといって',
+  suffix: 'からといって',
+  example: '忙しいからといって、健康を無視してはいけない。\n(就算忙，也不能忽視健康。)'
+},
+
+{
+  level: 'N2',
+  term: '〜気味',
+  type: 'fire',
+  meaning: '有點…（輕微負面傾向）',
+  connection: 'N / Vます + 気味',
+  suffix: '気味',
+  example: '風邪気味なので早く寝る。\n(有點感冒，所以早點睡。)'
+},
+
+{
+  level: 'N2',
+  term: '〜くせに',
+  type: 'fire',
+  meaning: '明明…卻…（帶責備／不滿）',
+  connection: '普通形 / Naな / Nの + くせに',
+  suffix: 'くせに',
+  example: '知っているくせに教えてくれない。\n(明明知道卻不告訴我。)'
+},
+
+{
+  level: 'N2',
+  term: '〜くせして',
+  type: 'fire',
+  meaning: '（口語）明明…卻…',
+  connection: '普通形 + くせして',
+  suffix: 'くせして',
+  example: '自分は何もしないくせして文句だけ言う。\n(明明自己什麼也不做，只會抱怨。)'
+},
+
+{
+  level: 'N2',
+  term: '〜くらいなら',
+  type: 'fire',
+  meaning: '與其…不如…（強烈比較）',
+  connection: 'Vる + くらいなら',
+  suffix: 'くらいなら',
+  example: '失敗を恐れて何もしないくらいなら、挑戦したほうがいい。\n(與其怕失敗而什麼都不做，不如去挑戰。)'
+},
+
+// --- N2 🔥 必學（第 3 批） ---
+
+{
+  level: 'N2',
+  term: '〜げ',
+  type: 'fire',
+  meaning: '帶著…的樣子（多為情緒：悲しげ、寂しげ、嬉しげ等）',
+  connection: 'Aい語幹 / Na語幹 + げ',
+  suffix: 'げ',
+  example: '彼女は悲しげな表情をしていた。\n(她帶著一副悲傷的表情。)'
+},
+
+{
+  level: 'N2',
+  term: '〜ことだ',
+  type: 'fire',
+  meaning: '「應該…」的忠告／建議（= 〜ほうがいい 的正式版）',
+  connection: 'Vる / Vない + ことだ',
+  suffix: 'ことだ',
+  example: '無理をしないことだ。\n(你應該不要勉強太過。)'
+},
+
+{
+  level: 'N2',
+  term: '〜ことだし',
+  type: 'fire',
+  meaning: '因為…嘛，所以…（較口語、理由之一）',
+  connection: '普通形 / Naな / Nの + ことだし',
+  suffix: 'ことだし',
+  example: '雨もやんだことだし、そろそろ出かけよう。\n(反正雨也停了，我們差不多出門吧。)'
+},
+
+{
+  level: 'N2',
+  term: '〜ことなく',
+  type: 'fire',
+  meaning: '不…地（完全沒有做A就做B）',
+  connection: 'V辞書形 + ことなく',
+  suffix: 'ことなく',
+  example: '彼は休むことなく働き続けた。\n(他毫無休息地持續工作。)'
+},
+
+{
+  level: 'N2',
+  term: '〜ことだろう',
+  type: 'fire',
+  meaning: '表示強烈感嘆：「多麼…啊」',
+  connection: '疑問詞 + ことだろう',
+  suffix: 'ことだろう',
+  example: 'どれほど嬉しかったことだろう。\n(該有多麼開心啊。)'
+},
+
+{
+  level: 'N2',
+  term: '〜ことか',
+  type: 'fire',
+  meaning: '「到底有多…啊」的強烈感嘆',
+  connection: '疑問詞 + ことか',
+  suffix: 'ことか',
+  example: '彼に助けられたことが何度あったことか。\n(到底有多少次被他幫助過啊。)'
+},
+
+{
+  level: 'N2',
+  term: '〜ことに（は）',
+  type: 'fire',
+  meaning: '令人…的是（情緒副詞化）',
+  connection: 'Aい / Naな / Vた + ことに',
+  suffix: 'ことに',
+  example: '驚いたことに、彼は何も言わずに帰ってしまった。\n(令人驚訝的是，他什麼都沒說就回去了。)'
+},
+
+{
+  level: 'N2',
+  term: '〜ざるを得ない',
+  type: 'fire',
+  meaning: '不得不…（半強制）',
+  connection: 'Vない（する→せざる）+ を得ない',
+  suffix: 'ざるを得ない',
+  example: '事情が事情だけに、謝らざるを得ない。\n(因為事情如此，我不得不道歉。)'
+},
+
+{
+  level: 'N2',
+  term: '〜ずにはいられない',
+  type: 'fire',
+  meaning: '忍不住…／無法克制…',
+  connection: 'Vない → ずにはいられない（する→せずにはいられない）',
+  suffix: 'ずにはいられない',
+  example: 'この曲を聞くと踊らずにはいられない。\n(聽到這首歌就忍不住想跳舞。)'
+},
+
+{
+  level: 'N2',
+  term: '〜そうにない',
+  type: 'fire',
+  meaning: '看起來不太可能…',
+  connection: 'Vます + そうにない',
+  suffix: 'そうにない',
+  example: '今日は雨がやみそうにない。\n(今天看起來雨不太會停。)'
+},
+
+{
+  level: 'N2',
+  term: '〜だけあって',
+  type: 'fire',
+  meaning: '不愧是…（正面評價）',
+  connection: 'N / 普通形 + だけあって',
+  suffix: 'だけあって',
+  example: 'プロだけあって、試合運びがうまい。\n(不愧是職業選手，比賽掌控得很好。)'
+},
+
+{
+  level: 'N2',
+  term: '〜だけのことはあって',
+  type: 'fire',
+  meaning: '確實…（付出的努力有相應回報）',
+  connection: '普通形 + だけのことはあって',
+  suffix: 'だけのことはあって',
+  example: '高かっただけのことはあって、質がいい。\n(雖然貴，但品質確實好。)'
+},
+// --- N2 🔥 必學（第 4 批） ---
+
+{
+  level: 'N2',
+  term: '〜だけに',
+  type: 'fire',
+  meaning: '正因為是…所以更…（前後強烈呼應）',
+  connection: '普通形 / Naな / N + だけに',
+  suffix: 'だけに',
+  example: '努力しただけに、結果が楽しみだ。\n(正因為努力過，所以更加期待結果。)'
+},
+
+{
+  level: 'N2',
+  term: '〜だけまし',
+  type: 'fire',
+  meaning: '總比…好／還算不錯了（帶一點無奈感）',
+  connection: '普通形 + だけましだ',
+  suffix: 'だけまし',
+  example: '給料は少ないが、仕事があるだけましだ。\n(薪水雖少，但至少有工作已經不錯了。)'
+},
+
+{
+  level: 'N2',
+  term: '〜たて',
+  type: 'fire',
+  meaning: '剛…完不久（新鮮、現做）',
+  connection: 'Vます + たて',
+  suffix: 'たて',
+  example: '焼きたてのパンは最高だ。\n(剛出爐的麵包最棒。)'
+},
+
+{
+  level: 'N2',
+  term: '〜っぽい',
+  type: 'fire',
+  meaning: '有點…／看起來像…（口語超高頻）',
+  connection: 'N / Vます / Aい語幹 + っぽい',
+  suffix: 'っぽい',
+  example: 'この服、子どもっぽく見えるね。\n(這件衣服看起來有點孩子氣。)'
+},
+
+{
+  level: 'N2',
+  term: '〜てでも',
+  type: 'fire',
+  meaning: '就算要…也要…（強烈意志）',
+  connection: 'Vて + でも',
+  suffix: 'てでも',
+  example: '借金してでも留学したい。\n(就算要借錢也想去留學。)'
+},
+
+{
+  level: 'N2',
+  term: '〜てならない',
+  type: 'fire',
+  meaning: '非常…／忍不住…（情緒自然湧現）',
+  connection: 'Vて / Aくて / Naで + ならない',
+  suffix: 'てならない',
+  example: '明日の試験が心配でならない。\n(對明天的考試感到非常擔心。)'
+},
+
+{
+  level: 'N2',
+  term: '〜てはいられない',
+  type: 'fire',
+  meaning: '不能再…下去（時間緊迫、狀況不允許）',
+  connection: 'Vて + はいられない',
+  suffix: 'てはいられない',
+  example: 'こうしてはいられない、急がなきゃ。\n(不能再這樣拖下去了，得快點。)'
+},
+
+{
+  level: 'N2',
+  term: '〜てまで',
+  type: 'fire',
+  meaning: '做到…這種程度都要（帶驚訝／批判）',
+  connection: 'Vて + まで',
+  suffix: 'てまで',
+  example: '徹夜してまでゲームするなんて信じられない。\n(竟然熬夜都要玩遊戲，真不可思議。)'
+},
+
+{
+  level: 'N2',
+  term: '〜までして',
+  type: 'fire',
+  meaning: '做到…這種程度（與「〜てまで」幾乎同義）',
+  connection: 'N + までして',
+  suffix: 'までして',
+  example: '親に嘘をついてまでして遊びに行くとは。\n(竟然騙父母都要跑出去玩。)'
+},
+
+{
+  level: 'N2',
+  term: '〜てみせる',
+  type: 'fire',
+  meaning: '我一定會做到（強烈意志）',
+  connection: 'Vて + みせる',
+  suffix: 'てみせる',
+  example: '絶対合格してみせる。\n(我一定會考上的。)'
+},
+
+{
+  level: 'N2',
+  term: '〜というものではない',
+  type: 'fire',
+  meaning: '並不是說…就…（否定一般化判斷）',
+  connection: '普通形 + というものではない',
+  suffix: 'というものではない',
+  example: '高ければいいというものではない。\n(並不是貴就一定好。)'
+},
+
+{
+  level: 'N2',
+  term: '〜どころか',
+  type: 'fire',
+  meaning: '別說…連…／根本不是…而是…（強烈反差）',
+  connection: 'N / 普通形 + どころか',
+  suffix: 'どころか',
+  example: '忙しくて休むどころか、寝る時間もない。\n(忙得不只不能休息，連睡覺時間都沒有。)'
+},
+// --- N2 🔥 必學（第 5 批） ---
+
+{
+  level: 'N2',
+  term: '〜ところだった',
+  type: 'fire',
+  meaning: '差點就…（幸運地避免、或不幸差點發生）',
+  connection: 'V辞書形 + ところだった',
+  suffix: 'ところだった',
+  example: 'もう少しで事故になるところだった。\n(再一下子就要出車禍了。)'
+},
+
+{
+  level: 'N2',
+  term: '〜どころではない',
+  type: 'fire',
+  meaning: '根本不是…的時候／完全沒心思…',
+  connection: 'N / V辞書形 + どころではない',
+  suffix: 'どころではない',
+  example: '忙しくて遊びに行くどころではない。\n(忙到根本沒空去玩。)'
+},
+
+{
+  level: 'N2',
+  term: '〜とともに',
+  type: 'fire',
+  meaning: '隨著…／與…一起（同時性或同步變化）',
+  connection: 'N / V辞書形 + とともに',
+  suffix: 'とともに',
+  example: '時代の変化とともに価値観も変わる。\n(隨著時代變遷，價值觀也會改變。)'
+},
+
+{
+  level: 'N2',
+  term: '〜となると',
+  type: 'fire',
+  meaning: '一旦…就…（表示情況成立後的結果）',
+  connection: 'N / 普通形 + となると',
+  suffix: 'となると',
+  example: '海外で暮らすとなると、準備が大変だ。\n(一旦要到海外生活，準備就很麻煩。)'
+},
+
+{
+  level: 'N2',
+  term: '〜となれば',
+  type: 'fire',
+  meaning: '如果變成…的情況，就…（假定）',
+  connection: 'N / 普通形 + となれば',
+  suffix: 'となれば',
+  example: '本当に必要となれば、買うしかない。\n(如果真的需要的話，就只能買了。)'
+},
+
+{
+  level: 'N2',
+  term: '〜となったら',
+  type: 'fire',
+  meaning: '如果變成那種情況…（假定＋主觀）',
+  connection: 'N / 普通形 + となったら',
+  suffix: 'となったら',
+  example: '引っ越すとなったら、手続きが面倒だ。\n(如果要搬家，各種手續很麻煩。)'
+},
+
+{
+  level: 'N2',
+  term: '〜に越したことはない',
+  type: 'fire',
+  meaning: '還是…最好（理想狀態）',
+  connection: '普通形（Na・N である）+ に越したことはない',
+  suffix: 'に越したことはない',
+  example: '安いに越したことはないが、品質も大事だ。\n(便宜當然最好，但品質也很重要。)'
+},
+
+{
+  level: 'N2',
+  term: '〜に応えて',
+  type: 'fire',
+  meaning: '回應…／因應…',
+  connection: 'N + に応えて',
+  suffix: 'に応えて',
+  example: 'ファンの声に応えて新曲を発表した。\n(為了回應粉絲的期待，推出了新歌。)'
+},
+
+{
+  level: 'N2',
+  term: '〜に限って',
+  type: 'fire',
+  meaning: '① 單就…而言 ② 偏偏…（負面）',
+  connection: 'N + に限って',
+  suffix: 'に限って',
+  example: '今日に限って雨が降る。\n(偏偏就今天下雨。)'
+},
+
+{
+  level: 'N2',
+  term: '〜にしたら',
+  type: 'fire',
+  meaning: '對…來說（立場）',
+  connection: 'N + にしたら',
+  suffix: 'にしたら',
+  example: '子どもにしたら、大人のルールは難しい。\n(對小孩來說，大人的規矩很難懂。)'
+},
+
+{
+  level: 'N2',
+  term: '〜にすれば',
+  type: 'fire',
+  meaning: '以…的立場來說（比「〜にしたら」正式一點）',
+  connection: 'N + にすれば',
+  suffix: 'にすれば',
+  example: '彼にすれば、冗談のつもりだった。\n(站在他的立場，他只是開玩笑。)'
+},
+
+{
+  level: 'N2',
+  term: '〜にしてみたら',
+  type: 'fire',
+  meaning: '從…角度來看（推測語氣柔和）',
+  connection: 'N + にしてみたら',
+  suffix: 'にしてみたら',
+  example: '新人にしてみたら、この仕事は難しいだろう。\n(對新手來說，這份工作應該很難。)'
+},
+// --- N2 🔥 必學（第 6 批） ---
+
+{
+  level: 'N2',
+  term: '〜にしては',
+  type: 'fire',
+  meaning: '以…來說卻…（反差、超出預期）',
+  connection: 'N / 普通形 + にしては',
+  suffix: 'にしては',
+  example: '初めてにしては、よくできた。\n(以是第一次來說，你做得很好。)'
+},
+
+{
+  level: 'N2',
+  term: '〜に加えて',
+  type: 'fire',
+  meaning: '除了…之外還…（追加）',
+  connection: 'N + に加えて',
+  suffix: 'に加えて',
+  example: '雨に加えて風も強くなってきた。\n(除了下雨之外，風也變大了。)'
+},
+
+{
+  level: 'N2',
+  term: '〜に先立って',
+  type: 'fire',
+  meaning: '在…之前先…（正式語）',
+  connection: 'N / V辞書形 + に先立って',
+  suffix: 'に先立って',
+  example: '開店に先立って、スタッフ会議を行う。\n(開店之前先舉行員工會議。)'
+},
+
+{
+  level: 'N2',
+  term: '〜にすぎない',
+  type: 'fire',
+  meaning: '只不過是…（低估、謙遜）',
+  connection: '普通形 / N + にすぎない',
+  suffix: 'にすぎない',
+  example: '私は通訳ではなく、手伝っているにすぎない。\n(我不是通譯，只是幫點忙而已。)'
+},
+
+{
+  level: 'N2',
+  term: '〜に沿って',
+  type: 'fire',
+  meaning: '沿著…／按照…',
+  connection: 'N + に沿って',
+  suffix: 'に沿って',
+  example: 'マニュアルに沿って作業してください。\n(請按照手冊操作。)'
+},
+
+{
+  level: 'N2',
+  term: '〜につけて',
+  type: 'fire',
+  meaning: '每當…就…（情緒觸發）',
+  connection: 'V辞書形 + につけて',
+  suffix: 'につけて',
+  example: '写真を見るにつけて、昔を思い出す。\n(每當看到照片，就想起過去。)'
+},
+
+{
+  level: 'N2',
+  term: '〜にともなって',
+  type: 'fire',
+  meaning: '隨著…（變化伴隨）',
+  connection: 'N / V辞書形 + にともなって',
+  suffix: 'にともなって',
+  example: '人口の増加にともなって、住宅が不足している。\n(隨著人口增加，住宅不足。)'
+},
+
+{
+  level: 'N2',
+  term: '〜にも関わらず',
+  type: 'fire',
+  meaning: '儘管…卻…（強烈逆接）',
+  connection: '普通形 / Naである / Nである + にも関わらず',
+  suffix: 'にも関わらず',
+  example: '雨にも関わらず、多くの人が参加した。\n(儘管下雨，仍有許多人參加。)'
+},
+
+{
+  level: 'N2',
+  term: '〜に基づいて',
+  type: 'fire',
+  meaning: '根據…／依據…',
+  connection: 'N + に基づいて',
+  suffix: 'に基づいて',
+  example: 'データに基づいて判断する。\n(依據數據做判斷。)'
+},
+
+{
+  level: 'N2',
+  term: '〜ぬきにして',
+  type: 'fire',
+  meaning: '不考慮…／撇除…（話題或要素）',
+  connection: 'N + ぬきにして',
+  suffix: 'ぬきにして',
+  example: '冗談ぬきにして、真面目に話そう。\n(先別開玩笑了，認真聊吧。)'
+},
+
+{
+  level: 'N2',
+  term: '〜ぬきで',
+  type: 'fire',
+  meaning: '不…地（排除某物）',
+  connection: 'N + ぬきで',
+  suffix: 'ぬきで',
+  example: '今日はアルコールぬきでお願いします。\n(今天請不要加酒。)'
+},
+
+{
+  level: 'N2',
+  term: '〜ぬく',
+  type: 'fire',
+  meaning: '堅持到底、做到底（強意志）',
+  connection: 'Vます + ぬく',
+  suffix: 'ぬく',
+  example: '最後までやりぬくつもりだ。\n(我打算堅持到最後。)'
+},
+
+// --- N2 🔥 必學（第 7 批） ---
+
+{
+  level: 'N2',
+  term: '〜の上では',
+  type: 'fire',
+  meaning: '在…上／理論上（與現實常相反）',
+  connection: 'N + の上では（じょうでは）',
+  suffix: 'の上では',
+  example: '理論の上では可能だが、実際は難しい。\n(理論上可行，但實際上很困難。)'
+},
+
+{
+  level: 'N2',
+  term: '〜上（じょう）',
+  type: 'fire',
+  meaning: '在…方面／從…角度',
+  connection: 'N + 上（じょう）',
+  suffix: '上',
+  example: '仕事上のミスはすぐ報告してください。\n(工作上的錯誤請立即回報。)'
+},
+
+{
+  level: 'N2',
+  term: '〜のことだから',
+  type: 'fire',
+  meaning: '因為是…（推測某人一貫性格）',
+  connection: 'N + のことだから',
+  suffix: 'のことだから',
+  example: '真面目な彼のことだから、もう準備しているだろう。\n(因為他是個認真的人，現在應該已經準備好了。)'
+},
+
+{
+  level: 'N2',
+  term: '〜のもとで',
+  type: 'fire',
+  meaning: '在…之下（指導、條件、影響）',
+  connection: 'N + のもとで',
+  suffix: 'のもとで',
+  example: '専門家の指導のもとで研究が進められている。\n(研究在專家的指導下進行。)'
+},
+
+{
+  level: 'N2',
+  term: '〜ばかりか',
+  type: 'fire',
+  meaning: '不但…還…（強調遞進）',
+  connection: '普通形 + ばかりか',
+  suffix: 'ばかりか',
+  example: '彼は謝らないばかりか、逆に怒り出した。\n(他不但不道歉，反而生氣了。)'
+},
+
+{
+  level: 'N2',
+  term: '〜ばかりだ',
+  type: 'fire',
+  meaning: '越來越…（多為負向方向）',
+  connection: 'V辞書形 + ばかりだ',
+  suffix: 'ばかりだ',
+  example: '物価は上がるばかりだ。\n(物價不斷上漲。)'
+},
+
+{
+  level: 'N2',
+  term: '〜ばかりに',
+  type: 'fire',
+  meaning: '就因為…（導致負面結果）',
+  connection: '普通形 + ばかりに',
+  suffix: 'ばかりに',
+  example: '遅れたばかりに、チャンスを逃した。\n(就因為遲到，錯失了機會。)'
+},
+
+{
+  level: 'N2',
+  term: '〜はさておき',
+  type: 'fire',
+  meaning: '暫且不談…（轉換話題）',
+  connection: 'N + はさておき',
+  suffix: 'はさておき',
+  example: '冗談はさておき、本題に入りましょう。\n(玩笑先不說，進入正題吧。)'
+},
+
+{
+  level: 'N2',
+  term: '〜はともかくとして',
+  type: 'fire',
+  meaning: '先不論…（保留意見後談主題）',
+  connection: 'N + はともかくとして',
+  suffix: 'はともかくとして',
+  example: '値段はともかくとして、品質が問題だ。\n(價格暫且不論，品質才是問題。)'
+},
+
+{
+  level: 'N2',
+  term: '〜はもとより',
+  type: 'fire',
+  meaning: '不用說…就連…都…（範圍擴大）',
+  connection: 'N + はもとより',
+  suffix: 'はもとより',
+  example: '彼は英語はもとより、中国語も話せる。\n(他不用說英語，就連中文也會說。)'
+},
+
+{
+  level: 'N2',
+  term: '〜反面',
+  type: 'fire',
+  meaning: '一方面…另一方面…（正負對照）',
+  connection: '普通形 / Naな + 反面',
+  suffix: '反面',
+  example: '便利な反面、トラブルも多い。\n(雖然方便，但麻煩也不少。)'
+},
+
+{
+  level: 'N2',
+  term: '〜ままに',
+  type: 'fire',
+  meaning: '隨…而（由外力左右）',
+  connection: 'V辞書形 + ままに',
+  suffix: 'ままに',
+  example: '成り行きのままに任せた。\n(交給事態自然發展。)'
+},
+
+// --- N2 🔥 必學（第 8 批） ---
+
+{
+  level: 'N2',
+  term: '〜もかまわず',
+  type: 'fire',
+  meaning: '不顧…／不在乎…就…',
+  connection: 'N / V辞書形 + のもかまわず',
+  suffix: 'もかまわず',
+  example: '人目もかまわず泣き出した。\n(不顧旁人眼光哭了出來。)'
+},
+
+{
+  level: 'N2',
+  term: '〜もしない',
+  type: 'fire',
+  meaning: '完全不…（批判強）',
+  connection: 'Vます + もしない',
+  suffix: 'もしない',
+  example: '説明もしないで勝手に始めるな。\n(什麼都不說就擅自開始，不要這樣。)'
+},
+
+{
+  level: 'N2',
+  term: '〜ものか',
+  type: 'fire',
+  meaning: '才不要…／怎會…（強烈否定）',
+  connection: '普通形 + ものか',
+  suffix: 'ものか',
+  example: 'あんな所に行くものか。\n(我才不要去那種地方。)'
+},
+
+{
+  level: 'N2',
+  term: '〜ものですか',
+  type: 'fire',
+  meaning: '會是那樣嗎？（強否定，語氣比 ものか 溫和）',
+  connection: '普通形 + ものですか',
+  suffix: 'ものですか',
+  example: '彼が嘘をつくものですか。\n(他怎麼可能說謊。)'
+},
+
+{
+  level: 'N2',
+  term: '〜ものだ（感慨）',
+  type: 'fire',
+  meaning: '真是…啊（回憶／感慨）',
+  connection: 'Vた + ものだ',
+  suffix: 'ものだ',
+  example: '子どもの頃はよく川で遊んだものだ。\n(小時候真的常常在河邊玩啊。)'
+},
+
+{
+  level: 'N2',
+  term: '〜ものだ（一般論）',
+  type: 'fire',
+  meaning: '本來就會…／理所當然（普遍規則）',
+  connection: 'V辞書形 / Vない形 + ものだ',
+  suffix: 'ものだ',
+  example: '人間は失敗するものだ。\n(人本來就是會失敗的。)'
+},
+
+{
+  level: 'N2',
+  term: '〜ものだから',
+  type: 'fire',
+  meaning: '因為…（用於無法控制的理由）',
+  connection: '普通形 + ものだから',
+  suffix: 'ものだから',
+  example: '事故があったものだから、遅れてしまった。\n(因為發生事故，所以遲到了。)'
+},
+
+{
+  level: 'N2',
+  term: '〜ものなら',
+  type: 'fire',
+  meaning: '如果能…（強烈假設，通常是不太可能的事情）',
+  connection: 'V辞書形 + ものなら',
+  suffix: 'ものなら',
+  example: '帰れるものなら帰りたい。\n(如果能回去的話，我想回去。)'
+},
+
+{
+  level: 'N2',
+  term: '〜ものの',
+  type: 'fire',
+  meaning: '雖然…但是…（逆接，與實際落差）',
+  connection: '普通形 / Naな + ものの',
+  suffix: 'ものの',
+  example: '勉強したものの、試験は難しかった。\n(雖然讀書了，但考試仍然很難。)'
+},
+
+{
+  level: 'N2',
+  term: '〜もん / 〜んだもん',
+  type: 'fire',
+  meaning: '因為嘛…（口語理由，可愛語氣）',
+  connection: '普通形 + んだもん',
+  suffix: 'んだもん',
+  example: '疲れたんだもん、早く寝る。\n(因為累嘛，所以早點睡。)'
+},
+
+{
+  level: 'N2',
+  term: '〜やら〜やら',
+  type: 'fire',
+  meaning: '又…又…／一大堆…（例舉混亂狀態）',
+  connection: 'N / V辞書形 + やら',
+  suffix: 'やら',
+  example: '財布やら携帯やら、全部なくした。\n(皮夾、手機等等，一切都搞丟了。)'
+},
+
+{
+  level: 'N2',
+  term: '〜ようとしている',
+  type: 'fire',
+  meaning: '正要…／即將…（變化顯現前）',
+  connection: 'V辞書形 + ようとしている',
+  suffix: 'ようとしている',
+  example: '桜が咲こうとしている。\n(櫻花正要綻放。)'
+},
+
+// --- N2 🔥 必學（第 9 批） ---
+
+{
+  level: 'N2',
+  term: '〜ようものなら',
+  type: 'fire',
+  meaning: '如果一旦…就會…（負面重大後果）',
+  connection: 'V辞書形 + ようものなら',
+  suffix: 'ようものなら',
+  example: 'そんなことを言おうものなら、大問題になる。\n(要是說出那種話，可就糟糕了。)'
+},
+
+{
+  level: 'N2',
+  term: '〜を頼りに',
+  type: 'fire',
+  meaning: '依靠…／藉助…',
+  connection: 'N + を頼りに',
+  suffix: 'を頼りに',
+  example: '地図を頼りに山道を進んだ。\n(依靠地圖走在山路上。)'
+},
+
+{
+  level: 'N2',
+  term: '〜を問わず',
+  type: 'fire',
+  meaning: '不論…都…（完全無差別）',
+  connection: 'N + を問わず',
+  suffix: 'を問わず',
+  example: '国籍を問わず応募できる。\n(不論國籍都能報名。)'
+},
+
+{
+  level: 'N2',
+  term: '〜を除いて',
+  type: 'fire',
+  meaning: '除了…之外',
+  connection: 'N + を除いて',
+  suffix: 'を除いて',
+  example: '彼を除いて全員参加した。\n(除了他之外全員都參加了。)'
+},
+
+{
+  level: 'N2',
+  term: '〜をはじめ',
+  type: 'fire',
+  meaning: '以…為首／包括…在內（從代表例擴展）',
+  connection: 'N + をはじめ',
+  suffix: 'をはじめ',
+  example: '日本をはじめ、多くの国が参加した。\n(包含日本在內有許多國家參加。)'
+},
+
+{
+  level: 'N2',
+  term: '〜をもとに',
+  type: 'fire',
+  meaning: '以…為基礎／根據…',
+  connection: 'N + をもとに',
+  suffix: 'をもとに',
+  example: '事実をもとに記事を書いた。\n(根據事實撰寫文章。)'
+},
+
+{
+  level: 'N2',
+  term: '〜んだから',
+  type: 'fire',
+  meaning: '因為嘛…（理由帶感情）',
+  connection: '普通形 + んだから',
+  suffix: 'んだから',
+  example: '危ないんだから気をつけて。\n(因為很危險嘛，要小心喔。)'
+},
+
+// --- N2 ◎ 理解即可（第 1 批） ---
+
+{
+  level: 'N2',
+  term: '〜上で（〜てから）',
+  type: 'ok',
+  meaning: '在…之後／以…為基礎（正式文體）',
+  connection: 'Vた + 上で / N + の上で',
+  suffix: '上で',
+  example: '確認した上で、ご連絡します。\n(確認之後再聯絡您。)'
+},
+
+{
+  level: 'N2',
+  term: '〜限り（限界）',
+  type: 'ok',
+  meaning: '在…的範圍內是極限／只能…',
+  connection: 'V辞書形 / Nの + 限り',
+  suffix: '限り',
+  example: '私の知る限り、彼は嘘をつかない。\n(以我所知的範圍，他不會說謊。)'
+},
+
+{
+  level: 'N2',
+  term: '〜限り（条件範囲）',
+  type: 'ok',
+  meaning: '只要…就…（條件限定）',
+  connection: 'Vる / Vない / Aい / Naな + 限り',
+  suffix: '限り',
+  example: '努力する限り、可能性はある。\n(只要努力，就有可能性。)'
+},
+
+{
+  level: 'N2',
+  term: '〜がたい',
+  type: 'ok',
+  meaning: '難以…（心理上難做）',
+  connection: 'Vます + がたい',
+  suffix: 'がたい',
+  example: '信じがたい話だ。\n(難以置信的事情。)'
+},
+
+{
+  level: 'N2',
+  term: '〜か〜ないかのうちに',
+  type: 'ok',
+  meaning: '剛…就…（前後幾乎同時）',
+  connection: 'V辞書形 + か + Vない形 + かのうちに',
+  suffix: 'か〜ないかのうちに',
+  example: 'ベルが鳴るか鳴らないかのうちに走り出した。\n(鈴聲剛響起就跑了出去。)'
+},
+
+{
+  level: 'N2',
+  term: '〜かねる（商務敬語）',
+  type: 'ok',
+  meaning: '難以…／無法…（禮貌拒絕）',
+  connection: 'Vます + かねる',
+  suffix: 'かねる',
+  example: 'そのご要望にはお応えしかねます。\n(該要求恐怕無法回應您。)'
+},
+
+{
+  level: 'N2',
+  term: '〜次第',
+  type: 'ok',
+  meaning: '一…就…（動作完成後立即）',
+  connection: 'Vます + 次第',
+  suffix: '次第',
+  example: '準備ができ次第、出発します。\n(準備好後就出發。)'
+},
+
+{
+  level: 'N2',
+  term: '〜次第だ / 〜次第で',
+  type: 'ok',
+  meaning: '取決於…／依…而變',
+  connection: 'N + 次第だ／次第で',
+  suffix: '次第で',
+  example: '結果はあなたの努力次第だ。\n(結果取決於你的努力。）'
+},
+
+{
+  level: 'N2',
+  term: '〜末に',
+  type: 'ok',
+  meaning: '經過…之後（得到結論）',
+  connection: 'Vた / Nの + 末に',
+  suffix: '末に',
+  example: '悩んだ末に、転職を決めた。\n(煩惱許久後決定轉職。)'
+},
+
+{
+  level: 'N2',
+  term: '〜ずじまい',
+  type: 'ok',
+  meaning: '最終沒能…（留下遺憾）',
+  connection: 'Vない形 + ずじまい',
+  suffix: 'ずじまい',
+  example: '結局会えずじまいだった。\n(結果一直沒能見到面。)'
+},
+
+{
+  level: 'N2',
+  term: '〜つつ',
+  type: 'ok',
+  meaning: '一邊…一邊…（正式文）',
+  connection: 'Vます + つつ',
+  suffix: 'つつ',
+  example: '考えつつ行動する。\n(一邊思考一邊行動。)'
+},
+
+{
+  level: 'N2',
+  term: '〜つつある',
+  type: 'ok',
+  meaning: '正逐漸…（變化中）',
+  connection: 'Vます + つつある',
+  suffix: 'つつある',
+  example: '景気は回復しつつある。\n(景氣正在逐漸復甦。)'
+},
+
+// --- N2 ◎ 理解即可（第 2 批） ---
+
+{
+  level: 'N2',
+  term: '〜てこのかた',
+  type: 'ok',
+  meaning: '自從…以來（直到現在都…，常搭悲喜劇式語感）',
+  connection: 'Vて + このかた',
+  suffix: 'てこのかた',
+  example: '卒業してこのかた、一度も会っていない。\n(自從畢業後就一次都沒見過。)'
+},
+
+{
+  level: 'N2',
+  term: '〜というものではない',
+  type: 'ok',
+  meaning: '並不是說…就一定…（否定一般化）',
+  connection: '普通形 + というものではない',
+  suffix: 'というものではない',
+  example: '努力すれば必ず成功するというものではない。\n(努力並不代表一定會成功。)'
+},
+
+{
+  level: 'N2',
+  term: '〜とかで',
+  type: 'ok',
+  meaning: '聽說…／據說…（轉述用，較口語）',
+  connection: '普通形 + とかで',
+  suffix: 'とかで',
+  example: '雨が降るとかで、試合は中止になった。\n(聽說會下雨，所以比賽取消了。)'
+},
+
+{
+  level: 'N2',
+  term: '〜として〜ない',
+  type: 'ok',
+  meaning: '連一個…都不（強烈否定）',
+  connection: 'N + として + 〜ない',
+  suffix: 'として〜ない',
+  example: '一人として反対しなかった。\n(沒有一個人反對。)'
+},
+
+{
+  level: 'N2',
+  term: '〜とは（定義）',
+  type: 'ok',
+  meaning: '所謂…是指…（書面用於定義）',
+  connection: 'N + とは',
+  suffix: 'とは',
+  example: '民主主義とは、国民が主権を持つ政治制度である。\n(所謂民主主義，是指國民擁有主權的政治制度。)'
+},
+
+{
+  level: 'N2',
+  term: '〜に際して',
+  type: 'ok',
+  meaning: '在…之際（正式，用於重要時刻）',
+  connection: 'N / V辞書形 + に際して',
+  suffix: 'に際して',
+  example: '入学に際して、多くの書類が必要です。\n(入學時需要很多文件。)'
+},
+
+{
+  level: 'N2',
+  term: '〜に相違ない',
+  type: 'ok',
+  meaning: '一定是…／無疑是…（推測強烈）',
+  connection: '普通形 + に相違ない',
+  suffix: 'に相違ない',
+  example: '彼は成功するに相違ない。\n(他一定會成功。)'
+},
+
+{
+  level: 'N2',
+  term: '〜にて',
+  type: 'ok',
+  meaning: '於…（書面・公告・超正式）',
+  connection: 'N + にて',
+  suffix: 'にて',
+  example: '本日は休業とさせていただきます。\n(今日於本店停止營業。)'
+},
+
+{
+  level: 'N2',
+  term: '〜のみならず',
+  type: 'ok',
+  meaning: '不僅…而且…（正式的「だけでなく」）',
+  connection: 'N / 普通形 + のみならず',
+  suffix: 'のみならず',
+  example: '彼は日本語のみならず、中国語も話せる。\n(他不僅會日文，也會中文。)'
+},
+
+{
+  level: 'N2',
+  term: '〜ぱなし',
+  type: 'ok',
+  meaning: '放著不管／持續處於某狀態',
+  connection: 'Vます + っぱなし',
+  suffix: 'っぱなし',
+  example: '電気をつけっぱなしにしないで。\n(不要一直把燈開著不管。)'
+},
+
+{
+  level: 'N2',
+  term: '〜ぶる',
+  type: 'ok',
+  meaning: '裝作…／假裝…（帶批判）',
+  connection: 'N + ぶる',
+  suffix: 'ぶる',
+  example: '彼は知らないふりをして大人ぶっている。\n(他裝作不知道，一副大人的樣子。)'
+},
+
+{
+  level: 'N2',
+  term: '〜ないことには〜ない',
+  type: 'ok',
+  meaning: '如果不…就無法…（必要條件）',
+  connection: 'Vない形 + ことには + Vない',
+  suffix: 'ないことには〜ない',
+  example: '実際にやってみないことには分からない。\n(如果不實際做做看，就無法理解。)'
+},
+
+// --- N2 ◎ 理解即可（第 3 批） ---
+
+{
+  level: 'N2',
+  term: '〜ないで済む',
+  type: 'ok',
+  meaning: '不必…就能結束／避免了…（實際避免）',
+  connection: 'Vない形 + で済む',
+  suffix: 'ないで済む',
+  example: 'タクシーで行ったので、遅れないで済んだ。\n(因為搭計程車，避免了遲到。)'
+},
+
+{
+  level: 'N2',
+  term: '〜ずに済む',
+  type: 'ok',
+  meaning: '不用…也沒問題（避免某行為）',
+  connection: 'Vない → ずに + 済む （する→せずに）',
+  suffix: 'ずに済む',
+  example: '友達が手伝ってくれて、徹夜せずに済んだ。\n(朋友幫忙，讓我不用熬夜。)'
+},
+
+{
+  level: 'N2',
+  term: '〜ないでもない',
+  type: 'ok',
+  meaning: '也不是不…（委婉肯定或保留）',
+  connection: 'Vない形 + でもない',
+  suffix: 'ないでもない',
+  example: '行きたくないでもないが、今日は疲れている。\n(不是不想去，但今天有點累。)'
+},
+
+{
+  level: 'N2',
+  term: '〜ないものでもない',
+  type: 'ok',
+  meaning: '也不是不能…（保留空間）',
+  connection: 'Vない形 + ものでもない',
+  suffix: 'ないものでもない',
+  example: '条件次第では、引き受けないものでもない。\n(看條件而定，也不是不能接受。)'
+},
+
+{
+  level: 'N2',
+  term: '〜ないとも限らない',
+  type: 'ok',
+  meaning: '也未必不…／有可能…（弱肯定）',
+  connection: '普通形 + とも限らない',
+  suffix: 'ないとも限らない',
+  example: '明日は雪が降らないとも限らない。\n(明天未必不會下雪。)'
+},
+
+{
+  level: 'N2',
+  term: '〜ながら（逆接）',
+  type: 'ok',
+  meaning: '雖然…但是…（正式文）',
+  connection: 'Vます / Aい / Na / N + ながら',
+  suffix: 'ながら',
+  example: '残念ながら、ご期待に応えられません。\n(很遺憾，無法回應您的期待。)'
+},
+
+{
+  level: 'N2',
+  term: '〜にあたり / 〜にあたって',
+  type: 'ok',
+  meaning: '在…之際／正式場合前（書面、公告）',
+  connection: 'N / V辞書形 + にあたり',
+  suffix: 'にあたり',
+  example: '開店にあたり、多くの方に協力いただいた。\n(在開店之際受到許多人的協助。)'
+},
+
+{
+  level: 'N2',
+  term: '〜に応じて',
+  type: 'ok',
+  meaning: '根據…／隨著…（條件變化）',
+  connection: 'N + に応じて',
+  suffix: 'に応じて',
+  example: '状況に応じて対応を変える。\n(根據狀況改變應對方式。)'
+},
+
+{
+  level: 'N2',
+  term: '〜に限らず',
+  type: 'ok',
+  meaning: '不只…連…也…（範圍擴大）',
+  connection: 'N + に限らず',
+  suffix: 'に限らず',
+  example: '学生に限らず、社会人も参加できる。\n(不只學生，社會人士也能參加。)'
+},
+
+{
+  level: 'N2',
+  term: '〜に限り（限定）',
+  type: 'ok',
+  meaning: '僅限…（多用於公告）',
+  connection: 'N + に限り',
+  suffix: 'に限り',
+  example: '本日ご来店のお客様に限り、割引します。\n(僅限今日光臨的客人提供折扣。)'
+},
+
+{
+  level: 'N2',
+  term: '〜につき',
+  type: 'ok',
+  meaning: '因為…（公告正式用法）／每…（數量）',
+  connection: 'N + につき',
+  suffix: 'につき',
+  example: '本日は閉店につき、入場できません。\n(因本日休店，無法入場。)'
+},
+
+{
+  level: 'N2',
+  term: '〜にほかならない',
+  type: 'ok',
+  meaning: '正是…／無疑是…（強烈定義）',
+  connection: 'N + にほかならない',
+  suffix: 'にほかならない',
+  example: '成功は努力の結果にほかならない。\n(成功無疑是努力的結果。)'
+},
+
+// --- N2 ◎ 理解即可（第 4 批・FINAL） ---
+
+{
+  level: 'N2',
+  term: '〜に基づいて',
+  type: 'ok',
+  meaning: '根據…／以…為基準（正式書面語）',
+  connection: 'N + に基づいて',
+  suffix: 'に基づいて',
+  example: '法律に基づいて処理される。\n(將依照法律處理。)'
+},
+
+{
+  level: 'N2',
+  term: '〜の上では（正式版）',
+  type: 'ok',
+  meaning: '在…方面／從…理論上來說（書面語）',
+  connection: 'N + の上では（じょうでは）',
+  suffix: 'の上では',
+  example: '計画の上では問題ない。\n(在計畫上沒有問題。)'
+},
+
+{
+  level: 'N2',
+  term: '〜ばかりだ（中性用法）',
+  type: 'ok',
+  meaning: '只是…而已／一直…（不一定負向）',
+  connection: 'V辞書形 + ばかりだ',
+  suffix: 'ばかりだ',
+  example: 'することは準備するばかりだ。\n(只剩下做準備這件事了。)'
+},
+
+{
+  level: 'N2',
+  term: '〜ばかりだ（客觀事實累積）',
+  type: 'ok',
+  meaning: '事情朝某一方向推移（可正向或中性）',
+  connection: 'V辞書形 + ばかりだ',
+  suffix: 'ばかりだ',
+  example: '仕事は増えるばかりだ。\n(工作一直在增加。)'
+},
+
+// --- N2 △ 低頻（文語寄り） ---
+
+{
+  level: 'N2',
+  term: '〜あげく（硬用法）',
+  type: 'low',
+  meaning: '經過…之後（文語調、較硬）',
+  connection: 'Vた / Nの + あげく',
+  suffix: 'あげく',
+  example: '議論したあげく、結論は出なかった。\n(經過討論之後，仍沒有結論。)'
+},
+
+{
+  level: 'N2',
+  term: '〜かと思うと（硬版）',
+  type: 'low',
+  meaning: '剛…就…（較文語、正式感強）',
+  connection: 'Vた + かと思うと',
+  suffix: 'かと思うと',
+  example: '雨がやんだかと思うと、また降り出した。\n(雨剛停又下了起來。)'
+},
+
+{
+  level: 'N2',
+  term: '〜こととなると',
+  type: 'low',
+  meaning: '一旦說到…就會…（書面調）',
+  connection: 'N / 普通形 + こととなると',
+  suffix: 'こととなると',
+  example: '仕事のこととなると、彼は厳しい。\n(只要是談到工作，他就變得嚴格。)'
+},
+
+{
+  level: 'N2',
+  term: '〜ことに（文語感強）',
+  type: 'low',
+  meaning: '令人…的是（偏文語體）',
+  connection: 'Aい / Vた + ことに',
+  suffix: 'ことに',
+  example: '不思議なことに、彼は何も言わなかった。\n(不可思議的是，他什麼都沒說。)'
+},
+
+{
+  level: 'N2',
+  term: '〜てこのかた（古風）',
+  type: 'low',
+  meaning: '自從…以來（較古風的書面語）',
+  connection: 'Vて + このかた',
+  suffix: 'てこのかた',
+  example: '彼と別れてこのかた、一度も会っていない。\n(自從與他分手後，就一次也沒有見面。)'
+},
+
+{
+  level: 'N2',
+  term: '〜ぬ（書面否定）',
+  type: 'low',
+  meaning: '…ない 的古典否定（硬書面）',
+  connection: 'V辞書形 + ぬ',
+  suffix: 'ぬ',
+  example: '我慢ならぬ行為だ。\n(這是無法忍受的行為。)'
+},
+
+// --- N3 🔥 必學（第 1 批） ---
+
+{
+  level: 'N3',
+  term: '〜合う',
+  type: 'fire',
+  meaning: '互相…／彼此…（共同動作）',
+  connection: 'Vます + 合う',
+  suffix: '合う',
+  example: '助け合って生きていく。\n(互相扶持地活下去。)'
+},
+
+{
+  level: 'N3',
+  term: 'いくら〜ても／どんなに〜ても',
+  type: 'fire',
+  meaning: '無論怎麼…也…（讓步）',
+  connection: 'いくら + Vても / Aくても / Naでも / Nでも',
+  suffix: 'ても',
+  example: 'いくら説明しても分かってくれない。\n(不管怎麼說明都不明白。)'
+},
+
+{
+  level: 'N3',
+  term: '〜一方だ（変化）',
+  type: 'fire',
+  meaning: '持續朝某方向變化（多半負向）',
+  connection: 'V辞書形 + 一方だ',
+  suffix: '一方だ',
+  example: '物価は上がる一方だ。\n(物價不斷上漲。)'
+},
+
+{
+  level: 'N3',
+  term: '〜上に',
+  type: 'fire',
+  meaning: '不但…而且…（累加強調）',
+  connection: '普通形 / Naな / Nの + 上に',
+  suffix: '上に',
+  example: '彼は優しい上に頭もいい。\n(他不但溫柔又聰明。)'
+},
+
+{
+  level: 'N3',
+  term: '〜うちに',
+  type: 'fire',
+  meaning: '趁著…的時候／在…期間內',
+  connection: 'Vる / Vている / Aい / Naな + うちに',
+  suffix: 'うちに',
+  example: '若いうちに旅行したほうがいい。\n(趁年輕多旅行比較好。)'
+},
+
+{
+  level: 'N3',
+  term: '〜おかげで',
+  type: 'fire',
+  meaning: '託…之福／多虧…（正面原因）',
+  connection: '普通形 / Naな / Nの + おかげで',
+  suffix: 'おかげで',
+  example: 'あなたのおかげで助かった。\n(多虧你才得救。)'
+},
+
+{
+  level: 'N3',
+  term: 'お〜だ（丁寧語）',
+  type: 'fire',
+  meaning: '尊敬表現（客氣、對象提升）',
+  connection: 'お + Vます語幹 + です／になります',
+  suffix: 'お〜だ',
+  example: 'お待ちですか。\n(您在等人嗎？)'
+},
+
+{
+  level: 'N3',
+  term: '〜がきっかけで',
+  type: 'fire',
+  meaning: '以…為契機／因為…開始',
+  connection: 'N + がきっかけで',
+  suffix: 'がきっかけで',
+  example: '留学がきっかけで日本語を学んだ。\n(因為留學開始學日文。)'
+},
+
+{
+  level: 'N3',
+  term: '〜かける／〜かけの',
+  type: 'fire',
+  meaning: '做到一半／剛開始…',
+  connection: 'Vます + かける／かけの',
+  suffix: 'かける',
+  example: '読みかけの本がたくさんある。\n(有很多看了一半的書。)'
+},
+
+{
+  level: 'N3',
+  term: '〜がち',
+  type: 'fire',
+  meaning: '容易…／常常…（負面傾向）',
+  connection: 'N / Vます + がち',
+  suffix: 'がち',
+  example: '最近忘れがちだ。\n(最近容易忘東忘西。)'
+},
+
+{
+  level: 'N3',
+  term: '〜かな(あ)',
+  type: 'fire',
+  meaning: '…吧？／會不會…呢（自言自語、輕推量）',
+  connection: '普通形 + かな',
+  suffix: 'かな',
+  example: '明日晴れるかな。\n(明天會放晴嗎？)'
+},
+
+{
+  level: 'N3',
+  term: '〜から〜にかけて',
+  type: 'fire',
+  meaning: '從…到…（大概範圍，不精確）',
+  connection: 'N1 から N2 にかけて',
+  suffix: 'から〜にかけて',
+  example: '夜から朝にかけて雨が降るでしょう。\n(從晚上到早上可能會下雨。)'
+},
+
+// --- N3 🔥 必學（第 2 批） ---
+
+{
+  level: 'N3',
+  term: '〜からには',
+  type: 'fire',
+  meaning: '既然…就…（強意志、責任、理所當然）',
+  connection: '普通形 + からには',
+  suffix: 'からには',
+  example: '引き受けたからには、最後までやる。\n(既然接下了，就做到最後。)'
+},
+
+{
+  level: 'N3',
+  term: '〜かわりに（代償）',
+  type: 'fire',
+  meaning: '作為交換／雖然…但是…（補償）',
+  connection: '普通形 / Nの + かわりに',
+  suffix: 'かわりに',
+  example: '手伝うかわりに、夕飯を作ってね。\n(幫忙的交換條件是做晚餐喔。)'
+},
+
+{
+  level: 'N3',
+  term: '〜かわりに（代理）',
+  type: 'fire',
+  meaning: '代替（某人或某事）',
+  connection: 'Nの + かわりに',
+  suffix: 'かわりに',
+  example: '今日は私が先生のかわりに説明します。\n(今天由我代替老師說明。)'
+},
+
+{
+  level: 'N3',
+  term: '〜きる',
+  type: 'fire',
+  meaning: '完全…／徹底…（做到底）',
+  connection: 'Vます + きる',
+  suffix: 'きる',
+  example: 'やりきった。\n(完全做到、拼盡全力完成。)'
+},
+
+{
+  level: 'N3',
+  term: '〜くらい（軽視・程度）',
+  type: 'fire',
+  meaning: '…程度／至少…／區區…',
+  connection: 'N / Vる + くらい',
+  suffix: 'くらい',
+  example: '少しくらい待てるよ。\n(等一下下沒什麼啦。)'
+},
+
+{
+  level: 'N3',
+  term: '〜結果',
+  type: 'fire',
+  meaning: '結果…（自然導向）',
+  connection: 'Vた + 結果',
+  suffix: '結果',
+  example: '努力した結果、合格できた。\n(努力的結果，終於合格了。)'
+},
+
+{
+  level: 'N3',
+  term: '〜こそ',
+  type: 'fire',
+  meaning: '正是…／才是…（強調焦點）',
+  connection: 'N + こそ',
+  suffix: 'こそ',
+  example: 'あなたこそ大事な存在だ。\n(你才是最重要的存在。)'
+},
+
+{
+  level: 'N3',
+  term: '〜こと（名詞化）',
+  type: 'fire',
+  meaning: '…的事／使句子名詞化',
+  connection: '普通形 + こと',
+  suffix: 'こと',
+  example: '大切なのは続けることだ。\n(重要的是持續下去這件事。)'
+},
+
+{
+  level: 'N3',
+  term: '〜ごとに',
+  type: 'fire',
+  meaning: '每…一次／每…都…',
+  connection: 'N / V辞書形 + ごとに',
+  suffix: 'ごとに',
+  example: '会うごとに成長している。\n(每次見面都變得更成熟。)'
+},
+
+{
+  level: 'N3',
+  term: '〜最中に',
+  type: 'fire',
+  meaning: '正…的時候（意外發生）',
+  connection: 'Nの / Vている + 最中に',
+  suffix: '最中に',
+  example: '食事の最中に電話が鳴った。\n(吃飯到一半電話響了。)'
+},
+
+{
+  level: 'N3',
+  term: '〜さえ',
+  type: 'fire',
+  meaning: '甚至…／連…都…',
+  connection: 'N / Vます + さえ',
+  suffix: 'さえ',
+  example: '忙しすぎてご飯さえ食べられない。\n(忙到連飯都吃不了。)'
+},
+
+{
+  level: 'N3',
+  term: '〜さえ〜ば',
+  type: 'fire',
+  meaning: '只要…就…（充分條件）',
+  connection: 'Vます + さえ〜ば / Nさえ〜ば',
+  suffix: 'さえ〜ば',
+  example: '君がいさえすれば何もいらない。\n(只要有你什麼都不需要。)'
+},
+// --- N3 🔥 必學（第 3 批） ---
+
+{
+  level: 'N3',
+  term: '〜しかない / 〜ほかない',
+  type: 'fire',
+  meaning: '只好…／只能…（無可奈何）',
+  connection: 'V辞書形 + しかない / ほかない',
+  suffix: 'しかない',
+  example: '電車が止まっているので歩くしかない。\n(電車停駛，只能走路了。)'
+},
+
+{
+  level: 'N3',
+  term: '〜じゃない？（勸誘・確認）',
+  type: 'fire',
+  meaning: '…不是嗎？／要不要…？（輕勸誘）',
+  connection: '普通形 + んじゃない？',
+  suffix: 'じゃない？',
+  example: 'もう帰ったほうがいいんじゃない？\n(是不是該回去了？)'
+},
+
+{
+  level: 'N3',
+  term: '〜ずに',
+  type: 'fire',
+  meaning: '不…就…／沒…就…',
+  connection: 'Vない形 + ずに',
+  suffix: 'ずに',
+  example: '朝ごはんを食べずに出かけた。\n(沒吃早餐就出門了。)'
+},
+
+{
+  level: 'N3',
+  term: '〜せいで',
+  type: 'fire',
+  meaning: '都怪…／因為…（負面原因）',
+  connection: '普通形 / Naな / Nの + せいで',
+  suffix: 'せいで',
+  example: '雨のせいで遅れた。\n(因為下雨而遲到。)'
+},
+
+{
+  level: 'N3',
+  term: '〜たがる',
+  type: 'fire',
+  meaning: '（第三人稱）想要…／渴望…',
+  connection: 'Vます + たがる',
+  suffix: 'たがる',
+  example: '子供は新しいおもちゃを欲しがる。\n(小孩很想要新玩具。)'
+},
+
+{
+  level: 'N3',
+  term: '〜だけ',
+  type: 'fire',
+  meaning: '只…／只有…（範圍限定）',
+  connection: 'N / V / Aい / Naな + だけ',
+  suffix: 'だけ',
+  example: '好きなだけ食べていいよ。\n(想吃多少就吃多少。)'
+},
+
+{
+  level: 'N3',
+  term: '〜だけでなく…も',
+  type: 'fire',
+  meaning: '不只…連…也…',
+  connection: '普通形 + だけでなく',
+  suffix: 'だけでなく',
+  example: '日本語だけでなく、中国語も話せる。\n(不只日文，連中文也會說。)'
+},
+
+{
+  level: 'N3',
+  term: 'たとえ〜ても',
+  type: 'fire',
+  meaning: '即使…也…（讓步）',
+  connection: 'たとえ + Vても / Aくても / Naでも / Nでも',
+  suffix: 'ても',
+  example: 'たとえ反対されても続ける。\n(即使被反對也會繼續。)'
+},
+
+{
+  level: 'N3',
+  term: '〜たびに',
+  type: 'fire',
+  meaning: '每當…就…',
+  connection: 'Nの / V辞書形 + たびに',
+  suffix: 'たびに',
+  example: '会うたびに元気をもらう。\n(每次見面都得到力量。)'
+},
+
+{
+  level: 'N3',
+  term: '〜ために（原因）',
+  type: 'fire',
+  meaning: '因為…／由於…（理由）',
+  connection: '普通形 / Naな / Nの + ために',
+  suffix: 'ために',
+  example: '事故のために電車が遅れた。\n(因事故導致火車誤點。)'
+},
+
+{
+  level: 'N3',
+  term: '〜たものだ（回憶）',
+  type: 'fire',
+  meaning: '以前常常…（回憶語氣）',
+  connection: 'Vた形 + ものだ',
+  suffix: 'ものだ',
+  example: '子供の頃はよく川で遊んだものだ。\n(小時候常常在河邊玩。)'
+},
+
+{
+  level: 'N3',
+  term: '〜だらけ',
+  type: 'fire',
+  meaning: '滿是…／全都是…（負面量多）',
+  connection: 'N + だらけ',
+  suffix: 'だらけ',
+  example: 'この部屋はゴミだらけだ。\n(這房間滿是垃圾。)'
+},
+// --- N3 🔥 必學（第 4 批） ---
+
+{
+  level: 'N3',
+  term: '〜だろう',
+  type: 'fire',
+  meaning: '大概…吧（推量、輕判斷）',
+  connection: '普通形 + だろう',
+  suffix: 'だろう',
+  example: '明日は雨だろう。\n(明天大概會下雨吧。)'
+},
+
+{
+  level: 'N3',
+  term: '（なんて）〜だろう',
+  type: 'fire',
+  meaning: '多麼…啊（強烈感嘆）',
+  connection: 'なんて + 普通形 + だろう',
+  suffix: 'だろう',
+  example: 'なんて美しい景色だろう。\n(多麼美的景色啊。)'
+},
+
+{
+  level: 'N3',
+  term: 'つい〜てしまう',
+  type: 'fire',
+  meaning: '不小心就…／不由得…',
+  connection: 'つい + Vてしまう',
+  suffix: 'てしまう',
+  example: 'つい食べすぎてしまった。\n(不小心吃太多了。)'
+},
+
+{
+  level: 'N3',
+  term: 'ついでに',
+  type: 'fire',
+  meaning: '順便…',
+  connection: 'V辞書形 / Vた / Nの + ついでに',
+  suffix: 'ついでに',
+  example: '散歩のついでにコンビニに寄った。\n(散步時順便去便利商店。)'
+},
+
+{
+  level: 'N3',
+  term: '〜っけ',
+  type: 'fire',
+  meaning: '…來著？（回想、確認語氣）',
+  connection: '普通形 + っけ',
+  suffix: 'っけ',
+  example: '明日の集合時間は何時だっけ？\n(明天集合時間是幾點來著？)'
+},
+
+{
+  level: 'N3',
+  term: '〜つもりだ（実際とは違う）',
+  type: 'fire',
+  meaning: '自以為…／以為…其實不是那樣',
+  connection: '普通形 + つもりだ',
+  suffix: 'つもりだ',
+  example: '優しく言ったつもりだったのに、怒ってると思われた。\n(明明以為自己講得很溫柔，卻被誤會生氣。)'
+},
+
+{
+  level: 'N3',
+  term: '（移動動詞）〜ている',
+  type: 'fire',
+  meaning: '表示固定狀態（住む・通う等）',
+  connection: '移動系動詞 + ている',
+  suffix: 'ている',
+  example: '東京に住んでいます。\n(住在東京。)'
+},
+
+{
+  level: 'N3',
+  term: '〜ている場合じゃない',
+  type: 'fire',
+  meaning: '不是在…的時候（情況緊急）',
+  connection: 'Vて + いる場合じゃない',
+  suffix: 'ている場合じゃない',
+  example: 'のんびりしている場合じゃないよ。\n(現在不是悠哉的時候啊。)'
+},
+
+{
+  level: 'N3',
+  term: '〜てからでないと',
+  type: 'fire',
+  meaning: '不…的話就不能…／必須先…',
+  connection: 'Vて + からでないと',
+  suffix: 'てからでないと',
+  example: '許可をもらってからでないと入れない。\n(沒有得到許可不能進去。)'
+},
+
+{
+  level: 'N3',
+  term: '〜てしかたがない / 〜てしょうがない',
+  type: 'fire',
+  meaning: '非常…／…得不得了（情緒強）',
+  connection: 'Vて / Aくて / Naで + しかたがない',
+  suffix: 'てしかたがない',
+  example: '心配でしかたがない。\n(擔心得不得了。)'
+},
+
+{
+  level: 'N3',
+  term: '〜てたまらない',
+  type: 'fire',
+  meaning: '…到受不了（更強烈程度）',
+  connection: 'Vて / Aくて / Naで + たまらない',
+  suffix: 'てたまらない',
+  example: '暑くてたまらない。\n(熱到受不了。)'
+},
+
+{
+  level: 'N3',
+  term: '〜てはいけないから / 〜といけないから',
+  type: 'fire',
+  meaning: '以防…／如果…會糟糕，所以…',
+  connection: 'Vる + といけないから / てはいけないから',
+  suffix: 'といけないから',
+  example: '遅れるといけないから早めに出る。\n(以防遲到所以早點出門。)'
+},
+// --- N3 🔥 必學（第 5 批） ---
+
+{
+  level: 'N3',
+  term: '〜ても構わない',
+  type: 'fire',
+  meaning: '可以…／…也沒關係（允許）',
+  connection: 'Vても / Aくても / Naでも / Nでも + 構わない',
+  suffix: 'ても構わない',
+  example: 'ここに座っても構わない？\n(我坐這裡可以嗎？)'
+},
+
+{
+  level: 'N3',
+  term: '〜てもしかたがない / 〜てもしょうがない',
+  type: 'fire',
+  meaning: '…也沒辦法／…也無可奈何',
+  connection: 'Vても + しかたがない',
+  suffix: 'てもしかたがない',
+  example: '失敗してもしかたがない。\n(失敗了也沒辦法。)'
+},
+
+{
+  level: 'N3',
+  term: '〜ても始まらない',
+  type: 'fire',
+  meaning: '…了也沒用／抱怨也無濟於事',
+  connection: 'Vても + 始まらない',
+  suffix: 'ても始まらない',
+  example: '文句を言っても始まらない。\n(抱怨也沒用。)'
+},
+
+{
+  level: 'N3',
+  term: '〜といえば',
+  type: 'fire',
+  meaning: '說到…／提到…',
+  connection: 'N / 普通形 + といえば',
+  suffix: 'といえば',
+  example: '夏といえば海だね。\n(說到夏天就想到大海啊。)'
+},
+
+{
+  level: 'N3',
+  term: '〜ということだ（傳聞）',
+  type: 'fire',
+  meaning: '聽說…／據說…（傳聞表現）',
+  connection: '普通形 + ということだ',
+  suffix: 'ということだ',
+  example: '来週は休みになるということだ。\n(據說下週會放假。)'
+},
+
+{
+  level: 'N3',
+  term: '〜というより（も）',
+  type: 'fire',
+  meaning: '與其說…不如說…（修正說法）',
+  connection: '普通形 + というより',
+  suffix: 'というより',
+  example: '寒いというより痛い。\n(與其說冷，不如說是痛。)'
+},
+
+{
+  level: 'N3',
+  term: '〜通す',
+  type: 'fire',
+  meaning: '貫徹…／堅持到底…',
+  connection: 'Vます + 通す',
+  suffix: '通す',
+  example: '自分の意見を言い通す。\n(堅持自己的意見到底。)'
+},
+
+{
+  level: 'N3',
+  term: '〜とおりに',
+  type: 'fire',
+  meaning: '照著…／按照…',
+  connection: 'V辞書形 / Vた / Nの + とおりに',
+  suffix: 'とおりに',
+  example: '説明書のとおりに組み立てる。\n(按照說明書來組裝。)'
+},
+
+{
+  level: 'N3',
+  term: '〜とか〜とか',
+  type: 'fire',
+  meaning: '…啦…啦（列舉、模糊）',
+  connection: 'N + とか',
+  suffix: 'とか',
+  example: '週末は映画とか買い物とかした。\n(週末看了電影、逛了街之類的。)'
+},
+
+{
+  level: 'N3',
+  term: '〜としたら',
+  type: 'fire',
+  meaning: '如果…的話（假定）',
+  connection: '普通形 + としたら',
+  suffix: 'としたら',
+  example: '行くとしたら明日だ。\n(如果要去的話就是明天。)'
+},
+
+{
+  level: 'N3',
+  term: '〜として',
+  type: 'fire',
+  meaning: '作為…／以…身份',
+  connection: 'N + として',
+  suffix: 'として',
+  example: '彼は代表として参加した。\n(他作為代表參加了比賽。)'
+},
+
+{
+  level: 'N3',
+  term: '〜としても',
+  type: 'fire',
+  meaning: '即使…也…（讓步假定）',
+  connection: '普通形 + としても',
+  suffix: 'としても',
+  example: '行けないとしても連絡してね。\n(就算不能來也要聯絡喔。)'
+},
+// --- N3 🔥 必學（第 6 批） ---
+
+{
+  level: 'N3',
+  term: '〜とたん',
+  type: 'fire',
+  meaning: '一…就…（瞬間發生）',
+  connection: 'Vた + とたん',
+  suffix: 'とたん',
+  example: '家に着いたとたん雨が降り出した。\n(一到家就開始下雨。)'
+},
+
+{
+  level: 'N3',
+  term: '〜途中で / 途中に',
+  type: 'fire',
+  meaning: '在…的途中／途中發生…',
+  connection: 'Nの / Vる + 途中で',
+  suffix: '途中で',
+  example: '学校へ行く途中で友だちに会った。\n(在去學校的途中遇到朋友。)'
+},
+
+{
+  level: 'N3',
+  term: '〜とともに（一緒）',
+  type: 'fire',
+  meaning: '與…一起／跟…同時',
+  connection: 'N / V辞書形 + とともに',
+  suffix: 'とともに',
+  example: '家族とともに暮らしている。\n(和家人一起生活。)'
+},
+
+{
+  level: 'N3',
+  term: '〜とのことだ（傳聞）',
+  type: 'fire',
+  meaning: '聽說…（更正式的傳聞）',
+  connection: '普通形 + とのことだ',
+  suffix: 'とのことだ',
+  example: '明日は会議が中止とのことだ。\n(聽說明天的會議取消。)'
+},
+
+{
+  level: 'N3',
+  term: '〜とは限らない',
+  type: 'fire',
+  meaning: '未必…／不一定…',
+  connection: '普通形 + とは限らない',
+  suffix: 'とは限らない',
+  example: '高いものがいいとは限らない。\n(貴的東西不一定好。)'
+},
+
+{
+  level: 'N3',
+  term: '〜とみえる（推測）',
+  type: 'fire',
+  meaning: '看起來…／似乎…（根據外觀推測）',
+  connection: '普通形 + とみえる',
+  suffix: 'とみえる',
+  example: '彼は忙しいとみえる。\n(看起來他很忙。)'
+},
+
+{
+  level: 'N3',
+  term: '〜なあ（感嘆）',
+  type: 'fire',
+  meaning: '啊…／好…喔（感嘆、喃喃自語）',
+  connection: '普通形 + なあ',
+  suffix: 'なあ',
+  example: '疲れたなあ。\n(好累喔…)'
+},
+
+{
+  level: 'N3',
+  term: '〜直す（やり直す）',
+  type: 'fire',
+  meaning: '重新…／再…一次',
+  connection: 'Vます + 直す',
+  suffix: '直す',
+  example: 'もう一度考え直す。\n(再重新想一次。)'
+},
+
+{
+  level: 'N3',
+  term: '〜など / なんて / なんか',
+  type: 'fire',
+  meaning: '什麼的…／之類…（輕蔑、謙遜、列舉多功能）',
+  connection: 'N + など / なんて / なんか',
+  suffix: 'など',
+  example: '私なんてまだまだです。\n(我啊，還差得遠呢。)'
+},
+
+{
+  level: 'N3',
+  term: '〜に限る',
+  type: 'fire',
+  meaning: '…最好／…最棒（話者斷言）',
+  connection: 'V辞書形 / Vない形 / N + に限る',
+  suffix: 'に限る',
+  example: '暑い日はアイスに限る。\n(熱天氣就是要吃冰。)'
+},
+
+{
+  level: 'N3',
+  term: '〜にかけては',
+  type: 'fire',
+  meaning: '在…方面（特別擅長）',
+  connection: 'N + にかけては',
+  suffix: 'にかけては',
+  example: '彼は料理にかけてはプロだ。\n(他在料理方面簡直是專家。)'
+},
+
+{
+  level: 'N3',
+  term: '〜に代わって',
+  type: 'fire',
+  meaning: '代替…／代表…',
+  connection: 'N + に代わって',
+  suffix: 'に代わって',
+  example: '田中さんに代わって説明します。\n(由我代替田中先生說明。)'
+},
+// --- N3 🔥 必學（第 7 批） ---
+
+{
+  level: 'N3',
+  term: '〜に関して',
+  type: 'fire',
+  meaning: '關於…／有關…（較正式）',
+  connection: 'N + に関して',
+  suffix: 'に関して',
+  example: 'この問題に関して意見があります。\n(關於這個問題我有意見。)'
+},
+
+{
+  level: 'N3',
+  term: '〜に決まっている',
+  type: 'fire',
+  meaning: '一定…／肯定…（強烈判斷）',
+  connection: '普通形 + に決まっている',
+  suffix: 'に決まっている',
+  example: 'あんな速さじゃ遅れるに決まっている。\n(那麼慢肯定會遲到啊。)'
+},
+
+{
+  level: 'N3',
+  term: '〜に比べて',
+  type: 'fire',
+  meaning: '與…相比',
+  connection: 'N + に比べて',
+  suffix: 'に比べて',
+  example: '去年に比べて売上が伸びた。\n(和去年相比業績提升了。)'
+},
+
+{
+  level: 'N3',
+  term: '〜にしたがって',
+  type: 'fire',
+  meaning: '隨著…／伴隨…（自然變化）',
+  connection: 'N / V辞書形 + にしたがって',
+  suffix: 'にしたがって',
+  example: '年を取るにしたがって早起きになる。\n(隨著年紀增加變得更早起。)'
+},
+
+{
+  level: 'N3',
+  term: '〜にしても〜にしても',
+  type: 'fire',
+  meaning: '無論…也…／不管…或…都…',
+  connection: 'N1 にしても N2 にしても',
+  suffix: 'にしても',
+  example: '行くにしても行かないにしても連絡してね。\n(不管去不去都要通知我喔。)'
+},
+
+{
+  level: 'N3',
+  term: '〜に対して（対象・比較）',
+  type: 'fire',
+  meaning: '對於…／與…相對',
+  connection: 'N + に対して',
+  suffix: 'に対して',
+  example: '先生に対して失礼だよ。\n(對老師很失禮喔。)'
+},
+
+{
+  level: 'N3',
+  term: '〜に違いない',
+  type: 'fire',
+  meaning: '一定是…／毫無疑問是…（強推測）',
+  connection: '普通形 + に違いない',
+  suffix: 'に違いない',
+  example: '彼は疲れているに違いない。\n(他一定很累。)'
+},
+
+{
+  level: 'N3',
+  term: '〜について',
+  type: 'fire',
+  meaning: '關於…／針對…',
+  connection: 'N + について',
+  suffix: 'について',
+  example: '計画について話し合いましょう。\n(來討論一下這個計畫吧。)'
+},
+
+{
+  level: 'N3',
+  term: '〜につれて',
+  type: 'fire',
+  meaning: '隨著…（自然變化）',
+  connection: 'N / V辞書形 + につれて',
+  suffix: 'につれて',
+  example: '気温が下がるにつれて風が強くなる。\n(氣溫下降時風也變強。)'
+},
+
+{
+  level: 'N3',
+  term: '〜にとって',
+  type: 'fire',
+  meaning: '對…來說（立場視角）',
+  connection: 'N + にとって',
+  suffix: 'にとって',
+  example: 'あなたにとって幸せとは何ですか。\n(對你來說幸福是什麼？)'
+},
+
+{
+  level: 'N3',
+  term: '〜には（理由）',
+  type: 'fire',
+  meaning: '要…的話／為了…',
+  connection: 'V辞書形 + には',
+  suffix: 'には',
+  example: '成功するには努力が必要だ。\n(要成功就需要努力。)'
+},
+
+{
+  level: 'N3',
+  term: '〜に反して',
+  type: 'fire',
+  meaning: '與…相反／違背…',
+  connection: 'N / 普通形 + に反して',
+  suffix: 'に反して',
+  example: '予想に反して試験は簡単だった。\n(出乎意料，考試很簡單。)'
+},
+// --- N3 🔥 必學（第 8 批） ---
+
+{
+  level: 'N3',
+  term: '〜によって（手段）',
+  type: 'fire',
+  meaning: '透過…／藉由…（方法・手段）',
+  connection: 'N + によって',
+  suffix: 'によって',
+  example: '電話によって申し込みができます。\n(可以透過電話報名。)'
+},
+
+{
+  level: 'N3',
+  term: '〜によって（対応）',
+  type: 'fire',
+  meaning: '根據…而不同／因情況而異',
+  connection: 'N + によって',
+  suffix: 'によって',
+  example: '人によって考え方は違う。\n(每個人的想法都不同。)'
+},
+
+{
+  level: 'N3',
+  term: '〜によって（理由）',
+  type: 'fire',
+  meaning: '因為…（較書面）',
+  connection: 'N + によって',
+  suffix: 'によって',
+  example: '台風によって大きな被害が出た。\n(因颱風造成重大災害。)'
+},
+
+{
+  level: 'N3',
+  term: '〜によっては',
+  type: 'fire',
+  meaning: '依…而定／有時會…',
+  connection: 'N + によっては',
+  suffix: 'によっては',
+  example: '店によっては休みの日もある。\n(有些店依情況會休息。)'
+},
+
+{
+  level: 'N3',
+  term: '〜によると（傳聞）',
+  type: 'fire',
+  meaning: '根據…（傳聞來源）',
+  connection: 'N + によると',
+  suffix: 'によると',
+  example: '天気予報によると明日は雨だ。\n(根據天氣預報，明天會下雨。)'
+},
+
+{
+  level: 'N3',
+  term: '〜にわたって',
+  type: 'fire',
+  meaning: '長達…／遍及…（時間・範圍）',
+  connection: 'N + にわたって',
+  suffix: 'にわたって',
+  example: '三日にわたって会議が続いた。\n(會議連續開了三天。)'
+},
+
+{
+  level: 'N3',
+  term: '〜のでしょうか / 〜んでしょうか',
+  type: 'fire',
+  meaning: '…嗎？（柔軟詢問）',
+  connection: '普通形 + のでしょうか',
+  suffix: 'のでしょうか',
+  example: 'この道で合っているんでしょうか。\n(這條路是對的嗎？)'
+},
+
+{
+  level: 'N3',
+  term: '数量 + は（限制）',
+  type: 'fire',
+  meaning: '至少…／起碼…（留餘地）',
+  connection: '数量 + は',
+  suffix: 'は',
+  example: '一度は行ってみたい。\n(至少想去一次看看。)'
+},
+
+{
+  level: 'N3',
+  term: '〜場合',
+  type: 'fire',
+  meaning: '…的情況下／如果…',
+  connection: '普通形 + 場合',
+  suffix: '場合',
+  example: '雨の場合は中止です。\n(如果下雨就取消。)'
+},
+
+{
+  level: 'N3',
+  term: '〜ばかりなく',
+  type: 'fire',
+  meaning: '不只…連…也…（正式版の「だけでなく」）',
+  connection: '普通形 + ばかりなく',
+  suffix: 'ばかりなく',
+  example: '彼は英語ばかりなく中国語も話せる。\n(他不只英語，中文也會說。)'
+},
+
+{
+  level: 'N3',
+  term: '〜はずがない',
+  type: 'fire',
+  meaning: '不可能…／絕對不會…（強否定）',
+  connection: '普通形 + はずがない',
+  suffix: 'はずがない',
+  example: '彼が嘘をつくはずがない。\n(他不可能說謊。)'
+},
+
+{
+  level: 'N3',
+  term: '〜ば〜のに（反実仮想）',
+  type: 'fire',
+  meaning: '要是…就好了（與事實相反）',
+  connection: 'Vば + よかったのに',
+  suffix: 'ば〜のに',
+  example: 'もっと早く来ればよかったのに。\n(早點來就好了嘛。)'
+},
+// --- N3 🔥 必學（第 9 批） ---
+
+{
+  level: 'N3',
+  term: '〜は別として',
+  type: 'fire',
+  meaning: '先不談…／暫且不論…',
+  connection: 'N + は別として',
+  suffix: 'は別として',
+  example: '値段は別として、このデザインは最高だ。\n(先不談價格，這設計真的無敵。)'
+},
+
+{
+  level: 'N3',
+  term: '〜はもちろん',
+  type: 'fire',
+  meaning: '…不用說／…當然…',
+  connection: 'N + はもちろん',
+  suffix: 'はもちろん',
+  example: '日本語はもちろん、英語も話せる。\n(不用說日文，英文也會說。)'
+},
+
+{
+  level: 'N3',
+  term: '〜ぶり（間隔・樣子）',
+  type: 'fire',
+  meaning: '…之後再…／…的樣子',
+  connection: 'N + ぶり',
+  suffix: 'ぶり',
+  example: '一年ぶりに友だちに会った。\n(隔了一年再次見到朋友。)'
+},
+
+{
+  level: 'N3',
+  term: '〜ふりをする',
+  type: 'fire',
+  meaning: '假裝…／裝作…',
+  connection: '普通形 / Naな / Nの + ふりをする',
+  suffix: 'ふりをする',
+  example: '聞こえないふりをした。\n(假裝沒聽到。)'
+},
+
+{
+  level: 'N3',
+  term: '〜べきだ / 〜べきではない',
+  type: 'fire',
+  meaning: '應該…／不應該…',
+  connection: 'V辞書形 + べきだ',
+  suffix: 'べきだ',
+  example: '約束は守るべきだ。\n(承諾的事應該要遵守。)'
+},
+
+{
+  level: 'N3',
+  term: '〜ほど（相関）',
+  type: 'fire',
+  meaning: '越…越…',
+  connection: 'Vば Vるほど / Aいほど',
+  suffix: 'ほど',
+  example: '練習すればするほど上手になる。\n(越練習就越進步。)'
+},
+
+{
+  level: 'N3',
+  term: '〜ほど（程度）',
+  type: 'fire',
+  meaning: '…到…程度／那麼…',
+  connection: 'N / Vる / Aい + ほど',
+  suffix: 'ほど',
+  example: '涙が出るほど嬉しい。\n(開心得流出眼淚。)'
+},
+
+{
+  level: 'N3',
+  term: '〜ほど〜はない',
+  type: 'fire',
+  meaning: '沒有比…更…',
+  connection: 'N + ほど〜はない',
+  suffix: 'ほど〜はない',
+  example: '犬ほどかわいい動物はいない。\n(沒有比狗更可愛的動物。)'
+},
+
+{
+  level: 'N3',
+  term: 'まるで〜みたいだ',
+  type: 'fire',
+  meaning: '簡直像…一樣（比喻）',
+  connection: '普通形 + みたいだ',
+  suffix: 'みたいだ',
+  example: 'まるで夢みたいだ。\n(簡直像做夢一樣。)'
+},
+
+{
+  level: 'N3',
+  term: 'まるで〜ようだ',
+  type: 'fire',
+  meaning: '彷彿…／就像…',
+  connection: '普通形 + ようだ',
+  suffix: 'ようだ',
+  example: 'まるで時間が止まったようだ。\n(彷彿時間停住了。)'
+},
+
+{
+  level: 'N3',
+  term: '〜向きに',
+  type: 'fire',
+  meaning: '適合…（用途／方向性）',
+  connection: 'N + 向きに',
+  suffix: '向きに',
+  example: 'これは初心者向きの本だ。\n(這是一本適合初學者的書。)'
+},
+
+{
+  level: 'N3',
+  term: '〜向けに',
+  type: 'fire',
+  meaning: '面向…／針對…（對象設定）',
+  connection: 'N + 向けに',
+  suffix: '向けに',
+  example: '子供向けに作られた番組だ。\n(這是給小孩看的節目。)'
+},
+// --- N3 🔥 必學（第 10 批） ---
+
+{
+  level: 'N3',
+  term: '〜も〜ば〜も',
+  type: 'fire',
+  meaning: '既…又…（並列對稱強調）',
+  connection: 'N1 も N2 ば N3 も',
+  suffix: 'も〜ば〜も',
+  example: '彼は歌も歌えばダンスも上手だ。\n(他既會唱歌又擅長跳舞。)'
+},
+
+{
+  level: 'N3',
+  term: '〜ようがない',
+  type: 'fire',
+  meaning: '沒辦法…／無從…（方法不存在）',
+  connection: 'Vます + ようがない',
+  suffix: 'ようがない',
+  example: '住所が分からなくて連絡しようがない。\n(不知道地址，完全沒辦法聯絡。)'
+},
+
+{
+  level: 'N3',
+  term: '〜ようとする',
+  type: 'fire',
+  meaning: '正要…／試圖…',
+  connection: 'Vよう + とする',
+  suffix: 'ようとする',
+  example: '出かけようとしたら電話が鳴った。\n(正要出門時電話響了。)'
+},
+
+{
+  level: 'N3',
+  term: '連用中止',
+  type: 'fire',
+  meaning: '以「Vます／Aく／Naで」並列動作，語氣較文書',
+  connection: 'Vます / Aく / Naで + 、',
+  suffix: '連用中止',
+  example: '電車に乗り、会社へ向かった。\n(搭上電車，前往公司。)'
+},
+
+{
+  level: 'N3',
+  term: '〜わけがない',
+  type: 'fire',
+  meaning: '不可能…（強烈否定）',
+  connection: '普通形 + わけがない',
+  suffix: 'わけがない',
+  example: '彼がそんなことをするわけがない。\n(他不可能做那種事。)'
+},
+
+{
+  level: 'N3',
+  term: '〜わけだ / 〜というわけだ',
+  type: 'fire',
+  meaning: '難怪…／原來如此（理解、歸納）',
+  connection: '普通形 + わけだ',
+  suffix: 'わけだ',
+  example: '疲れているわけだ。昨日ほとんど寝てないんだね。\n(難怪這麼累，昨天幾乎沒睡啊。)'
+},
+
+{
+  level: 'N3',
+  term: '〜わけではない / 〜わけじゃない',
+  type: 'fire',
+  meaning: '並不是…（部分否定、委婉）',
+  connection: '普通形 + わけではない',
+  suffix: 'わけではない',
+  example: '嫌いなわけではないけど、あまり食べない。\n(不是討厭，只是不太吃。)'
+},
+
+{
+  level: 'N3',
+  term: '〜わけにはいかない',
+  type: 'fire',
+  meaning: '不能…／不便…（道義・情理限制）',
+  connection: 'V辞書形 + わけにはいかない',
+  suffix: 'わけにはいかない',
+  example: '明日は試験だから休むわけにはいかない。\n(明天考試不能請假。)'
+},
+
+{
+  level: 'N3',
+  term: '〜わりに',
+  type: 'fire',
+  meaning: '明明…卻…（落差・反差）',
+  connection: '普通形 / Naな / Nの + わりに',
+  suffix: 'わりに',
+  example: '彼は年齢のわりに若く見える。\n(他看起來比實際年齡更年輕。)'
+},
+
+{
+  level: 'N3',
+  term: '〜を込めて',
+  type: 'fire',
+  meaning: '包含…（情感／心意）',
+  connection: 'N + を込めて',
+  suffix: 'を込めて',
+  example: '感謝の気持ちを込めて手紙を書いた。\n(寫了封信，包含著我的感謝。)'
+},
+
+{
+  level: 'N3',
+  term: '〜を中心に',
+  type: 'fire',
+  meaning: '以…為中心／以…為主體',
+  connection: 'N + を中心に',
+  suffix: 'を中心に',
+  example: '若者を中心に流行している。\n(以年輕人為主流行起來。)'
+},
+
+{
+  level: 'N3',
+  term: '〜を通して / 〜を通じて（期間）',
+  type: 'fire',
+  meaning: '整個期間都…／長時間持續…',
+  connection: 'N + を通して／を通じて',
+  suffix: 'を通して',
+  example: '一年を通して雨が多い地域だ。\n(這個地區全年雨量都很多。)'
+},
+// --- N3 🔥 必學（第 11 批・收尾） ---
+
+{
+  level: 'N3',
+  term: '〜を通して / 〜を通じて（媒介）',
+  type: 'fire',
+  meaning: '透過…／藉由…（以某媒介達成）',
+  connection: 'N + を通して / を通じて',
+  suffix: 'を通して',
+  example: '友人を通して彼と知り合った。\n(透過朋友認識了他。)'
+},
+// --- N3 ◎ 理解即可（第 1 批） ---
+
+{
+  level: 'N3',
+  term: '〜おきに',
+  type: 'ok',
+  meaning: '每隔…（間隔性週期）',
+  connection: '数量 + おきに',
+  suffix: 'おきに',
+  example: '三日おきに掃除している。\n(每隔三天打掃一次。)'
+},
+
+{
+  level: 'N3',
+  term: '〜おそれがある',
+  type: 'ok',
+  meaning: '恐怕會…／有可能發生…（新聞・警告用語）',
+  connection: 'V辞書形 / Nの + おそれがある',
+  suffix: 'おそれがある',
+  example: '大雨のため、川が氾濫するおそれがある。\n(因豪雨，河川恐有氾濫之虞。)'
+},
+
+{
+  level: 'N3',
+  term: '〜ことから',
+  type: 'ok',
+  meaning: '由於…／基於…（客觀推論、文章體）',
+  connection: '普通形 / Nである + ことから',
+  suffix: 'ことから',
+  example: '事故が多いことから、この道は危険だと分かる。\n(從事故多這點可看出這條路很危險。)'
+},
+
+{
+  level: 'N3',
+  term: '〜ことになっている',
+  type: 'ok',
+  meaning: '規定為…／按規則要…',
+  connection: '普通形 + ことになっている',
+  suffix: 'ことになっている',
+  example: '学校では制服を着ることになっている。\n(學校規定要穿制服。)'
+},
+
+{
+  level: 'N3',
+  term: '〜ことはない',
+  type: 'ok',
+  meaning: '不必…（建議語氣偏硬、文章體多）',
+  connection: 'V辞書形 + ことはない',
+  suffix: 'ことはない',
+  example: '心配することはない。\n(無須擔心。)'
+},
+
+{
+  level: 'N3',
+  term: '〜際に / 〜際の',
+  type: 'ok',
+  meaning: '…之際／…時（正式場合的「とき」）',
+  connection: 'V辞書形 / Vた / Nの + 際に',
+  suffix: '際に',
+  example: 'ご利用の際には身分証を提示してください。\n(使用時請出示身分證。)'
+},
+
+{
+  level: 'N3',
+  term: '〜てはじめて',
+  type: 'ok',
+  meaning: '在…之後才首次…（因果敘述・偏書面）',
+  connection: 'Vて + はじめて',
+  suffix: 'てはじめて',
+  example: '失ってはじめて大切さに気づく。\n(失去之後才第一次察覺其重要性。)'
+},
+
+{
+  level: 'N3',
+  term: '〜において / 〜における',
+  type: 'ok',
+  meaning: '在…（書面語的「で」）／於…（文章體）',
+  connection: 'N + において / における',
+  suffix: 'において',
+  example: '会議は東京において行われた。\n(會議於東京舉行。)'
+},
+
+{
+  level: 'N3',
+  term: '〜につき（比率）',
+  type: 'ok',
+  meaning: '每…（比率用法、公告體）',
+  connection: '数量 + につき',
+  suffix: 'につき',
+  example: '一人につきコーヒー一杯無料です。\n(每人可免費一杯咖啡。)'
+},
+// --- N3 △ 低頻（生硬・教科書書面用） ---
+
+{
+  level: 'N3',
+  term: '〜たところ',
+  type: 'low',
+  meaning: '做了…之後／一做就…（較書面、敘述事件結果）',
+  connection: 'Vた + ところ',
+  suffix: 'たところ',
+  example: '聞いてみたところ、彼はもう帰ったという。\n(問了之後得知他已經回去了。)'
+},
+
+{
+  level: 'N3',
+  term: '〜とみえる',
+  type: 'low',
+  meaning: '看起來…／似乎…（偏文語的客觀推測）',
+  connection: '普通形 + とみえる',
+  suffix: 'とみえる',
+  example: '彼は忙しいとみえる、返事が全然来ない。\n(看來他很忙，完全沒有回覆。)'
+},
+// --- N4 🔥 必學（第 1 批）---
+
+{
+  level: 'N4',
+  term: '〜間',
+  type: 'fire',
+  meaning: '在…期間（整段都持續）',
+  connection: 'Nの / Vる + 間',
+  suffix: '間',
+  example: '夏休みの間、祖父の家にいた。\n(整個暑假期間我都待在外公家。)'
+},
+
+{
+  level: 'N4',
+  term: '〜間に',
+  type: 'fire',
+  meaning: '趁著…期間（短時間內完成某事）',
+  connection: 'Nの / Vる + 間に',
+  suffix: '間に',
+  example: '母が出かけている間に宿題を終わらせた。\n(趁媽媽外出，把作業做完了。)'
+},
+
+{
+  level: 'N4',
+  term: '〜終わる',
+  type: 'fire',
+  meaning: '做完…／結束…',
+  connection: 'Vます + 終わる',
+  suffix: '終わる',
+  example: 'ご飯を食べ終わったら出かけよう。\n(吃完飯就出門吧。)'
+},
+
+{
+  level: 'N4',
+  term: '（疑問詞）〜か',
+  type: 'fire',
+  meaning: '是否…／某個不確定的內容',
+  connection: '疑問詞 + 〜か',
+  suffix: 'か',
+  example: '何が一番大切か、よく考えてください。\n(什麼最重要，請好好想想。)'
+},
+
+{
+  level: 'N4',
+  term: '〜がする',
+  type: 'fire',
+  meaning: '感覺到…（氣味、聲音、味道）',
+  connection: 'N + がする',
+  suffix: 'がする',
+  example: 'いい匂いがする。\n(聞起來好香。)'
+},
+
+{
+  level: 'N4',
+  term: '〜かどうか',
+  type: 'fire',
+  meaning: '是否…／判斷某事的真假',
+  connection: '普通形 + かどうか',
+  suffix: 'かどうか',
+  example: '行けるかどうか、まだ分からない。\n(能不能去，還不確定。)'
+},
+
+{
+  level: 'N4',
+  term: '〜かもしれない',
+  type: 'fire',
+  meaning: '也許…／可能…（推量）',
+  connection: '普通形 + かもしれない',
+  suffix: 'かもしれない',
+  example: '明日は雨かもしれない。\n(明天可能會下雨。)'
+},
+
+{
+  level: 'N4',
+  term: '〜ことがある',
+  type: 'fire',
+  meaning: '有時會…／曾經…過',
+  connection: 'Vる / Vた + ことがある',
+  suffix: 'ことがある',
+  example: '日本に行ったことがある。\n(我去過日本。)'
+},
+
+{
+  level: 'N4',
+  term: '〜ことにする',
+  type: 'fire',
+  meaning: '決定要…（主觀意志）',
+  connection: 'Vる / Vない + ことにする',
+  suffix: 'ことにする',
+  example: '毎日走ることにした。\n(我決定每天跑步。)'
+},
+
+{
+  level: 'N4',
+  term: '〜ことになる',
+  type: 'fire',
+  meaning: '決定變成…／被安排成…（非主動）',
+  connection: 'Vる / Vない + ことになる',
+  suffix: 'ことになる',
+  example: '来月転勤することになった。\n(決定下個月調職了。)'
+},
+
+{
+  level: 'N4',
+  term: '〜させてください',
+  type: 'fire',
+  meaning: '請讓我…（請求許可）',
+  connection: 'Vさせて + ください',
+  suffix: 'させてください',
+  example: '少し考えさせてください。\n(請讓我想一下。)'
+},
+
+{
+  level: 'N4',
+  term: '〜しか〜ない',
+  type: 'fire',
+  meaning: '只有…（否定量、限制）',
+  connection: 'N + しか + Vない',
+  suffix: 'しか〜ない',
+  example: '100円しか持っていない。\n(我只有 100 元。)'
+},
+// --- N4 🔥 必學（第 2 批）---
+
+{
+  level: 'N4',
+  term: '〜し、〜し',
+  type: 'fire',
+  meaning: '又…又…（列舉理由・強調多重特徵）',
+  connection: '普通形 + し',
+  suffix: 'し',
+  example: '安いし、美味しいし、ここが一番だ。\n(又便宜又好吃，這裡最好。)'
+},
+
+{
+  level: 'N4',
+  term: '〜すぎる',
+  type: 'fire',
+  meaning: '太…／過度…',
+  connection: 'Vます / A語幹 + すぎる',
+  suffix: 'すぎる',
+  example: '食べすぎると太るよ。\n(吃太多會變胖喔。)'
+},
+
+{
+  level: 'N4',
+  term: '（形容詞）する',
+  type: 'fire',
+  meaning: '讓…變得…（使役性變化）',
+  connection: 'Aく / Naに + する',
+  suffix: '〜する',
+  example: '部屋を暖かくした。\n(把房間弄暖一點。)'
+},
+
+{
+  level: 'N4',
+  term: '〜そうです（直前）',
+  type: 'fire',
+  meaning: '看起來就要…（即將發生）',
+  connection: 'Vます + そうです',
+  suffix: 'そうです',
+  example: '雨が降りそうです。\n(看起來要下雨了。)'
+},
+
+{
+  level: 'N4',
+  term: '〜そうです（様態）',
+  type: 'fire',
+  meaning: '看起來…／似乎…（外觀判斷）',
+  connection: 'A語幹 / Vます + そうだ',
+  suffix: 'そうだ',
+  example: 'このケーキ、美味しそう！\n(這蛋糕看起來很好吃！)'
+},
+
+{
+  level: 'N4',
+  term: '〜出す',
+  type: 'fire',
+  meaning: '突然開始…／忍不住開始…',
+  connection: 'Vます + 出す',
+  suffix: '出す',
+  example: '急に雨が降り出した。\n(突然下起雨來。)'
+},
+
+{
+  level: 'N4',
+  term: '〜たばかり',
+  type: 'fire',
+  meaning: '剛…沒多久（主觀感覺）',
+  connection: 'Vた + ばかり',
+  suffix: 'たばかり',
+  example: '今帰ったばかりです。\n(我才剛回來。)'
+},
+
+{
+  level: 'N4',
+  term: '〜ために（目的）',
+  type: 'fire',
+  meaning: '為了…（目的性）',
+  connection: 'Vる / Nの + ために',
+  suffix: 'ために',
+  example: '日本語を上手になるために、毎日勉強している。\n(為了日文變好，我每天都讀書。)'
+},
+
+{
+  level: 'N4',
+  term: '〜ために（原因）',
+  type: 'fire',
+  meaning: '因為…（造成結果）',
+  connection: '普通形 + ために',
+  suffix: 'ために',
+  example: '事故のために電車が遅れた。\n(因為事故電車晚點了。)'
+},
+
+{
+  level: 'N4',
+  term: '〜たらいいですか',
+  type: 'fire',
+  meaning: '該怎麼做比較好？（詢問建議）',
+  connection: 'Vた + らいいですか',
+  suffix: 'たらいいですか',
+  example: 'どうしたらいいですか？\n(我該怎麼做比較好？)'
+},
+
+{
+  level: 'N4',
+  term: '〜たらどうですか',
+  type: 'fire',
+  meaning: '你要不要試試…？（柔和建議）',
+  connection: 'Vた + らどうですか',
+  suffix: 'たらどうですか',
+  example: '休んだらどうですか？\n(你要不要休息一下？)'
+},
+
+{
+  level: 'N4',
+  term: '〜続ける',
+  type: 'fire',
+  meaning: '持續…／一直做…',
+  connection: 'Vます + 続ける',
+  suffix: '続ける',
+  example: '毎日練習し続ければ上達する。\n(若持續每天練習就會進步。)'
+},
+// --- N4 🔥 必學（第 3 批）---
+
+{
+  level: 'N4',
+  term: '〜って（伝聞）',
+  type: 'fire',
+  meaning: '聽說…／他說…（最口語的引用）',
+  connection: '普通形 + って',
+  suffix: 'って',
+  example: '明日雨だって。\n(聽說明天會下雨。)'
+},
+
+{
+  level: 'N4',
+  term: '〜つもりだ',
+  type: 'fire',
+  meaning: '打算…／以為自己…（主觀）',
+  connection: 'Vる / Vない + つもりだ',
+  suffix: 'つもりだ',
+  example: '早く起きるつもりだったのに、寝坊した。\n(原本打算早起，結果睡過頭了。)'
+},
+
+{
+  level: 'N4',
+  term: '〜て（理由）',
+  type: 'fire',
+  meaning: '因為…／由於…（口語理由）',
+  connection: 'Vて / Aて / Naで / Nで',
+  suffix: 'て',
+  example: '熱くて、眠れなかった。\n(太熱了，睡不著。)'
+},
+
+{
+  level: 'N4',
+  term: '〜てある',
+  type: 'fire',
+  meaning: '被…好／某狀態已被準備好（他動詞結果狀態）',
+  connection: '他動詞 Vて + ある',
+  suffix: 'てある',
+  example: '机の上にメモが置いてある。\n(桌上放著一張便條。)'
+},
+
+{
+  level: 'N4',
+  term: '（自動詞）ている',
+  type: 'fire',
+  meaning: '正在…／狀態持續（自動詞的狀態化）',
+  connection: '自動詞 Vて + いる',
+  suffix: 'ている',
+  example: '雨が降っている。\n(正在下雨。)'
+},
+
+{
+  level: 'N4',
+  term: '〜ていく（変化方向）',
+  type: 'fire',
+  meaning: '逐漸…下去（未來方向）',
+  connection: 'Vて + いく',
+  suffix: 'ていく',
+  example: '寒くなっていく。\n(會越來越冷。)'
+},
+
+{
+  level: 'N4',
+  term: '〜ておく',
+  type: 'fire',
+  meaning: '事先…／預先…（準備動作）',
+  connection: 'Vて + おく',
+  suffix: 'ておく',
+  example: '旅行の前にチケットを買っておく。\n(旅行前先把票買好。)'
+},
+
+{
+  level: 'N4',
+  term: '〜てくる（変化・移動）',
+  type: 'fire',
+  meaning: '變得…起來／朝自己方向移動',
+  connection: 'Vて + くる',
+  suffix: 'てくる',
+  example: '暖かくなってきた。\n(開始變暖了。)'
+},
+
+{
+  level: 'N4',
+  term: '〜てくる（行って戻る）',
+  type: 'fire',
+  meaning: '去做…再回來（離開 → 完成 → 回來）',
+  connection: 'Vて + くる',
+  suffix: 'てくる',
+  example: 'ちょっと飲み物を買ってくる。\n(我去買個飲料就回來。)'
+},
+
+{
+  level: 'N4',
+  term: '〜てしまう',
+  type: 'fire',
+  meaning: '不小心…／遺憾地…／完全做完',
+  connection: 'Vて + しまう（口語：ちゃう／じゃう）',
+  suffix: 'てしまう',
+  example: '財布を忘れてしまった。\n(不小心忘記帶錢包了。)'
+},
+
+{
+  level: 'N4',
+  term: '〜でしょう',
+  type: 'fire',
+  meaning: '大概…吧（推測）／對吧？（確認）',
+  connection: '普通形 + でしょう',
+  suffix: 'でしょう',
+  example: '明日は晴れるでしょう。\n(明天大概會放晴吧。)'
+},
+
+{
+  level: 'N4',
+  term: '〜てみる',
+  type: 'fire',
+  meaning: '試著…看看',
+  connection: 'Vて + みる',
+  suffix: 'てみる',
+  example: 'この服を着てみる。\n(我來試穿看看這件衣服。)'
+},
+// --- N4 🔥 必學（第 4 批）---
+
+{
+  level: 'N4',
+  term: '〜ても',
+  type: 'fire',
+  meaning: '即使…也…（逆接）',
+  connection: 'Vても / Aくても / Naでも / Nでも',
+  suffix: 'ても',
+  example: '雨が降っても行きます。\n(就算下雨我也會去。)'
+},
+
+{
+  level: 'N4',
+  term: '〜と（自然結果）',
+  type: 'fire',
+  meaning: '一…就…（習慣・自然發生）',
+  connection: '普通形 + と',
+  suffix: 'と',
+  example: '春になると暖かくなる。\n(一到春天就會變暖。)'
+},
+
+{
+  level: 'N4',
+  term: '〜ところだ',
+  type: 'fire',
+  meaning: '正要…／正好…／剛…（三態）',
+  connection: 'Vる / Vている / Vた + ところだ',
+  suffix: 'ところだ',
+  example: '今から出かけるところです。\n(正要出門。)'
+},
+
+{
+  level: 'N4',
+  term: '〜という（引用）',
+  type: 'fire',
+  meaning: '…叫做…／…這樣說（引用內容）',
+  connection: '普通形 + という',
+  suffix: 'という',
+  example: '田中さんという人を知っていますか。\n(你認識叫田中的人嗎？)'
+},
+
+{
+  level: 'N4',
+  term: 'なかなか〜ない',
+  type: 'fire',
+  meaning: '怎麼都不…／遲遲無法…',
+  connection: 'なかなか + Vない',
+  suffix: 'なかなか〜ない',
+  example: '日本語がなかなか上達しない。\n(日文怎麼都進步不起來。)'
+},
+
+{
+  level: 'N4',
+  term: '〜なさい',
+  type: 'fire',
+  meaning: '請…（稍強但親切的命令，用於目上→目下）',
+  connection: 'Vます + なさい',
+  suffix: 'なさい',
+  example: '早く寝なさい。\n(快去睡覺。)'
+},
+
+{
+  level: 'N4',
+  term: '〜なら（條件）',
+  type: 'fire',
+  meaning: '如果是… ／ 至少在…方面',
+  connection: 'Nなら / 普通形なら',
+  suffix: 'なら',
+  example: '行くなら一緒に行こう。\n(如果要去的話一起去吧。)'
+},
+
+{
+  level: 'N4',
+  term: '〜にくい',
+  type: 'fire',
+  meaning: '難以…／不好…（能力、感覺）',
+  connection: 'Vます + にくい',
+  suffix: 'にくい',
+  example: 'この字は読みにくい。\n(這個字很難讀。)'
+},
+
+{
+  level: 'N4',
+  term: '〜にする（決定）',
+  type: 'fire',
+  meaning: '決定選…／決定要…',
+  connection: 'N + にする',
+  suffix: 'にする',
+  example: '飲み物はコーヒーにします。\n(飲料我要咖啡。)'
+},
+
+{
+  level: 'N4',
+  term: '〜ので',
+  type: 'fire',
+  meaning: '因為…（客觀・柔和理由）',
+  connection: '普通形 + ので',
+  suffix: 'ので',
+  example: '雨なので、出かけません。\n(因為下雨所以不出門。)'
+},
+
+{
+  level: 'N4',
+  term: '〜のに（逆接）',
+  type: 'fire',
+  meaning: '明明…卻…（強烈反差）',
+  connection: '普通形 + のに',
+  suffix: 'のに',
+  example: '時間があるのに、手伝ってくれない。\n(明明有時間卻不幫忙。)'
+},
+
+{
+  level: 'N4',
+  term: '〜のは〜です（焦點化）',
+  type: 'fire',
+  meaning: '…的是…（強調信息焦點）',
+  connection: '〜のは + N / 句子 + です',
+  suffix: 'のは〜です',
+  example: '一番大変なのは漢字です。\n(最難的是漢字。)'
+},
+// --- N4 🔥 必學（第 5 批）---
+
+{
+  level: 'N4',
+  term: '〜ば（假定）',
+  type: 'fire',
+  meaning: '只要…就…（自然結果・假設）',
+  connection: 'Vば / Aければ / Naならば / Nならば',
+  suffix: 'ば',
+  example: '早く寝れば元気になるよ。\n(早點睡就會恢復精神喔。)'
+},
+
+{
+  level: 'N4',
+  term: '〜は〜が、〜は…（對比）',
+  type: 'fire',
+  meaning: 'A 是 A，但 B…（分項描述特徵）',
+  connection: 'Nは〜が…',
+  suffix: '〜は〜が',
+  example: 'この店は安いが、味は普通だ。\n(這家店便宜，但味道普通。)'
+},
+
+{
+  level: 'N4',
+  term: '〜ばかり（大量）',
+  type: 'fire',
+  meaning: '全都是…／光是…（偏負面）',
+  connection: 'N + ばかり',
+  suffix: 'ばかり',
+  example: '甘い物ばかり食べている。\n(一直都在吃甜的。)'
+},
+
+{
+  level: 'N4',
+  term: '〜はずだ（推量）',
+  type: 'fire',
+  meaning: '應該…／照理應該…',
+  connection: '普通形 + はずだ',
+  suffix: 'はずだ',
+  example: '今日は休みのはずだ。\n(今天應該是休假。)'
+},
+
+{
+  level: 'N4',
+  term: '〜始める',
+  type: 'fire',
+  meaning: '開始…（漸進・動作啟動）',
+  connection: 'Vます + 始める',
+  suffix: '始める',
+  example: '雨が降り始めた。\n(開始下雨了。)'
+},
+
+{
+  level: 'N4',
+  term: '〜必要がある',
+  type: 'fire',
+  meaning: '有必要…／必須…',
+  connection: 'Vる + 必要がある',
+  suffix: '必要がある',
+  example: 'もう一度確認する必要がある。\n(有必要再確認一次。)'
+},
+
+{
+  level: 'N4',
+  term: '〜ほうがいい',
+  type: 'fire',
+  meaning: '最好…／建議語氣',
+  connection: 'Vた / Vない + ほうがいい',
+  suffix: 'ほうがいい',
+  example: '早く寝たほうがいいよ。\n(你最好早点睡。)'
+},
+
+{
+  level: 'N4',
+  term: '〜ほど〜ない（比較）',
+  type: 'fire',
+  meaning: '不如…那麼…',
+  connection: 'Nほど + Aくない / Naではない',
+  suffix: 'ほど〜ない',
+  example: '日本語は思ったほど難しくない。\n(日文沒有想像中那麼難。)'
+},
+
+{
+  level: 'N4',
+  term: 'まだ〜ていない',
+  type: 'fire',
+  meaning: '還沒有…（動作未完成）',
+  connection: 'まだ + Vていない',
+  suffix: 'まだ〜ていない',
+  example: '宿題はまだ終わっていない。\n(作業還沒做完。)'
+},
+
+{
+  level: 'N4',
+  term: '〜までに',
+  type: 'fire',
+  meaning: '在…之前（期限點）',
+  connection: '時間 + までに',
+  suffix: 'までに',
+  example: '6時までに来てください。\n(請在六點前來。)'
+},
+
+{
+  level: 'N4',
+  term: '〜まま',
+  type: 'fire',
+  meaning: '保持…狀態（未改變）',
+  connection: 'Vた / Vない / A / Nの + まま',
+  suffix: 'まま',
+  example: 'テレビをつけたまま寝てしまった。\n(電視開著就睡著了。)'
+},
+
+{
+  level: 'N4',
+  term: '〜みたいだ（推量）',
+  type: 'fire',
+  meaning: '好像…／似乎…（口語推測）',
+  connection: '普通形 / N + みたいだ',
+  suffix: 'みたいだ',
+  example: '雨が降るみたいだ。\n(好像要下雨了。)'
+},
+// --- N4 🔥 必學（第 6 批）---
+
+{
+  level: 'N4',
+  term: '〜みたいな／〜みたいに（比喩）',
+  type: 'fire',
+  meaning: '像…一樣（比喻／例示）',
+  connection: 'N + みたいなN / みたいにV・A',
+  suffix: 'みたいな／みたいに',
+  example: '彼は猫みたいに静かだ。\n(他像貓一樣安靜。)'
+},
+
+{
+  level: 'N4',
+  term: '数量＋も（驚き）',
+  type: 'fire',
+  meaning: '竟然多達…（表示驚訝、強調量大）',
+  connection: '数量 + も',
+  suffix: '〜も',
+  example: '一日で本を3冊も読んだ。\n(一天竟然讀了三本書。)'
+},
+
+{
+  level: 'N4',
+  term: '〜やすい',
+  type: 'fire',
+  meaning: '容易…／好…（感覺或操作容易）',
+  connection: 'Vます + やすい',
+  suffix: 'やすい',
+  example: 'このペンは書きやすい。\n(這支筆很好寫。)'
+},
+
+{
+  level: 'N4',
+  term: '〜ようだ（推量）',
+  type: 'fire',
+  meaning: '似乎…／看來…（柔和推測）',
+  connection: '普通形 / Nの + ようだ',
+  suffix: 'ようだ',
+  example: '外は寒いようだ。\n(外面看起來很冷。)'
+},
+
+{
+  level: 'N4',
+  term: '〜ようと思う（意志）',
+  type: 'fire',
+  meaning: '我想要…（即時決定、主觀意志）',
+  connection: 'Vよう + と思う',
+  suffix: 'ようと思う',
+  example: '今日は早く寝ようと思う。\n(我想今天早點睡。)'
+},
+
+{
+  level: 'N4',
+  term: '〜ようと思っている（予定化）',
+  type: 'fire',
+  meaning: '打算…（已有計畫、較確定）',
+  connection: 'Vよう + と思っている',
+  suffix: 'ようと思っている',
+  example: '来年日本に行こうと思っている。\n(我打算明年去日本。)'
+},
+
+{
+  level: 'N4',
+  term: '〜ような／〜ように（例示）',
+  type: 'fire',
+  meaning: '像…那樣／以…的方式（例示、比喻）',
+  connection: 'Nの + ようなN / ようにV',
+  suffix: 'ような／ように',
+  example: '彼のように話したい。\n(我想像他那樣說話。)'
+},
+
+{
+  level: 'N4',
+  term: '〜ように（目標・祈願）',
+  type: 'fire',
+  meaning: '為了能…／希望能…（目標方向）',
+  connection: 'Vる / Vない + ように',
+  suffix: 'ように',
+  example: '忘れないようにメモした。\n(為了不忘記而做筆記。)'
+},
+
+{
+  level: 'N4',
+  term: '〜ようにしている（習慣化）',
+  type: 'fire',
+  meaning: '盡量做到…（努力維持的習慣）',
+  connection: 'Vる / Vない + ようにしている',
+  suffix: 'ようにしている',
+  example: '毎日運動するようにしている。\n(我盡量讓自己每天運動。)'
+},
+
+{
+  level: 'N4',
+  term: '〜ようにする（努力目標）',
+  type: 'fire',
+  meaning: '努力做到…（有意識的行動）',
+  connection: 'Vる / Vない + ようにする',
+  suffix: 'ようにする',
+  example: '早く寝るようにする。\n(我會努力早睡。)'
+},
+
+{
+  level: 'N4',
+  term: '〜ようになる（能力変化）',
+  type: 'fire',
+  meaning: '變得能…（能力或習慣的變化）',
+  connection: 'Vる + ようになる',
+  suffix: 'ようになる',
+  example: '日本語が話せるようになった。\n(變得會說日文了。)'
+},
+
+{
+  level: 'N4',
+  term: '〜予定だ',
+  type: 'fire',
+  meaning: '預定要…／計畫…（確定行程）',
+  connection: 'Vる / Nの + 予定だ',
+  suffix: '予定だ',
+  example: '明日は会議の予定だ。\n(明天預定有會議。)'
+},
+// --- N4 🔥 必學（第 7 批）---
+
+{
+  level: 'N4',
+  term: '〜らしい（推量）',
+  type: 'fire',
+  meaning: '好像…／聽說…（帶有推測或情報來源）',
+  connection: '普通形 + らしい',
+  suffix: 'らしい',
+  example: '明日は雪が降るらしい。\n(聽說明天會下雪。)'
+},
+
+{
+  level: 'N4',
+  term: '〜らしい（典型）',
+  type: 'fire',
+  meaning: '有…的樣子／像…典型特徵',
+  connection: 'N + らしい',
+  suffix: 'らしい',
+  example: '彼は男らしい性格だ。\n(他有男人味的性格。)'
+},
+// --- N4 ◎ 理解即可（第 1 批）---
+
+{
+  level: 'N4',
+  term: '〜そうです（伝聞）',
+  type: 'ok',
+  meaning: '聽說…（書面體・正式感）',
+  connection: '普通形 + そうです',
+  suffix: 'そうです',
+  example: 'ニュースによると、台風が来るそうです。\n(根據新聞所說，颱風會來。)'
+},
+
+{
+  level: 'N4',
+  term: '〜てはいけないから',
+  type: 'ok',
+  meaning: '因為不能…（理由偏書面、堅固敘述）',
+  connection: 'Vてはいけない + から',
+  suffix: 'てはいけないから',
+  example: '明日は試験があるので、遅れてはいけないから早く寝ます。\n(因為明天有考試不能遲到，所以我要早睡。)'
+},
+// --- N5 🔥 必學（第 1 批）---
+
+{
+  level: 'N5',
+  term: '〜あとで',
+  type: 'fire',
+  meaning: '…之後／做完 A 再做 B',
+  connection: 'Nの / Vた + あとで',
+  suffix: 'あとで',
+  example: '仕事のあとで映画を見ます。\n(下班後去看電影。)'
+},
+
+{
+  level: 'N5',
+  term: 'あまり〜ない',
+  type: 'fire',
+  meaning: '不太…／不怎麼…（程度低）',
+  connection: 'あまり + Vない / Aくない / Naではない',
+  suffix: 'あまり〜ない',
+  example: '今日はあまり寒くない。\n(今天不太冷。)'
+},
+
+{
+  level: 'N5',
+  term: '〜がいちばん',
+  type: 'fire',
+  meaning: '最…／第一…',
+  connection: 'Nが + いちばん + Aい',
+  suffix: 'がいちばん',
+  example: '春がいちばん好きです。\n(我最喜歡春天。)'
+},
+
+{
+  level: 'N5',
+  term: '〜方（方法）',
+  type: 'fire',
+  meaning: '…的方法／…的做法',
+  connection: 'Vます + 方（かた）',
+  suffix: '方',
+  example: 'このケーキの作り方を教えてください。\n(請教我這個蛋糕的作法。)'
+},
+
+{
+  level: 'N5',
+  term: '〜が欲しい',
+  type: 'fire',
+  meaning: '想要…（名詞）',
+  connection: 'Nが欲しい',
+  suffix: 'が欲しい',
+  example: '新しいスマホが欲しい。\n(我想要一支新手機。)'
+},
+
+{
+  level: 'N5',
+  term: '〜から（原因）',
+  type: 'fire',
+  meaning: '因為…（主觀理由）',
+  connection: '普通形 + から',
+  suffix: 'から',
+  example: '雨が降っているから出かけません。\n(因為下雨所以不出門。)'
+},
+
+{
+  level: 'N5',
+  term: 'ぜひ',
+  type: 'fire',
+  meaning: '務必／一定（強烈希望）',
+  connection: '副詞',
+  suffix: 'ぜひ',
+  example: '日本に来たらぜひ連絡してください。\n(來日本的話一定要聯絡我。)'
+},
+
+{
+  level: 'N5',
+  term: '〜だけ',
+  type: 'fire',
+  meaning: '只有…／僅僅…（量的限制）',
+  connection: 'N / Vる + だけ',
+  suffix: 'だけ',
+  example: '一つだけ質問があります。\n(我只有一個問題。)'
+},
+
+{
+  level: 'N5',
+  term: '〜で（手段）',
+  type: 'fire',
+  meaning: '用…／以…方式',
+  connection: 'Nで',
+  suffix: 'で',
+  example: 'はしで食べます。\n(我用筷子吃。)'
+},
+
+{
+  level: 'N5',
+  term: '〜てから',
+  type: 'fire',
+  meaning: '做完…之後（順序明確）',
+  connection: 'Vて + から',
+  suffix: 'てから',
+  example: '宿題をしてから遊びます。\n(寫完作業後再玩。)'
+},
+
+{
+  level: 'N5',
+  term: '〜でしょう（確認）',
+  type: 'fire',
+  meaning: '對吧？／是吧？（輕確認）',
+  connection: '普通形 + でしょう',
+  suffix: 'でしょう',
+  example: 'この店、美味しいでしょう？\n(這家店很好吃吧？)'
+},
+
+{
+  level: 'N5',
+  term: '〜てはいけない',
+  type: 'fire',
+  meaning: '不能…／禁止…',
+  connection: 'Vて + はいけない',
+  suffix: 'てはいけない',
+  example: 'ここに入ってはいけない。\n(不能進來這裡。)'
+},
+// --- N5 🔥 必學（第 2 批）---
+
+{
+  level: 'N5',
+  term: '〜てもいいですか',
+  type: 'fire',
+  meaning: '可以…嗎？（請求許可）',
+  connection: 'Vて + もいいですか',
+  suffix: 'てもいいですか',
+  example: 'ここで写真を撮ってもいいですか。\n(在這裡拍照可以嗎？)'
+},
+
+{
+  level: 'N5',
+  term: '〜どうやって',
+  type: 'fire',
+  meaning: '要怎麼…？（詢問方法）',
+  connection: '疑問詞',
+  suffix: 'どうやって',
+  example: 'これはどうやって使うんですか。\n(這個要怎麼用？)'
+},
+
+{
+  level: 'N5',
+  term: '〜と思う',
+  type: 'fire',
+  meaning: '我覺得…／我想…（主觀意見）',
+  connection: '普通形 + と思う',
+  suffix: 'と思う',
+  example: '明日は晴れると思う。\n(我覺得明天會放晴。)'
+},
+
+{
+  level: 'N5',
+  term: 'とても',
+  type: 'fire',
+  meaning: '非常…（強烈程度）',
+  connection: '副詞',
+  suffix: 'とても',
+  example: 'この料理はとても美味しい。\n(這道料理非常好吃。)'
+},
+
+{
+  level: 'N5',
+  term: 'どんな',
+  type: 'fire',
+  meaning: '什麼樣的…（詢問性質）',
+  connection: 'どんな + N',
+  suffix: 'どんな',
+  example: 'どんな映画が好きですか。\n(你喜歡什麼樣的電影？)'
+},
+
+{
+  level: 'N5',
+  term: '〜たい',
+  type: 'fire',
+  meaning: '想…（第一人稱願望）',
+  connection: 'Vます + たい',
+  suffix: 'たい',
+  example: '日本に行きたい。\n(我想去日本。)'
+},
+
+{
+  level: 'N5',
+  term: '〜たり〜たり',
+  type: 'fire',
+  meaning: '一會兒…一會兒…（列舉動作）',
+  connection: 'Vた + り + Vた + り + する',
+  suffix: 'たり',
+  example: '休みの日は映画を見たり散歩したりします。\n(休假日會看看電影、散散步之類的。)'
+},
+
+{
+  level: 'N5',
+  term: '〜とき',
+  type: 'fire',
+  meaning: '…的時候（時間）',
+  connection: 'Vる / Vた / Nの + とき',
+  suffix: 'とき',
+  example: '子どものとき、よく外で遊んだ。\n(小時候常常在外面玩。)'
+},
+
+{
+  level: 'N5',
+  term: '〜ないで',
+  type: 'fire',
+  meaning: '不…就…／不做 A 做 B',
+  connection: 'Vないで',
+  suffix: 'ないで',
+  example: '朝ごはんを食べないで学校に行った。\n(沒吃早餐就去上學了。)'
+},
+
+{
+  level: 'N5',
+  term: '〜ないでください',
+  type: 'fire',
+  meaning: '請不要…（禮貌禁止）',
+  connection: 'Vないで + ください',
+  suffix: 'ないでください',
+  example: 'ここでタバコを吸わないでください。\n(請不要在這裡抽煙。)'
+},
+
+{
+  level: 'N5',
+  term: '〜ながら',
+  type: 'fire',
+  meaning: '一邊…一邊…（同時動作）',
+  connection: 'Vます + ながら',
+  suffix: 'ながら',
+  example: '音楽を聞きながら勉強します。\n(一邊聽音樂一邊讀書。)'
+},
+
+{
+  level: 'N5',
+  term: '〜なくてもいい',
+  type: 'fire',
+  meaning: '不…也可以（不必做）',
+  connection: 'Vない + なくてもいい',
+  suffix: 'なくてもいい',
+  example: '今日は宿題をしなくてもいい。\n(今天不做作業也可以。)'
+},
+// --- N5 🔥 必學（第 3 批）---
+
+{
+  level: 'N5',
+  term: '〜なる（変化）',
+  type: 'fire',
+  meaning: '變成…／變得…（狀態變化）',
+  connection: 'Aく / Naに / Nに + なる',
+  suffix: 'なる',
+  example: '日本語が上手になった。\n(日文變得更好了。)'
+},
+
+{
+  level: 'N5',
+  term: '〜（目的）に行く／来る／帰る',
+  type: 'fire',
+  meaning: '去／來／回去做…（目的移動）',
+  connection: 'Vます + に + 行く／来る／帰る',
+  suffix: '〜に行く／〜に来る／〜に帰る',
+  example: '図書館へ本を借りに行く。\n(我去圖書館借書。)'
+},
+
+{
+  level: 'N5',
+  term: '〜はどうですか',
+  type: 'fire',
+  meaning: '…如何？（提議・建議）',
+  connection: 'N / Vて + はどうですか',
+  suffix: 'はどうですか',
+  example: 'このケーキはどうですか？\n(這個蛋糕如何？)'
+},
+
+{
+  level: 'N5',
+  term: '〜は〜より（比較）',
+  type: 'fire',
+  meaning: 'A 比 B …（基本比較句）',
+  connection: 'Nは Nより + Aい／Naだ／V',
+  suffix: 'は〜より',
+  example: '東京は大阪より大きいです。\n(東京比大阪大。)'
+},
+
+{
+  level: 'N5',
+  term: '〜前に',
+  type: 'fire',
+  meaning: '在…之前（時間關係）',
+  connection: 'Nの / Vる + 前に',
+  suffix: '前に',
+  example: '寝る前に歯を磨く。\n(睡前刷牙。)'
+},
+
+{
+  level: 'N5',
+  term: '〜ましょう',
+  type: 'fire',
+  meaning: '一起…吧（邀請）',
+  connection: 'Vます + ましょう',
+  suffix: 'ましょう',
+  example: '一緒に食べましょう。\n(一起吃吧。)'
+},
+
+{
+  level: 'N5',
+  term: '〜ましょうか',
+  type: 'fire',
+  meaning: '要不要我來…？（主動提供幫忙）',
+  connection: 'Vます + ましょうか',
+  suffix: 'ましょうか',
+  example: '荷物を持ちましょうか？\n(行李要不要我幫你拿？)'
+},
+
+{
+  level: 'N5',
+  term: '〜ませんか',
+  type: 'fire',
+  meaning: '要不要…？（較禮貌的邀請）',
+  connection: 'Vませんか',
+  suffix: 'ませんか',
+  example: '一緒に映画を見ませんか。\n(要不要一起看電影？)'
+},
+
+{
+  level: 'N5',
+  term: 'もう〜した',
+  type: 'fire',
+  meaning: '已經…了（完成）',
+  connection: 'もう + Vた',
+  suffix: 'もう〜した',
+  example: 'もう宿題をした。\n(我已經做完作業了。)'
+},
+
+{
+  level: 'N5',
+  term: '〜をください',
+  type: 'fire',
+  meaning: '請給我…（點餐・購物最常用）',
+  connection: 'N + をください',
+  suffix: 'をください',
+  example: '水をください。\n(請給我水。)'
+},
+// --- N5 ◎ 理解即可 ---
+
+{
+  level: 'N5',
+  term: '〜なければならない',
+  type: 'ok',
+  meaning: '必須…／不得不…（書面・較硬）',
+  connection: 'Vない + なければならない',
+  suffix: 'なければならない',
+  example: '早く帰らなければならない。\n(我必須早點回家。)'
+},
+// --- Practical（非 JLPT・超高頻口語） ---
+// level = 'P'
+
+{
+  level: 'P',
+  term: '〜すぎです',
+  type: 'fire',
+  meaning: '太…了（〜すぎる的會話強調版）',
+  connection: 'Aすぎです / Vますすぎです',
+  suffix: 'すぎです',
+  example: '寒すぎです！\n(太冷了啦！)'
+},
+
+{
+  level: 'P',
+  term: '〜でも（提案・舉例）',
+  type: 'fire',
+  meaning: '…之類的／隨便…也可以（柔和提案）',
+  connection: 'Nでも',
+  suffix: 'でも',
+  example: 'コーヒーでも飲む？\n(喝杯咖啡之類的？)'
+},
+
+{
+  level: 'P',
+  term: '〜づらい',
+  type: 'fire',
+  meaning: '難以…（心理上的、不好開口、不好做）',
+  connection: 'Vます + づらい',
+  suffix: 'づらい',
+  example: '言いづらいけど…\n(有點難以啟齒，不過...)'
+},
+
+{
+  level: 'P',
+  term: 'とても〜ない',
+  type: 'ok',
+  meaning: '怎麼也不可能…（強否定、較書面但常見）',
+  connection: 'とても + Vない',
+  suffix: 'とても〜ない',
+  example: '一人ではとてもできない。\n(一個人根本不可能做到。)'
+},
+
+{
+  level: 'P',
+  term: '〜並み',
+  type: 'ok',
+  meaning: '跟…一樣的水準／達到…等級',
+  connection: 'N並み',
+  suffix: '並み',
+  example: '彼はプロ並みの腕前だ。\n(他的技術有職業水準。)'
+},
+
+{
+  level: 'P',
+  term: '〜にかけても',
+  type: 'ok',
+  meaning: '說到…方面（能力保證、強調長處）',
+  connection: 'Nにかけても',
+  suffix: 'にかけても',
+  example: '料理にかけても彼には勝てない。\n(說到料理，我比不過他。)'
+},
+
+{
+  level: 'P',
+  term: '〜まくる',
+  type: 'fire',
+  meaning: '狂…／爆…／瘋狂做（強烈口語）',
+  connection: 'Vます + まくる',
+  suffix: 'まくる',
+  example: '昨日は食べまくった。\n(昨天狂吃一波。)'
+},
+
+{
+  level: 'P',
+  term: '〜やつ',
+  type: 'fire',
+  meaning: '那個東西／那個人（粗口語，但超常用）',
+  connection: 'N（代詞功能）',
+  suffix: 'やつ',
+  example: 'あのやつ誰？\n(那傢伙是誰？)'
+},
+{
+  level: 'N1',
+  term: '〜あっての',
+  type: 'no',
+  meaning: '正因為有…才有…（強調前項是成就後項的必要條件）',
+  connection: '名詞 + あっての + 名詞',
+  suffix: 'あっての',
+  example: '努力あっての成功だ。\n(有努力才有成功。)'
+},
+{
+  level: 'N1',
+  term: '〜かたがた',
+  type: 'no',
+  meaning: '順便…／兼具…（帶有正式語氣）',
+  connection: '名詞 + かたがた',
+  suffix: 'かたがた',
+  example: 'お礼かたがたご挨拶に参りました。\n(我順便來向您致意並道謝。)'
+},
+{
+  level: 'N1',
+  term: '〜が早いか',
+  type: 'no',
+  meaning: '一…就…（幾乎同時發生，非常書面）',
+  connection: '動詞辞書形・た形 + が早いか',
+  suffix: 'が早いか',
+  example: 'ベルが鳴るが早いか、生徒たちは教室を飛び出した。\n(鈴聲一響，學生們立刻衝出教室。)'
+},
+{
+  level: 'N1',
+  term: '〜かれ〜かれ',
+  type: 'no',
+  meaning: '不論…或…（多用於對立的兩選項）',
+  connection: '形容詞い語幹 + かれ + 形容詞い語幹 + かれ',
+  suffix: 'かれ〜かれ',
+  example: '多かれ少なかれ、誰にでも悩みはある。\n(或多或少，每個人都有煩惱。)'
+},
+{
+  level: 'N1',
+  term: '〜きっての',
+  type: 'no',
+  meaning: '…之中最…／首屈一指的…',
+  connection: '名詞 + きっての',
+  suffix: 'きっての',
+  example: '彼はクラスきっての秀才だ。\n(他是班上數一數二的才子。)'
+},
+{
+  level: 'N1',
+  term: '〜極まる / 〜極まりない',
+  type: 'no',
+  meaning: '極其…／非常…到離譜的程度',
+  connection: '形容詞い語幹 + 極まる／極まりない\nナ形容詞語幹 + 極まる／極まりない',
+  suffix: '極まる / 極まりない',
+  example: '彼の態度は失礼極まりない。\n(他的態度極度失禮。)'
+},
+{
+  level: 'N1',
+  term: '〜ごとき / ごとく / ごとし',
+  type: 'no',
+  meaning: '如同…（文語・比喻）／區分：ごとき→輕蔑也常見',
+  connection: '名詞／動詞辞書形 + ごとき・ごとく・ごとし',
+  suffix: 'ごとき / ごとく / ごとし',
+  example: '彼ごときに負けるわけがない。\n(不可能輸給像他這種人。)'
+},
+{
+  level: 'N1',
+  term: '〜こととて',
+  type: 'no',
+  meaning: '因為…（文語強，常作為「歉意理由」）',
+  connection: '名詞・普通形 + こととて',
+  suffix: 'こととて',
+  example: '慣れぬこととて、ご迷惑をおかけしました。\n(因為我還不習慣，造成您的困擾。)'
+},
+{
+  level: 'N1',
+  term: '〜ずにはおかない / 〜ないではおかない',
+  type: 'no',
+  meaning: '必定會…／不可能不…（強烈的必然性）',
+  connection: '動詞未然形 + ずにはおかない\n動詞ない形 + ないではおかない',
+  suffix: 'ずにはおかない / ないではおかない',
+  example: '彼の演説は人々を感動させずにはおかない。\n(他的演說一定會讓人感動。)'
+},
+{
+  level: 'N1',
+  term: '〜ずにはすまない / 〜ないではすまない',
+  type: 'no',
+  meaning: '不…就說不過去／必須…（義務感或社會性壓力）',
+  connection: '動詞未然形 + ずにはすまない\n動詞ない形 + ないではすまない',
+  suffix: 'ずにはすまない / ないではすまない',
+  example: '約束した以上、行かずにはすまない。\n(既然答應了，不去說不過去。)'
+},
+{
+  level: 'N1',
+  term: '〜術がない',
+  type: 'no',
+  meaning: '毫無辦法…／無從…（語感偏無力、困境）',
+  connection: '動詞辞書形 + 術がない',
+  suffix: '術がない',
+  example: '彼を説得する術がない。\n(沒有任何辦法能說服他。)'
+},
+{
+  level: 'N1',
+  term: '〜そばから',
+  type: 'no',
+  meaning: '剛…就…（通常後項是反覆發生的負面事情）',
+  connection: '動詞辞書形・た形 + そばから',
+  suffix: 'そばから',
+  example: '片付けるそばから子どもが散らかす。\n(我才剛收好，小孩又弄亂。)'
+},
+{
+  level: 'N1',
+  term: '〜ただ〜のみ',
+  type: 'no',
+  meaning: '只…／唯有…（非常書面）',
+  connection: 'ただ + 名詞／動詞辞書形 + のみ',
+  suffix: 'のみ',
+  example: 'ただ成功を信じるのみだ。\n(只能相信會成功。)'
+},
+{
+  level: 'N1',
+  term: '〜だに',
+  type: 'no',
+  meaning: '連…都（極端誇張的強調，多用於負面）',
+  connection: '名詞／動詞辞書形 + だに',
+  suffix: 'だに',
+  example: '想像するだに恐ろしい。\n(光是想像就令人害怕。)'
+},
+{
+  level: 'N1',
+  term: '〜たりとも〜ない',
+  type: 'no',
+  meaning: '即使一…也不…（強烈否定）',
+  connection: '最小單位 + たりとも + 否定形',
+  suffix: 'たりとも〜ない',
+  example: '一日たりとも練習を休むわけにはいかない。\n(一天也不能休息練習。)'
+},
+{
+  level: 'N1',
+  term: '〜たるもの',
+  type: 'no',
+  meaning: '身為…的人應該…（帶責任感、義務）',
+  connection: '名詞 + たるもの',
+  suffix: 'たるもの',
+  example: '教師たるもの、常に学び続けるべきだ。\n(身為教師，應該持續學習。)'
+},
+{
+  level: 'N1',
+  term: '〜つ〜つ',
+  type: 'no',
+  meaning: '一會…一會…（兩種動作反覆）',
+  connection: '動詞ます語幹 + つ + 動詞ます語幹 + つ',
+  suffix: 'つ〜つ',
+  example: '行きつ戻りつしながら意見を決めた。\n(反覆前進後退後才決定意見。)'
+},
+{
+  level: 'N1',
+  term: '〜てまえ',
+  type: 'no',
+  meaning: '因為自己之前…所以不得不…（有社會壓力色彩）',
+  connection: '動詞た形 + てまえ',
+  suffix: 'てまえ',
+  example: '引き受けたてまえ、途中で投げ出せない。\n(既然接下了，途中不能放棄。)'
+},
+{
+  level: 'N1',
+  term: '〜てやまない',
+  type: 'no',
+  meaning: '衷心地…／始終…（多用願望、祈願）',
+  connection: '動詞て形 + やまない',
+  suffix: 'てやまない',
+  example: '成功を願ってやまない。\n(衷心祈願你成功。)'
+},
+{
+  level: 'N1',
+  term: '〜といえども',
+  type: 'no',
+  meaning: '即使…也…（強烈讓步、文語調）',
+  connection: '名詞・普通形 + といえども',
+  suffix: 'といえども',
+  example: '子どもといえども礼儀は必要だ。\n(即使是小孩也需要禮貌。)'
+},
+{
+  level: 'N1',
+  term: '〜ところを',
+  type: 'no',
+  meaning: '在…的情況下（多用於客套道歉或感謝）',
+  connection: '名詞・普通形 + ところを',
+  suffix: 'ところを',
+  example: 'お忙しいところを、失礼します。\n(在您忙碌之際，失禮了。)'
+},
+{
+  level: 'N1',
+  term: '〜ともあろう',
+  type: 'no',
+  meaning: '身為…的人竟然…（帶責難）',
+  connection: '名詞 + ともあろう + 名詞',
+  suffix: 'ともあろう',
+  example: '教師ともあろう人が、そんなことをしてはいけない。\n(身為教師的人不該做那種事。)'
+},
+{
+  level: 'N1',
+  term: '〜ともなく / 〜ともなしに',
+  type: 'no',
+  meaning: '不特意地…／無意中…',
+  connection: '動詞辞書形 + ともなく／ともなしに',
+  suffix: 'ともなく',
+  example: 'テレビを見るともなく眺めていた。\n(無意間看著電視。)'
+},
+{
+  level: 'N1',
+  term: '〜にあって',
+  type: 'no',
+  meaning: '在…狀況下／在…之時（正式・書面）',
+  connection: '名詞 + にあって',
+  suffix: 'にあって',
+  example: '非常時にあって冷静さが必要だ。\n(在非常時刻更需要冷靜。)'
+},
+{
+  level: 'N1',
+  term: '〜に至る / 〜に至るまで',
+  type: 'no',
+  meaning: '到達…／甚至到…（程度擴大）',
+  connection: '名詞 + に至る（まで）',
+  suffix: 'に至る',
+  example: '議論は夜中に至るまで続いた。\n(討論一直持續到深夜。)'
+},
+{
+  level: 'N1',
+  term: '〜にかたくない',
+  type: 'no',
+  meaning: '不難…（有明顯主觀推測）',
+  connection: '動詞辞書形 + にかたくない',
+  suffix: 'にかたくない',
+  example: '彼の苦労は想像にかたくない。\n(不難想像他的辛苦。)'
+},
+{
+  level: 'N1',
+  term: '〜に忍びない',
+  type: 'no',
+  meaning: '不忍…／看不下…',
+  connection: '名詞／動詞辞書形 + に忍びない',
+  suffix: 'に忍びない',
+  example: '古い本を捨てるのは忍びない。\n(不忍心丟掉這些舊書。)'
+},
+{
+  level: 'N1',
+  term: '〜に堪える / 〜に堪えない',
+  type: 'no',
+  meaning: '堪える：值得…／堪えない：不值得…（多用於評價作品）',
+  connection: '動詞辞書形／名詞 + に堪える・に堪えない',
+  suffix: 'に堪える / に堪えない',
+  example: '読むに堪えない文章だ。\n(一篇完全不值得一讀的文章。)'
+},
+{
+  level: 'N1',
+  term: '〜に足る',
+  type: 'no',
+  meaning: '足以…／值得…（高度肯定）',
+  connection: '動詞辞書形／名詞 + に足る',
+  suffix: 'に足る',
+  example: '信頼に足る人物だ。\n(是個值得信任的人。)'
+},
+{
+  level: 'N1',
+  term: '〜には無理がある',
+  type: 'no',
+  meaning: '對…來說牽強／有困難',
+  connection: '動詞辞書形／名詞 + には無理がある',
+  suffix: 'には無理がある',
+  example: 'この説明では納得させるには無理がある。\n(用這樣的說明要讓人信服很牽強。)'
+},
+{
+  level: 'N1',
+  term: '〜びる（例：大人びる）',
+  type: 'no',
+  meaning: '帶有…樣子／呈現出…氣質（限定少數固定詞）',
+  connection: '名詞語幹 + びる（僅限慣用詞）',
+  suffix: 'びる',
+  example: '彼女は年齢より大人びて見える。\n(她看起來比實際年齡更成熟。)'
+},
+{
+  level: 'N1',
+  term: '〜べからず',
+  type: 'no',
+  meaning: '禁止…（古風／多用於公告）',
+  connection: '動詞未然形 + べからず',
+  suffix: 'べからず',
+  example: 'ここに駐車するべからず。\n(禁止在此停車。)'
+},
+{
+  level: 'N1',
+  term: '〜べく',
+  type: 'no',
+  meaning: '為了…（文語強）',
+  connection: '動詞辞書形 + べく（する→すべく）',
+  suffix: 'べく',
+  example: '成功すべく努力した。\n(為了成功而努力。)'
+},
+{
+  level: 'N1',
+  term: '〜まじき',
+  type: 'no',
+  meaning: '不應該…的（強烈否定，道德非難語氣）',
+  connection: '動詞辞書形 + まじき + 名詞',
+  suffix: 'まじき',
+  example: '教師にあるまじき行為だ。\n(是教師不應該有的行為。)'
+},
+{
+  level: 'N1',
+  term: '〜までもない / 〜までもなく',
+  type: 'no',
+  meaning: '不必做到…／用不到…（明顯不需要）',
+  connection: '動詞辞書形 + までもない・までもなく',
+  suffix: 'までもない / までもなく',
+  example: '説明するまでもないだろう。\n(應該不用我解釋吧。)'
+},
+{
+  level: 'N1',
+  term: '〜めく',
+  type: 'no',
+  meaning: '帶有…氣息、味道（多接審美性的詞）',
+  connection: '名詞 + めく',
+  suffix: 'めく',
+  example: '春めいてきた。\n(開始有春天的氣息了。)'
+},
+{
+  level: 'N1',
+  term: '〜ものを',
+  type: 'no',
+  meaning: '明明…卻…（責備、不滿、遺憾）',
+  connection: '普通形 + ものを',
+  suffix: 'ものを',
+  example: '聞けばよかったものを。\n(你早說一聲不就好了嗎。)'
+},
+{
+  level: 'N1',
+  term: '〜や否や',
+  type: 'no',
+  meaning: '一…就…（瞬間性、文語書面）',
+  connection: '動詞辞書形 + や否や（やいなや）',
+  suffix: 'や否や',
+  example: 'ベルが鳴るや否や、彼は走り出した。\n(鈴聲一響他就跑出去。)'
+},
+{
+  level: 'N1',
+  term: '〜んがために',
+  type: 'no',
+  meaning: '為了要…（極強烈意志，書面）',
+  connection: '動詞未然形 + んがため（に）',
+  suffix: 'んがために',
+  example: '勝たんがために必死で努力した。\n(為了贏而拼命努力。)'
+},
+{
+  level: 'N1',
+  term: '〜んばかりに',
+  type: 'no',
+  meaning: '像是要…似的（誇張比喻）',
+  connection: '動詞未然形 + んばかりに',
+  suffix: 'んばかりに',
+  example: '泣かんばかりに訴えた。\n(幾乎要哭出來似地訴說。)'
+},
+{
+  level: 'N2',
+  term: '〜にて',
+  type: 'no',
+  meaning: '於…／在…（古風・正式・多見於公文與公告）',
+  connection: '名詞 + にて',
+  suffix: 'にて',
+  example: '本日15時にて閉店いたします。\n(本店今日於15點閉店。)'
+},
+{
+  level: 'N2',
+  term: '〜ぶる',
+  type: 'no',
+  meaning: '裝作…／自以為…（帶貶意，文語感強）',
+  connection: '名詞語幹・形容詞語幹 + ぶる',
+  suffix: 'ぶる',
+  example: '彼は大人ぶっている。\n(他一直裝成很成熟的樣子。)'
+},
+{
+  level: 'N2',
+  term: '〜ぬ',
+  type: 'no',
+  meaning: '「ない」的書面型／古風否定',
+  connection: '動詞未然形 + ぬ（する→せぬ）',
+  suffix: 'ぬ',
+  example: '我慢ならぬ。\n(無法忍受。)'
+},
+
+        ];
+
+        let currentTypeFilter = 'all';
+        let currentLevelFilter = 'all';
+        let currentSearch = '';
+
+        const gridEl = document.getElementById('grid');
+        const searchInput = document.getElementById('searchInput');
+        const resultInfoEl = document.getElementById('resultInfo');
+        const stickyHeader = document.getElementById('stickyHeader');
+        const toggleFiltersBtn = document.getElementById('toggleFiltersBtn');
+        const toggleIcon = document.getElementById('toggleIcon');
+
+        function getLevelBadgeClass(level) {
+            switch (level) {
+                case 'N1': return 'n1';
+                case 'N2': return 'n2';
+                case 'N3': return 'n3';
+                case 'N4': return 'n4';
+                case 'N5': return 'n5';
+                case 'P':  return 'p';
+                default:   return 'n5';
+            }
+        }
+
+        function getTypeLabel(type) {
+            switch (type) {
+                case 'fire': return '🔥 必學';
+                case 'ok':   return '◎ 理解';
+                case 'low':  return '△ 低頻';
+                case 'no':   return '✖ 不用';
+                default:     return '';
+            }
+        }
+
+        function getTypeSummary(type) {
+            switch (type) {
+                case 'fire': return '必學';
+                case 'ok':   return '理解';
+                case 'low':  return '低頻';
+                case 'no':   return '不用';
+                default:     return '全部';
+            }
+        }
+
+        function getLevelSummary(level) {
+            if (level === 'all') return '全部等級';
+            return level;
+        }
+
+        function renderCards() {
+            gridEl.innerHTML = '';
+
+            const filtered = grammarData.filter(item => {
+                if (currentTypeFilter !== 'all' && item.type !== currentTypeFilter) return false;
+                if (currentLevelFilter !== 'all' && item.level !== currentLevelFilter) return false;
+
+                if (currentSearch.trim() !== '') {
+                    const q = currentSearch.trim().toLowerCase();
+                    const haystack = (item.term + ' ' + item.meaning + ' ' + (item.example || '') + ' ' + item.level)
+                        .toLowerCase();
+                    if (!haystack.includes(q)) return false;
+                }
+                return true;
+            });
+
+            filtered.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.dataset.type = item.type;
+                card.dataset.level = item.level;
+
+                const levelBadgeClass = getLevelBadgeClass(item.level);
+                const typeLabel = getTypeLabel(item.type);
+
+                const connectionHTML = item.connection || '';
+                const exampleText = item.example || '';
+
+                card.innerHTML = `
+                    <div class="card-main">
+                        <div class="card-top">
+                            <div>
+                                <div class="status-text">${typeLabel}</div>
+                                <div class="term">${item.term}</div>
+                            </div>
+                            <div class="badges">
+                                <span class="badge ${levelBadgeClass}">${item.level}</span>
+                            </div>
+                        </div>
+                        <div class="meaning">${item.meaning}</div>
+                    </div>
+                    <div class="card-details">
+                        <div class="detail-section">
+                            <div class="section-label">接續</div>
+                            <div class="connect-wrapper">
+                                <div class="connect-chip">${connectionHTML}</div>
+                            </div>
+                        </div>
+                        <div class="detail-section">
+                            <div class="section-label">例句</div>
+                            <div class="example-box">${exampleText}</div>
+                        </div>
+                    </div>
+                    <div class="expand-icon">▼</div>
+                `;
+
+                const main = card.querySelector('.card-main');
+                const details = card.querySelector('.card-details');
+
+                main.addEventListener('click', () => {
+                    const isExpanded = card.classList.contains('expanded');
+                    if (isExpanded) {
+                        // 收合
+                        details.style.maxHeight = details.scrollHeight + 'px'; // 先鎖住高度
+                        requestAnimationFrame(() => {
+                            card.classList.remove('expanded');
+                            details.style.maxHeight = '0';
+                        });
+                    } else {
+                        // 展開
+                        card.classList.add('expanded');
+                        details.style.maxHeight = details.scrollHeight + 'px';
+                    }
+                });
+
+                // 動態調整 max-height 以應付內容高度變化
+                details.addEventListener('transitionend', (e) => {
+                    if (card.classList.contains('expanded')) {
+                        details.style.maxHeight = 'none';
+                    }
+                });
+
+                gridEl.appendChild(card);
+            });
+
+            // 更新上方件數資訊
+            const total = grammarData.length;
+            const count = filtered.length;
+            const typeText = getTypeSummary(currentTypeFilter);
+            const levelText = getLevelSummary(currentLevelFilter);
+
+            let summary = `共 ${count} / ${total} 條`;
+            if (currentTypeFilter !== 'all' || currentLevelFilter !== 'all' || currentSearch.trim() !== '') {
+                const parts = [];
+                if (currentTypeFilter !== 'all') parts.push(`熟練度：${typeText}`);
+                if (currentLevelFilter !== 'all') parts.push(`等級：${levelText}`);
+                if (currentSearch.trim() !== '') parts.push(`關鍵字：「${currentSearch.trim()}」`);
+                summary += ' ｜ ' + parts.join('・');
+            }
+            resultInfoEl.textContent = summary;
+        }
+
+        function filterByType(type, el) {
+            currentTypeFilter = type;
+            document.querySelectorAll('.filter-pill[data-group="type"]').forEach(btn => {
+                btn.classList.toggle('active', btn === el);
+            });
+            renderCards();
+        }
+
+        function filterByLevel(level, el) {
+            currentLevelFilter = level;
+            document.querySelectorAll('.filter-pill[data-group="level"]').forEach(btn => {
+                btn.classList.toggle('active', btn === el);
+            });
+            renderCards();
+        }
+
+        searchInput.addEventListener('input', (e) => {
+            currentSearch = e.target.value;
+            renderCards();
+        });
+
+        // 篩選區收合／展開
+        toggleFiltersBtn.addEventListener('click', () => {
+            const isCollapsed = stickyHeader.classList.toggle('collapsed');
+            toggleIcon.textContent = isCollapsed ? '▼' : '▲';
+            toggleFiltersBtn.firstElementChild.textContent = isCollapsed ? '展開篩選' : '收合篩選';
+        });
+
+        // 初次渲染
+        renderCards();
+    </script>
+</body>
+</html>
+
+
