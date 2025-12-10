@@ -1,12 +1,10 @@
-
-
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>JLPT 實用文法</title>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Inter:wght руководством;600&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg-body: #0f172a;
@@ -375,8 +373,9 @@
             border: 1px solid transparent;
         }
 
+        /* 關鍵的 Suffix 高亮樣式 */
         .connect-chip span {
-            color: var(--accent);
+            color: var(--accent); /* 紫色 */
             font-weight: bold;
         }
 
@@ -433,7 +432,6 @@
                 <input type="text" id="searchInput" placeholder="搜尋文法（例如：あげく、と思う、N1…）">
             </div>
 
-            <!-- 熟練度分類：必學 / 理解 / 低頻 / 不用 -->
             <div class="filter-section">
                 <div class="filter-label">熟練度</div>
                 <div class="filter-scroll" id="typeFilterRow">
@@ -445,7 +443,6 @@
                 </div>
             </div>
 
-            <!-- 等級分類：N1〜N5 + P -->
             <div class="filter-section">
                 <div class="filter-label">等級 / 分區</div>
                 <div class="filter-scroll" id="levelFilterRow">
@@ -460,8 +457,7 @@
             </div>
 
             <div class="result-info" id="resultInfo">
-                <!-- 這裡會顯示「共 X 條」＋目前篩選摘要 -->
-            </div>
+                </div>
         </div>
     </div>
 
@@ -480,7 +476,7 @@
   term: '〜がてら',
   type: 'fire',
   meaning: '做A的同時順便做B（A是主要行為，B是順便）',
-  connection: 'N(する) / Vます',
+  connection: 'N(する) / Vます + がてら',
   suffix: 'がてら',
   example: '散歩がてら、コンビニでコーヒーを買ってきた。\n(順便去散步，在便利商店買了咖啡回來。)'
 },
@@ -490,7 +486,7 @@
   term: '〜かと思いきや',
   type: 'fire',
   meaning: '原以為是A，結果卻是B（和預想相反）',
-  connection: '普通形（Na・Nだ）',
+  connection: '普通形（Na・Nだ） + かと思いきや',
   suffix: 'かと思いきや',
   example: '渋滞かと思いきや、意外とすぐ着いた。\n(還以為會塞車，結果意外很快就到了。)'
 },
@@ -500,7 +496,7 @@
   term: '〜かたわら',
   type: 'fire',
   meaning: '一邊做A，同時也做B（本業＋兼職／副業感）',
-  connection: 'V辞書形 / Nの',
+  connection: 'V辞書形 / Nの + かたわら',
   suffix: 'かたわら',
   example: '彼は会社員として働くかたわら、小説も書いている。\n(他一方面是上班族，同時也在寫小說。)'
 },
@@ -610,7 +606,7 @@
   term: '〜なりに',
   type: 'fire',
   meaning: '以各自相應的方式／風格去做',
-  connection: 'N / V / A',
+  connection: 'N + なりに / V + なりに / A + なりに',
   suffix: 'なりに',
   example: '子どもなりに一生懸命考えている。\n(小孩也有他自己方式在拼命思考。)'
 },
@@ -5353,7 +5349,7 @@
   term: '〜が早いか',
   type: 'no',
   meaning: '一…就…（幾乎同時發生，非常書面）',
-  connection: '動詞辞書形・た形 + が早いか',
+  connection: 'V辞書形・た形 + が早いか',
   suffix: 'が早いか',
   example: 'ベルが鳴るが早いか、生徒たちは教室を飛び出した。\n(鈴聲一響，學生們立刻衝出教室。)'
 },
@@ -5389,7 +5385,7 @@
   term: '〜ごとき / ごとく / ごとし',
   type: 'no',
   meaning: '如同…（文語・比喻）／區分：ごとき→輕蔑也常見',
-  connection: '名詞／動詞辞書形 + ごとき・ごとく・ごとし',
+  connection: '名詞／V辞書形 + ごとき・ごとく・ごとし',
   suffix: 'ごとき / ごとく / ごとし',
   example: '彼ごときに負けるわけがない。\n(不可能輸給像他這種人。)'
 },
@@ -5425,7 +5421,7 @@
   term: '〜術がない',
   type: 'no',
   meaning: '毫無辦法…／無從…（語感偏無力、困境）',
-  connection: '動詞辞書形 + 術がない',
+  connection: 'V辞書形 + 術がない',
   suffix: '術がない',
   example: '彼を説得する術がない。\n(沒有任何辦法能說服他。)'
 },
@@ -5434,7 +5430,7 @@
   term: '〜そばから',
   type: 'no',
   meaning: '剛…就…（通常後項是反覆發生的負面事情）',
-  connection: '動詞辞書形・た形 + そばから',
+  connection: 'V辞書形・た形 + そばから',
   suffix: 'そばから',
   example: '片付けるそばから子どもが散らかす。\n(我才剛收好，小孩又弄亂。)'
 },
@@ -5443,7 +5439,7 @@
   term: '〜ただ〜のみ',
   type: 'no',
   meaning: '只…／唯有…（非常書面）',
-  connection: 'ただ + 名詞／動詞辞書形 + のみ',
+  connection: 'ただ + 名詞／V辞書形 + のみ',
   suffix: 'のみ',
   example: 'ただ成功を信じるのみだ。\n(只能相信會成功。)'
 },
@@ -5452,7 +5448,7 @@
   term: '〜だに',
   type: 'no',
   meaning: '連…都（極端誇張的強調，多用於負面）',
-  connection: '名詞／動詞辞書形 + だに',
+  connection: '名詞／V辞書形 + だに',
   suffix: 'だに',
   example: '想像するだに恐ろしい。\n(光是想像就令人害怕。)'
 },
@@ -5533,7 +5529,7 @@
   term: '〜ともなく / 〜ともなしに',
   type: 'no',
   meaning: '不特意地…／無意中…',
-  connection: '動詞辞書形 + ともなく／ともなしに',
+  connection: 'V辞書形 + ともなく／ともなしに',
   suffix: 'ともなく',
   example: 'テレビを見るともなく眺めていた。\n(無意間看著電視。)'
 },
@@ -5560,7 +5556,7 @@
   term: '〜にかたくない',
   type: 'no',
   meaning: '不難…（有明顯主觀推測）',
-  connection: '動詞辞書形 + にかたくない',
+  connection: 'V辞書形 + にかたくない',
   suffix: 'にかたくない',
   example: '彼の苦労は想像にかたくない。\n(不難想像他的辛苦。)'
 },
@@ -5569,7 +5565,7 @@
   term: '〜に忍びない',
   type: 'no',
   meaning: '不忍…／看不下…',
-  connection: '名詞／動詞辞書形 + に忍びない',
+  connection: '名詞／V辞書形 + に忍びない',
   suffix: 'に忍びない',
   example: '古い本を捨てるのは忍びない。\n(不忍心丟掉這些舊書。)'
 },
@@ -5578,7 +5574,7 @@
   term: '〜に堪える / 〜に堪えない',
   type: 'no',
   meaning: '堪える：值得…／堪えない：不值得…（多用於評價作品）',
-  connection: '動詞辞書形／名詞 + に堪える・に堪えない',
+  connection: 'V辞書形／名詞 + に堪える・に堪えない',
   suffix: 'に堪える / に堪えない',
   example: '読むに堪えない文章だ。\n(一篇完全不值得一讀的文章。)'
 },
@@ -5587,7 +5583,7 @@
   term: '〜に足る',
   type: 'no',
   meaning: '足以…／值得…（高度肯定）',
-  connection: '動詞辞書形／名詞 + に足る',
+  connection: 'V辞書形／名詞 + に足る',
   suffix: 'に足る',
   example: '信頼に足る人物だ。\n(是個值得信任的人。)'
 },
@@ -5596,7 +5592,7 @@
   term: '〜には無理がある',
   type: 'no',
   meaning: '對…來說牽強／有困難',
-  connection: '動詞辞書形／名詞 + には無理がある',
+  connection: 'V辞書形／名詞 + には無理がある',
   suffix: 'には無理がある',
   example: 'この説明では納得させるには無理がある。\n(用這樣的說明要讓人信服很牽強。)'
 },
@@ -5623,7 +5619,7 @@
   term: '〜べく',
   type: 'no',
   meaning: '為了…（文語強）',
-  connection: '動詞辞書形 + べく（する→すべく）',
+  connection: 'V辞書形 + べく（する→すべく）',
   suffix: 'べく',
   example: '成功すべく努力した。\n(為了成功而努力。)'
 },
@@ -5632,7 +5628,7 @@
   term: '〜まじき',
   type: 'no',
   meaning: '不應該…的（強烈否定，道德非難語氣）',
-  connection: '動詞辞書形 + まじき + 名詞',
+  connection: 'V辞書形 + まじき + 名詞',
   suffix: 'まじき',
   example: '教師にあるまじき行為だ。\n(是教師不應該有的行為。)'
 },
@@ -5641,7 +5637,7 @@
   term: '〜までもない / 〜までもなく',
   type: 'no',
   meaning: '不必做到…／用不到…（明顯不需要）',
-  connection: '動詞辞書形 + までもない・までもなく',
+  connection: 'V辞書形 + までもない・までもなく',
   suffix: 'までもない / までもなく',
   example: '説明するまでもないだろう。\n(應該不用我解釋吧。)'
 },
@@ -5668,7 +5664,7 @@
   term: '〜や否や',
   type: 'no',
   meaning: '一…就…（瞬間性、文語書面）',
-  connection: '動詞辞書形 + や否や（やいなや）',
+  connection: 'V辞書形 + や否や（やいなや）',
   suffix: 'や否や',
   example: 'ベルが鳴るや否や、彼は走り出した。\n(鈴聲一響他就跑出去。)'
 },
@@ -5717,6 +5713,7 @@
   suffix: 'ぬ',
   example: '我慢ならぬ。\n(無法忍受。)'
 },
+
 
         ];
 
@@ -5793,8 +5790,19 @@
                 const levelBadgeClass = getLevelBadgeClass(item.level);
                 const typeLabel = getTypeLabel(item.type);
 
-                const connectionHTML = item.connection || '';
+                const connectionText = item.connection || '';
                 const exampleText = item.example || '';
+                
+                // --- 🎯 修正後的邏輯：高亮 suffix ---
+                let connectionHTML = connectionText;
+                if (item.suffix && connectionText.includes(item.suffix)) {
+                    // 創建一個正則表達式，'g' 確保全局替換所有匹配項
+                    // 使用 $& 來代表匹配到的整個字串，並用 <span> 包裹
+                    const regex = new RegExp(item.suffix.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'), 'g');
+                    connectionHTML = connectionText.replace(regex, '<span>$&</span>');
+                }
+                // --- 結束修正 ---
+
 
                 card.innerHTML = `
                     <div class="card-main">
