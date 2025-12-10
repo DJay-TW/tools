@@ -5765,6 +5765,13 @@
             if (level === 'all') return '全部等級';
             return level;
         }
+function buildConnectionHTML(connection, suffix) {
+    if (!connection) return '';
+    const parts = connection.split('/');
+    return parts.map(part => {
+        return `<div class="connect-chip">${part.trim()} <span>＋ ${suffix || ''}</span></div>`;
+    }).join('');
+}
 
         function renderCards() {
             gridEl.innerHTML = '';
@@ -5791,7 +5798,8 @@
                 const levelBadgeClass = getLevelBadgeClass(item.level);
                 const typeLabel = getTypeLabel(item.type);
 
-                const connectionHTML = item.connection || '';
+                const connectionHTML = buildConnectionHTML(item.connection || '', item.suffix || '');
+
                 const exampleText = item.example || '';
 
                 card.innerHTML = `
@@ -5901,6 +5909,7 @@
     </script>
 </body>
 </html>
+
 
 
 
