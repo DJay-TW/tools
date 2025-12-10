@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
@@ -5764,27 +5766,7 @@
         function getLevelSummary(level) {
             if (level === 'all') return '全部等級';
             return level;
-       function renderConnectionChips(connectionStr, suffix) {
-    if (!connectionStr) return '';
-
-    const cleanSuffix = (suffix || '').trim();
-    const parts = connectionStr.split('/');
-
-    return parts.map(rawPart => {
-        let base = rawPart.trim();
-
-        if (cleanSuffix && base.includes(cleanSuffix)) {
-            const highlighted = base.replaceAll(
-                cleanSuffix,
-                `<span>${cleanSuffix}</span>`
-            );
-            return `<div class="connect-chip">${highlighted}</div>`;
         }
-
-        return `<div class="connect-chip">${base}</div>`;
-    }).join('');
-}
-
 
         function renderCards() {
             gridEl.innerHTML = '';
@@ -5811,8 +5793,7 @@
                 const levelBadgeClass = getLevelBadgeClass(item.level);
                 const typeLabel = getTypeLabel(item.type);
 
-                const connectionHTML = renderConnectionChips(item.connection || '', item.suffix || '');
-
+                const connectionHTML = item.connection || '';
                 const exampleText = item.example || '';
 
                 card.innerHTML = `
@@ -5922,9 +5903,3 @@
     </script>
 </body>
 </html>
-
-
-
-
-
-
