@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>句尾功能模組 B：理論全活用 × 實用封印（語意版）</title>
+  <style>
+  :root {
+            --bg-color: #121212;
+            --card-bg: #1e1e1e;
+            --text-primary: #e0e0e0;
+            --text-secondary: #a0a0a0;
+            --accent-color: #cfb53b;
+            --accent-hover: #eecf5b;
+            --border-color: #333;
+            --font-main: "Helvetica Neue", Helvetica, "PingFang TC",
+                         "Hiragino Sans GB", "Microsoft JhengHei", Arial, sans-serif;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            font-family: var(--font-main);
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 32px;
+            padding-top: 10px;
+        }
+
+        h1 {
+            font-size: 2rem;
+            color: var(--accent-color);
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        /* chips row */
+        .chip-row {
+            max-width: 900px;
+            margin: 0 auto 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: center;
+        }
+
+        .chip {
+            font-size: 0.8rem;
+            padding: 4px 10px;
+            border-radius: 999px;
+            border: 1px solid var(--border-color);
+            background-color: #181818;
+            color: var(--text-secondary);
+            white-space: nowrap;
+        }
+
+        /* Grid Layout */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 20px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        /* Card Style */
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.25);
+            border-color: var(--accent-color);
+        }
+
+        .card-header {
+            margin-bottom: 16px;
+            z-index: 1;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 10px;
+        }
+
+        .japanese-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--accent-color);
+            margin-bottom: 4px;
+        }
+
+        .reading {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 4px;
+        }
+
+        .chinese-meaning {
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: #fff;
+        }
+
+        .section {
+            margin-bottom: 14px;
+            z-index: 1;
+        }
+
+        .section-title {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+            border-left: 3px solid var(--accent-color);
+            padding-left: 8px;
+            margin-bottom: 6px;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .section-content {
+            font-size: 0.9rem;
+            color: #ccc;
+        }
+
+        .section-content ul {
+            padding-left: 20px;
+            margin: 0;
+        }
+
+        .section-content li {
+            margin-bottom: 4px;
+        }
+
+        .note {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-top: 6px;
+        }
+
+        @media (max-width: 600px) {
+            .grid-container { grid-template-columns: 1fr; }
+            h1 { font-size: 1.6rem; }
+        }
+  /* small tweaks for this page */
+  .section-content ul { padding-left: 18px; }
+  .section-content li { margin-bottom: 10px; }
+  .reading { font-size: 0.85rem; }
+  .chinese-meaning { font-size: 0.95rem; }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>句尾功能模組 B</h1>
+  <div class="subtitle">理論全活用 × 實用封印（每式含語意翻譯）</div>
+</header>
+
+<div class="chip-row">
+  <span class="chip">🟢 反射層：自然／高頻</span>
+<span class="chip">🟡 可用但重：限定語境</span>
+<span class="chip">🔴 封印：理論可行但語感拒絕</span>
+<span class="chip">B 模組：句尾最小判斷單位</span>
+</div>
+
+<div class="grid-container">
+  
+    <div class="card">
+        <div class="card-header">
+            <div class="japanese-title">Module 1｜Vている（狀態）</div>
+            <div class="reading">狀態・現況（進行／定著）</div>
+            <div class="chinese-meaning">世界「現在就是這樣」的描述模組。</div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Forms</div>
+            <div class="section-content">
+                <ul>
+                    <li><b>している</b> <span style='color: var(--text-secondary);'>[🟢]</span><br><span class='note' style='margin-top:2px; display:block;'>現在正處於這個狀態</span></li>
+<li><b>していない</b> <span style='color: var(--text-secondary);'>[🟢]</span><br><span class='note' style='margin-top:2px; display:block;'>目前並不是這樣</span></li>
+<li><b>していた</b> <span style='color: var(--text-secondary);'>[🟢]</span><br><span class='note' style='margin-top:2px; display:block;'>當時處於那個狀態</span></li>
+<li><b>していなかった</b> <span style='color: var(--text-secondary);'>[🟡]</span><br><span class='note' style='margin-top:2px; display:block;'>當時其實不是那樣</span></li>
+<li><b>しています</b> <span style='color: var(--text-secondary);'>[🟢]</span><br><span class='note' style='margin-top:2px; display:block;'>目前是這個狀態（禮貌）</span></li>
+<li><b>していません</b> <span style='color: var(--text-secondary);'>[🟢]</span><br><span class='note' style='margin-top:2px; display:block;'>目前不是這個狀態（禮貌）</span></li>
+<li><b>していました</b> <span style='color: var(--text-secondary);'>[🟢]</span><br><span class='note' style='margin-top:2px; display:block;'>當時是那個狀態（正式回顧）</span></li>
+<li><b>していませんでした</b> <span style='color: var(--text-secondary);'>[🟡]</span><br><span class='note' style='margin-top:2px; display:block;'>當時並非如此（正式澄清）</span></li>
+<li><b>しているんです</b> <span style='color: var(--text-secondary);'>[🟢]</span><br><span class='note' style='margin-top:2px; display:block;'>我現在的狀況就是這樣（說明）</span></li>
+<li><b>していなかったんです</b> <span style='color: var(--text-secondary);'>[🟡]</span><br><span class='note' style='margin-top:2px; display:block;'>其實當時並沒有那樣（說明）</span></li>
+<li><b>しているわけです</b> <span style='color: var(--text-secondary);'>[🟡]</span><br><span class='note' style='margin-top:2px; display:block;'>結論來說，現在是這個狀態</span></li>
+<li><b>していなかったわけです</b> <span style='color: var(--text-secondary);'>[🔴]</span><br><span class='note' style='margin-top:2px; display:block;'>❌（狀態描述與結論判斷衝突）</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Note</div>
+            <div class="section-content">
+                <p>封印核心：Vている 本身是「世界描述中」，太早接「結論（わけだ）」容易語感拒絕。</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="card">
+        <div class="card-header">
+            <div class="japanese-title">Module 1-補｜Vてある（結果狀態）</div>
+            <div class="reading">目的性結果 → 現在維持</div>
+            <div class="chinese-meaning">有人做過 → 現在保持在完成狀態。</div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Forms</div>
+            <div class="section-content">
+                <ul>
+                    <li><b>してある</b> <span style='color: var(--text-secondary);'>[🟢]</span><br><span class='note' style='margin-top:2px; display:block;'>已經做好並保持著</span></li>
+<li><b>してあった</b> <span style='color: var(--text-secondary);'>[🟢]</span><br><span class='note' style='margin-top:2px; display:block;'>當時已經處理完成</span></li>
+<li><b>してあります</b> <span style='color: var(--text-secondary);'>[🟢]</span><br><span class='note' style='margin-top:2px; display:block;'>已準備完成（文件／現況）</span></li>
+<li><b>してありました</b> <span style='color: var(--text-secondary);'>[🟡]</span><br><span class='note' style='margin-top:2px; display:block;'>當時已完成（正式回報）</span></li>
+<li><b>してあるんです</b> <span style='color: var(--text-secondary);'>[🟡]</span><br><span class='note' style='margin-top:2px; display:block;'>所以現在是完成狀態（說明）</span></li>
+<li><b>してあるわけです</b> <span style='color: var(--text-secondary);'>[🔴]</span><br><span class='note' style='margin-top:2px; display:block;'>❌（結果本身不需要再下結論）</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Note</div>
+            <div class="section-content">
+                <p>主語通常是「結果」而非人；用於說明書、標示、現況描述很高頻。</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="card">
+        <div class="card-header">
+            <div class="japanese-title">Module 2｜Vてくる（過去→現在）</div>
+            <div class="reading">變化一路逼近「現在」</div>
+            <div class="chinese-meaning">過去累積／趨勢一路走到此刻。</div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Forms</div>
+            <div class="section-content">
+                <ul>
+                    <li><b>してくる</b> <span style='color: var(--text-secondary);'>[🟢]</span><br><span class='note' style='margin-top:2px; display:block;'>狀況正一路朝現在靠近</span></li>
+<li><b>してきた</b> <span style='color: var(--text-secondary);'>[🟢]</span><br><span class='note' style='margin-top:2px; display:block;'>已經一路走到現在</span></li>
+<li><b>してこなかった</b> <span style='color: var(--text-secondary);'>[🟢]</span><br><span class='note' style='margin-top:2px; display:block;'>過去一直都沒有</span></li>
+<li><b>してきます</b> <span style='color: var(--text-secondary);'>[🟢]</span><br><span class='note' style='margin-top:2px; display:block;'>將一路延續到現在（禮貌）</span></li>
+<li><b>してきました</b> <span style='color: var(--text-secondary);'>[🟢]</span><br><span class='note' style='margin-top:2px; display:block;'>已累積至今（回報）</span></li>
+<li><b>してきたんです</b> <span style='color: var(--text-secondary);'>[🟢]</span><br><span class='note' style='margin-top:2px; display:block;'>現在會這樣是有來歷的</span></li>
+<li><b>してこなかったんです</b> <span style='color: var(--text-secondary);'>[🟡]</span><br><span class='note' style='margin-top:2px; display:block;'>其實一路以來都沒有（對比／反駁）</span></li>
+<li><b>してきたわけです</b> <span style='color: var(--text-secondary);'>[🟡]</span><br><span class='note' style='margin-top:2px; display:block;'>這樣一路走來是有原因的（論述）</span></li>
+<li><b>してこなかったわけです</b> <span style='color: var(--text-secondary);'>[🔴]</span><br><span class='note' style='margin-top:2px; display:block;'>❌（否定累積＋結論過重）</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Note</div>
+            <div class="section-content">
+                <p>常與 Vている 合體 → してきている（現在狀態＝累積而來）。</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="card">
+        <div class="card-header">
+            <div class="japanese-title">Module 2｜Vていく（現在→未來）</div>
+            <div class="reading">從「現在」開始往後延展</div>
+            <div class="chinese-meaning">此刻起的推進／延續宣告。</div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Forms</div>
+            <div class="section-content">
+                <ul>
+                    <li><b>していく</b> <span style='color: var(--text-secondary);'>[🟢]</span><br><span class='note' style='margin-top:2px; display:block;'>從現在開始往後推進</span></li>
+<li><b>していった</b> <span style='color: var(--text-secondary);'>[🟢]</span><br><span class='note' style='margin-top:2px; display:block;'>當時開始一路延續</span></li>
+<li><b>していきます</b> <span style='color: var(--text-secondary);'>[🟢]</span><br><span class='note' style='margin-top:2px; display:block;'>接下來會這樣做（禮貌）</span></li>
+<li><b>していくつもりだ</b> <span style='color: var(--text-secondary);'>[🟢]</span><br><span class='note' style='margin-top:2px; display:block;'>心裡已決定要這樣走</span></li>
+<li><b>していく予定です</b> <span style='color: var(--text-secondary);'>[🟢]</span><br><span class='note' style='margin-top:2px; display:block;'>已經排定會這樣進行</span></li>
+<li><b>していくんです</b> <span style='color: var(--text-secondary);'>[🟡]</span><br><span class='note' style='margin-top:2px; display:block;'>方向確定是往這邊走（強調）</span></li>
+<li><b>していくわけです</b> <span style='color: var(--text-secondary);'>[🟡]</span><br><span class='note' style='margin-top:2px; display:block;'>說明一下接下來的走向</span></li>
+<li><b>していかないわけです</b> <span style='color: var(--text-secondary);'>[🔴]</span><br><span class='note' style='margin-top:2px; display:block;'>❌（否定方向＋結論衝突）</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Note</div>
+            <div class="section-content">
+                <p>Vていく 後面接 予定／つもり 最自然；也常接 べき／必要がある（評論）。</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="card">
+        <div class="card-header">
+            <div class="japanese-title">Module 2-核心｜Vてきている（累積狀態）</div>
+            <div class="reading">過去累積 → 現況（分析引擎）</div>
+            <div class="chinese-meaning">為什麼「現在」會是這樣（非常高頻）。</div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Forms</div>
+            <div class="section-content">
+                <ul>
+                    <li><b>してきている</b> <span style='color: var(--text-secondary);'>[🟢]</span><br><span class='note' style='margin-top:2px; display:block;'>現在的狀態是長期累積的結果</span></li>
+<li><b>してきていた</b> <span style='color: var(--text-secondary);'>[🟢]</span><br><span class='note' style='margin-top:2px; display:block;'>當時已經累積到那一步</span></li>
+<li><b>してきています</b> <span style='color: var(--text-secondary);'>[🟢]</span><br><span class='note' style='margin-top:2px; display:block;'>目前呈現出累積至今的狀態</span></li>
+<li><b>してきているんです</b> <span style='color: var(--text-secondary);'>[🟢]</span><br><span class='note' style='margin-top:2px; display:block;'>所以現在才會變成這樣</span></li>
+<li><b>してきていない</b> <span style='color: var(--text-secondary);'>[🟡]</span><br><span class='note' style='margin-top:2px; display:block;'>本來該累積但實際沒有</span></li>
+<li><b>してきていなかった</b> <span style='color: var(--text-secondary);'>[🟡]</span><br><span class='note' style='margin-top:2px; display:block;'>當時並未形成應有的累積（評論）</span></li>
+<li><b>してきているわけです</b> <span style='color: var(--text-secondary);'>[🟡]</span><br><span class='note' style='margin-top:2px; display:block;'>綜合來看就是這樣演變（論述）</span></li>
+<li><b>してきていなかったわけです</b> <span style='color: var(--text-secondary);'>[🔴]</span><br><span class='note' style='margin-top:2px; display:block;'>❌（多層否定＋結論過載）</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Note</div>
+            <div class="section-content">
+                <p>新聞、評論、分析對話的主引擎：看到就先抓「來歷→現況」這條線。</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="card">
+        <div class="card-header">
+            <div class="japanese-title">Module 3｜〜ようになる（門檻）</div>
+            <div class="reading">跨過臨界點（不能→能／不會→會）</div>
+            <div class="chinese-meaning">能力／習慣的「跨線」描述。</div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Forms</div>
+            <div class="section-content">
+                <ul>
+                    <li><b>できるようになる</b> <span style='color: var(--text-secondary);'>[🟢]</span><br><span class='note' style='margin-top:2px; display:block;'>從不能到能</span></li>
+<li><b>できるようになった</b> <span style='color: var(--text-secondary);'>[🟢]</span><br><span class='note' style='margin-top:2px; display:block;'>已經跨過那條門檻</span></li>
+<li><b>できるようになります</b> <span style='color: var(--text-secondary);'>[🟢]</span><br><span class='note' style='margin-top:2px; display:block;'>將會變得能做到</span></li>
+<li><b>できるようになってきている</b> <span style='color: var(--text-secondary);'>[🟢]</span><br><span class='note' style='margin-top:2px; display:block;'>正逐漸達到能做的狀態</span></li>
+<li><b>できるようになっていく</b> <span style='color: var(--text-secondary);'>[🟢]</span><br><span class='note' style='margin-top:2px; display:block;'>之後會越來越能做到</span></li>
+<li><b>できるようにならなかった</b> <span style='color: var(--text-secondary);'>[🟡]</span><br><span class='note' style='margin-top:2px; display:block;'>最終仍未跨過門檻</span></li>
+<li><b>できるようにならなかったんです</b> <span style='color: var(--text-secondary);'>[🟡]</span><br><span class='note' style='margin-top:2px; display:block;'>結果是沒能做到（說明）</span></li>
+<li><b>できるようにならなかったわけです</b> <span style='color: var(--text-secondary);'>[🔴]</span><br><span class='note' style='margin-top:2px; display:block;'>❌（門檻失敗不適合再下結論）</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Note</div>
+            <div class="section-content">
+                <p>常與世界線合體：〜ようになってきている／〜ようになっていく。</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="card">
+        <div class="card-header">
+            <div class="japanese-title">Module 4｜〜てしまう（完結）</div>
+            <div class="reading">完結／不可逆＋情緒收束</div>
+            <div class="chinese-meaning">完成、收尾、甚至『糟了』都包。</div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Forms</div>
+            <div class="section-content">
+                <ul>
+                    <li><b>してしまう</b> <span style='color: var(--text-secondary);'>[🟢]</span><br><span class='note' style='margin-top:2px; display:block;'>做完了／事情收尾</span></li>
+<li><b>してしまった</b> <span style='color: var(--text-secondary);'>[🟢]</span><br><span class='note' style='margin-top:2px; display:block;'>已成定局</span></li>
+<li><b>してしまいます</b> <span style='color: var(--text-secondary);'>[🟢]</span><br><span class='note' style='margin-top:2px; display:block;'>即將完成（禮貌）</span></li>
+<li><b>してしまったんです</b> <span style='color: var(--text-secondary);'>[🟢]</span><br><span class='note' style='margin-top:2px; display:block;'>已經發生，帶情緒（說明）</span></li>
+<li><b>してしまっている</b> <span style='color: var(--text-secondary);'>[🟢]</span><br><span class='note' style='margin-top:2px; display:block;'>已完成並卡在結果狀態</span></li>
+<li><b>してしまわなかった</b> <span style='color: var(--text-secondary);'>[🟡]</span><br><span class='note' style='margin-top:2px; display:block;'>結果沒有走到完結（對比）</span></li>
+<li><b>してしまわなかったわけです</b> <span style='color: var(--text-secondary);'>[🔴]</span><br><span class='note' style='margin-top:2px; display:block;'>❌（否定完結＋結論冗餘）</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Note</div>
+            <div class="section-content">
+                <p>你看到 〜てしまっている，多半就是『完了而且狀態還在』。</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="card">
+        <div class="card-header">
+            <div class="japanese-title">Module 5｜〜ことになる（制度／推導）</div>
+            <div class="reading">不是我決定，是制度／邏輯推導</div>
+            <div class="chinese-meaning">結果歸結（規則、安排、推論）。</div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Forms</div>
+            <div class="section-content">
+                <ul>
+                    <li><b>行くことになる</b> <span style='color: var(--text-secondary);'>[🟢]</span><br><span class='note' style='margin-top:2px; display:block;'>推導結果是要去</span></li>
+<li><b>行くことになった</b> <span style='color: var(--text-secondary);'>[🟢]</span><br><span class='note' style='margin-top:2px; display:block;'>已確定要去</span></li>
+<li><b>行くことになります</b> <span style='color: var(--text-secondary);'>[🟢]</span><br><span class='note' style='margin-top:2px; display:block;'>規則上會這樣（禮貌）</span></li>
+<li><b>行くことになっている</b> <span style='color: var(--text-secondary);'>[🟢]</span><br><span class='note' style='margin-top:2px; display:block;'>本來制度就是如此</span></li>
+<li><b>行くことになったんです</b> <span style='color: var(--text-secondary);'>[🟢]</span><br><span class='note' style='margin-top:2px; display:block;'>結果最後變成這樣（說明）</span></li>
+<li><b>行くことにならなかった</b> <span style='color: var(--text-secondary);'>[🟡]</span><br><span class='note' style='margin-top:2px; display:block;'>最終沒有成行（取消）</span></li>
+<li><b>行くことにならなかったわけです</b> <span style='color: var(--text-secondary);'>[🔴]</span><br><span class='note' style='margin-top:2px; display:block;'>❌（制度結果不需再下結論）</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Note</div>
+            <div class="section-content">
+                <p>〜ことになっている 是『制度態』：規則／流程／慣例。</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="card">
+        <div class="card-header">
+            <div class="japanese-title">Module 6｜意圖（つもり／予定）</div>
+            <div class="reading">意圖／計畫（人主觀 vs 客觀安排）</div>
+            <div class="chinese-meaning">內心決定與行程安排的句尾封口。</div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Forms</div>
+            <div class="section-content">
+                <ul>
+                    <li><b>行くつもりだ</b> <span style='color: var(--text-secondary);'>[🟢]</span><br><span class='note' style='margin-top:2px; display:block;'>我打算要去</span></li>
+<li><b>行くつもりです</b> <span style='color: var(--text-secondary);'>[🟢]</span><br><span class='note' style='margin-top:2px; display:block;'>我打算要去（禮貌）</span></li>
+<li><b>行く予定です</b> <span style='color: var(--text-secondary);'>[🟢]</span><br><span class='note' style='margin-top:2px; display:block;'>行程上已排定</span></li>
+<li><b>行くつもりだった</b> <span style='color: var(--text-secondary);'>[🟢]</span><br><span class='note' style='margin-top:2px; display:block;'>當時本來打算去</span></li>
+<li><b>行くつもりではなかった</b> <span style='color: var(--text-secondary);'>[🟡]</span><br><span class='note' style='margin-top:2px; display:block;'>原本並沒有這個打算（澄清）</span></li>
+<li><b>行くつもりではなかったわけです</b> <span style='color: var(--text-secondary);'>[🔴]</span><br><span class='note' style='margin-top:2px; display:block;'>❌（意圖否定＋結論過載）</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Note</div>
+            <div class="section-content">
+                <p>Vていく＋予定／つもり 是母語者超自然組合。</p>
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+</body>
+</html>
