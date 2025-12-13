@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>形容詞口語丁寧活用：い形容詞／な形容詞／いい</title>
+  <style>
+:root {
+            --bg-color: #121212;
+            --card-bg: #1e1e1e;
+            --text-primary: #e0e0e0;
+            --text-secondary: #a0a0a0;
+            --accent-color: #cfb53b;
+            --accent-hover: #eecf5b;
+            --border-color: #333;
+            --font-main: "Helvetica Neue", Helvetica, "PingFang TC",
+                         "Hiragino Sans GB", "Microsoft JhengHei", Arial, sans-serif;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            font-family: var(--font-main);
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 32px;
+            padding-top: 10px;
+        }
+
+        h1 {
+            font-size: 2rem;
+            color: var(--accent-color);
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        /* chips row */
+        .chip-row {
+            max-width: 900px;
+            margin: 0 auto 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: center;
+        }
+
+        .chip {
+            font-size: 0.8rem;
+            padding: 4px 10px;
+            border-radius: 999px;
+            border: 1px solid var(--border-color);
+            background-color: #181818;
+            color: var(--text-secondary);
+            white-space: nowrap;
+        }
+
+        /* Grid Layout */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 20px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        /* Card Style */
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.25);
+            border-color: var(--accent-color);
+        }
+
+        .card-header {
+            margin-bottom: 16px;
+            z-index: 1;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 10px;
+        }
+
+        .japanese-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--accent-color);
+            margin-bottom: 4px;
+        }
+
+        .reading {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 4px;
+        }
+
+        .chinese-meaning {
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: #fff;
+        }
+
+        .section {
+            margin-bottom: 14px;
+            z-index: 1;
+        }
+
+        .section-title {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+            border-left: 3px solid var(--accent-color);
+            padding-left: 8px;
+            margin-bottom: 6px;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .section-content {
+            font-size: 0.9rem;
+            color: #ccc;
+        }
+
+        .section-content ul {
+            padding-left: 20px;
+            margin: 0;
+        }
+
+        .section-content li {
+            margin-bottom: 4px;
+        }
+
+        .note {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-top: 6px;
+        }
+
+        @media (max-width: 600px) {
+            .grid-container { grid-template-columns: 1fr; }
+            h1 { font-size: 1.6rem; }
+        }
+    /* page-specific tweaks (keep minimal + same aesthetic) */
+    .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
+    code {
+      background: #151515;
+      border: 1px solid var(--border-color);
+      padding: 2px 6px;
+      border-radius: 6px;
+      color: var(--text-primary);
+    }
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    @media (max-width: 700px) {
+      .two-col { grid-template-columns: 1fr; }
+    }
+    .divider {
+      height: 1px;
+      background: var(--border-color);
+      margin: 10px 0 4px;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>形容詞口語丁寧活用</h1>
+    <div class="subtitle">只收「實際會講、實際會聽到」的版本（暗色速查）</div>
+  </header>
+
+  <div class="chip-row">
+    <span class="chip">い形容詞：原形 + です / でした</span>
+    <span class="chip">な形容詞：名詞系統 + です</span>
+    <span class="chip">いい：變化全部用 よ</span>
+    <span class="chip">避免生硬：〜ありません 系</span>
+  </div>
+
+  <div class="grid-container">
+
+    <!-- Card: い形容詞 -->
+    <div class="card">
+      <div class="card-header">
+        <div class="japanese-title">① い形容詞（例：高い）</div>
+        <div class="reading">核心：<span class="mono">語幹 + い</span> ／ 口語丁寧：原形 <span class="mono">+ です</span></div>
+        <div class="chinese-meaning">不用背硬式敬語，日常就靠「です／でした」。</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">常用活用（口語安全）</div>
+        <div class="section-content">
+          <ul>
+            <li>基本：高い → <b>高いです</b></li>
+            <li>否定：高くない → <b>高くないです</b></li>
+            <li>過去：高かった → <b>高かったです</b></li>
+            <li>過去否定：高くなかった → <b>高くなかったです</b></li>
+            <li>て形：高くて</li>
+            <li>副詞：高く</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">常見接續</div>
+        <div class="section-content">
+          <ul>
+            <li>推量：高いでしょう</li>
+            <li>條件：高ければ</li>
+          </ul>
+          <div class="note">備註：<code>高くありません</code>／<code>高くありませんでした</code> 偏硬、偏櫃檯/文件感，日常對話可不必用。</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card: な形容詞 -->
+    <div class="card">
+      <div class="card-header">
+        <div class="japanese-title">② な形容詞（例：静か）</div>
+        <div class="reading">核心：<span class="mono">語幹 + な／だ</span> ／ 口語丁寧：<span class="mono">〜です</span> 系</div>
+        <div class="chinese-meaning">判斷只看「後面接什麼」：名詞？句尾？接續？</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">「な／だ」使用條件（一句判斷法）</div>
+        <div class="section-content">
+          <div class="two-col">
+            <div>
+              <div class="divider"></div>
+              <p><b>後面是名詞 → 用「な」</b></p>
+              <ul>
+                <li>静かな部屋</li>
+                <li>便利なアプリ</li>
+                <li>大事な話</li>
+              </ul>
+            </div>
+            <div>
+              <div class="divider"></div>
+              <p><b>句子結尾（斷句）→ 用「だ／です」</b></p>
+              <ul>
+                <li>部屋は静かだ</li>
+                <li>それは大事です</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="divider"></div>
+          <p><b>要接續／變形 → 兩個都不用</b></p>
+          <ul>
+            <li>静かで助かる</li>
+            <li>静かに話す</li>
+            <li>静かなら行く</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">常用活用（口語安全）</div>
+        <div class="section-content">
+          <ul>
+            <li>基本：静かだ → <b>静かです</b></li>
+            <li>否定：静かじゃない → <b>静かじゃないです</b></li>
+            <li>過去：静かだった → <b>静かでした</b></li>
+            <li>過去否定：静かじゃなかった → <b>静かじゃなかったです</b></li>
+            <li>て形：静かで</li>
+            <li>副詞：静かに</li>
+          </ul>
+          <div class="note">備註：<code>ではありません</code>／<code>ではありませんでした</code> 偏正式，日常口語多用 <code>じゃないです</code> 系。</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card: いい -->
+    <div class="card">
+      <div class="card-header">
+        <div class="japanese-title">③ 不規則：いい（良い）</div>
+        <div class="reading">只有基本形是 <span class="mono">いい</span>，其餘全部用 <span class="mono">よ</span></div>
+        <div class="chinese-meaning">這個不規則值得單獨背：背一行就好。</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">口語安全形</div>
+        <div class="section-content">
+          <ul>
+            <li>基本：<b>いいです</b></li>
+            <li>否定：<b>よくないです</b></li>
+            <li>過去：<b>よかったです</b></li>
+            <li>過去否定：<b>よくなかったです</b></li>
+            <li>て形：よくて</li>
+            <li>副詞：よく</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">常見接續</div>
+        <div class="section-content">
+          <ul>
+            <li>推量：いいでしょう</li>
+            <li>條件：よければ</li>
+          </ul>
+          <div class="note">避免：<code>いくない</code>／<code>いかった</code>（常見誤造）。</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>
