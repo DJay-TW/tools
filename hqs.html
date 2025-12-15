@@ -1,0 +1,645 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>High-Frequency Japanese Collocations</title>
+  <meta name="color-scheme" content="dark" />
+  <style>
+    :root{
+      --bg: #0b0d12;
+      --panel: #0f1320;
+      --panel2: #0c1020;
+      --text: #e7eaf2;
+      --muted: #a6afc3;
+      --faint: #6f7890;
+      --line: rgba(255,255,255,.08);
+      --shadow: 0 12px 36px rgba(0,0,0,.45);
+      --radius: 18px;
+      --radius2: 14px;
+      --accent: rgba(255,255,255,.12);
+      --focus: rgba(255,255,255,.22);
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", Arial, sans-serif;
+    }
+    *{ box-sizing: border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      font-family: var(--sans);
+      background:
+        radial-gradient(1200px 600px at 15% 5%, rgba(255,255,255,.06), transparent 60%),
+        radial-gradient(900px 500px at 85% 20%, rgba(255,255,255,.05), transparent 55%),
+        var(--bg);
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      letter-spacing: .1px;
+    }
+    a{ color: inherit; text-decoration:none; }
+    .wrap{
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 28px 18px 60px;
+    }
+    header{
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap: 18px;
+      margin-bottom: 18px;
+    }
+    .title{
+      display:flex;
+      flex-direction:column;
+      gap: 6px;
+    }
+    h1{
+      margin:0;
+      font-size: 18px;
+      font-weight: 650;
+      letter-spacing: .3px;
+    }
+    .sub{
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.4;
+    }
+
+    .controls{
+      display:flex;
+      gap: 10px;
+      align-items:center;
+      flex-wrap: wrap;
+      justify-content:flex-end;
+    }
+    .input{
+      display:flex;
+      align-items:center;
+      gap: 10px;
+      padding: 10px 12px;
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      box-shadow: 0 1px 0 rgba(255,255,255,.04) inset;
+      min-width: 260px;
+    }
+    .input input{
+      width:100%;
+      background: transparent;
+      border:none;
+      outline:none;
+      color: var(--text);
+      font-size: 13px;
+    }
+    .pill{
+      padding: 10px 12px;
+      background: rgba(255,255,255,.04);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      cursor:pointer;
+      user-select:none;
+      font-size: 13px;
+      color: var(--muted);
+      transition: transform .08s ease, background .12s ease, border-color .12s ease;
+    }
+    .pill:hover{ background: rgba(255,255,255,.06); border-color: rgba(255,255,255,.12); }
+    .pill:active{ transform: translateY(1px); }
+    .pill[aria-pressed="true"]{
+      background: rgba(255,255,255,.08);
+      border-color: rgba(255,255,255,.18);
+      color: var(--text);
+    }
+
+    .stats{
+      margin: 10px 0 18px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap: 12px;
+      color: var(--faint);
+      font-size: 12px;
+    }
+
+    .grid{
+      display:flex;
+      flex-direction:column;
+      gap: 14px;
+    }
+    details.group{
+      background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    summary{
+      list-style:none;
+      cursor:pointer;
+      padding: 14px 16px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 10px;
+      user-select:none;
+      border-bottom: 1px solid transparent;
+    }
+    summary::-webkit-details-marker{ display:none; }
+    .group[open] summary{
+      border-bottom-color: var(--line);
+      background: rgba(255,255,255,.02);
+    }
+    .groupTitle{
+      display:flex;
+      flex-direction:column;
+      gap: 4px;
+      min-width: 0;
+    }
+    .groupTitle .name{
+      font-weight: 650;
+      font-size: 13px;
+      letter-spacing: .2px;
+    }
+    .groupTitle .meta{
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .chev{
+      width: 28px; height: 28px;
+      border-radius: 10px;
+      display:grid; place-items:center;
+      border: 1px solid var(--line);
+      background: rgba(0,0,0,.12);
+      flex: 0 0 auto;
+      transition: transform .14s ease;
+    }
+    details[open] .chev{ transform: rotate(180deg); }
+
+    .cards{
+      padding: 14px;
+      display:grid;
+      grid-template-columns: repeat(2, minmax(0,1fr));
+      gap: 10px;
+    }
+    @media (max-width: 860px){
+      .cards{ grid-template-columns: 1fr; }
+      .input{ min-width: 100%; }
+      header{ align-items:flex-start; flex-direction:column; }
+      .controls{ width:100%; justify-content:stretch; }
+    }
+    .card{
+      background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+      border: 1px solid var(--line);
+      border-radius: var(--radius2);
+      padding: 12px 12px 11px;
+      display:flex;
+      flex-direction:column;
+      gap: 9px;
+      position:relative;
+      min-height: 92px;
+    }
+    .topRow{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap: 10px;
+    }
+    .jp{
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: .2px;
+      line-height: 1.2;
+      word-break: break-word;
+    }
+    .kana{
+      color: var(--muted);
+      font-size: 12px;
+      font-family: var(--mono);
+      letter-spacing: .2px;
+    }
+    .zh{
+      color: var(--text);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+    .btn{
+      flex: 0 0 auto;
+      border: 1px solid var(--line);
+      background: rgba(0,0,0,.14);
+      color: var(--muted);
+      font-size: 12px;
+      padding: 7px 10px;
+      border-radius: 12px;
+      cursor:pointer;
+      transition: background .12s ease, border-color .12s ease, color .12s ease;
+    }
+    .btn:hover{
+      background: rgba(255,255,255,.06);
+      border-color: rgba(255,255,255,.14);
+      color: var(--text);
+    }
+    .btn:active{ transform: translateY(1px); }
+    .toast{
+      position: fixed;
+      left: 50%;
+      bottom: 18px;
+      transform: translateX(-50%);
+      background: rgba(15,19,32,.92);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 10px 12px;
+      color: var(--muted);
+      font-size: 12px;
+      box-shadow: var(--shadow);
+      opacity: 0;
+      pointer-events:none;
+      transition: opacity .16s ease, transform .16s ease;
+    }
+    .toast.show{
+      opacity: 1;
+      transform: translateX(-50%) translateY(-4px);
+    }
+    footer{
+      margin-top: 22px;
+      color: var(--faint);
+      font-size: 12px;
+      display:flex;
+      justify-content:space-between;
+      gap: 12px;
+      flex-wrap:wrap;
+    }
+    kbd{
+      font-family: var(--mono);
+      font-size: 11px;
+      padding: 2px 6px;
+      border: 1px solid var(--line);
+      border-bottom-color: rgba(255,255,255,.18);
+      border-radius: 8px;
+      background: rgba(0,0,0,.16);
+      color: var(--muted);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <header>
+      <div class="title">
+        <h1>超高頻搭配詞（反射層）</h1>
+        <div class="sub">暗色靜態頁｜分類展開｜搜尋｜點「Copy」複製日文表達</div>
+      </div>
+      <div class="controls">
+        <div class="input" role="search">
+          <input id="q" placeholder="搜尋：日文 / 假名 / 中文（例如：落ちる、きが、忙、對齊）" autocomplete="off" />
+        </div>
+        <button class="pill" id="toggleAll" aria-pressed="false" type="button">展開全部</button>
+        <button class="pill" id="clear" type="button">清除</button>
+      </div>
+    </header>
+
+    <div class="stats">
+      <div id="count">—</div>
+      <div>快捷：<kbd>/</kbd> 聚焦搜尋　<kbd>Esc</kbd> 清除</div>
+    </div>
+
+    <main id="app" class="grid"></main>
+
+    <footer>
+      <div>Data: 145 items · Minimal dark UI</div>
+      <div>Single-file static HTML</div>
+    </footer>
+  </div>
+
+  <div id="toast" class="toast" aria-live="polite"></div>
+
+  <script>
+    // =========================
+    // Data
+    // =========================
+    const DATA = [
+      {cat:"心智・思考與記憶", no:1, jp:"目を通す", kana:"めをとおす", zh:"過目、瀏覽"},
+      {cat:"心智・思考與記憶", no:2, jp:"頭に入れる", kana:"あたまにいれる", zh:"記住、放進腦袋"},
+      {cat:"心智・思考與記憶", no:3, jp:"腑に落ちない", kana:"ふにおちない", zh:"無法理解、想不通"},
+      {cat:"心智・思考與記憶", no:4, jp:"目に焼き付く", kana:"めにやきつく", zh:"刻印在眼裡、難以忘懷"},
+      {cat:"心智・思考與記憶", no:5, jp:"耳に残る", kana:"みみにのこる", zh:"縈繞在耳邊、聽了難忘"},
+      {cat:"心智・思考與記憶", no:6, jp:"ピンとくる", kana:"ぴんとくる", zh:"馬上理解、有靈感"},
+      {cat:"心智・思考與記憶", no:7, jp:"見当がつく", kana:"けんとうがつく", zh:"大致推測、心裡有數"},
+      {cat:"心智・思考與記憶", no:8, jp:"見当違い", kana:"けんとうちがい", zh:"離題、完全搞錯"},
+      {cat:"心智・思考與記憶", no:9, jp:"気に留める", kana:"きにとめる", zh:"放在心上、留意"},
+      {cat:"心智・思考與記憶", no:10, jp:"気に留めない", kana:"きにとめない", zh:"不放在心上、不在意"},
+      {cat:"心智・思考與記憶", no:11, jp:"心に響く", kana:"こころにひびく", zh:"觸動人心、打動心弦"},
+      {cat:"心智・思考與記憶", no:12, jp:"胸に刻む", kana:"むねにきざむ", zh:"銘記在心"},
+      {cat:"心智・思考與記憶", no:13, jp:"先が読める", kana:"さきがよめる", zh:"看得出後勢、看得見前景"},
+      {cat:"心智・思考與記憶", no:14, jp:"先が見えない", kana:"さきがみえない", zh:"前景不明、看不見未來"},
+
+      {cat:"態度・情緒", no:15, jp:"気が重い", kana:"きがおもい", zh:"覺得沈重、提不起勁"},
+      {cat:"態度・情緒", no:16, jp:"気が楽だ", kana:"きがらくだ", zh:"輕鬆、無壓力"},
+      {cat:"態度・情緒", no:17, jp:"気が利く", kana:"きがきく", zh:"機靈周到、貼心"},
+      {cat:"態度・情緒", no:18, jp:"気が回る", kana:"きがまわる", zh:"想得周全、細膩"},
+      {cat:"態度・情緒", no:19, jp:"気が短い", kana:"きがみじかい", zh:"急性子、沒耐性"},
+      {cat:"態度・情緒", no:20, jp:"気が長い", kana:"きがながい", zh:"有耐性、慢性子"},
+      {cat:"態度・情緒", no:21, jp:"気が散る", kana:"きがちる", zh:"心不在焉、分心"},
+      {cat:"態度・情緒", no:22, jp:"気を遣う", kana:"きをつかう", zh:"顧慮、費心"},
+      {cat:"態度・情緒", no:23, jp:"気を抜く", kana:"きをぬく", zh:"放鬆警戒、鬆懈"},
+      {cat:"態度・情緒", no:24, jp:"気を張る", kana:"きをはる", zh:"繃緊神經、打起精神"},
+      {cat:"態度・情緒", no:25, jp:"ムッとする", kana:"むっとする", zh:"一肚子氣、悶怒"},
+      {cat:"態度・情緒", no:26, jp:"カチンとくる", kana:"かちんとくる", zh:"被激到、火冒三丈"},
+      {cat:"態度・情緒", no:27, jp:"しっくりくる", kana:"しっくりくる", zh:"合拍、合適、順心"},
+      {cat:"態度・情緒", no:28, jp:"もやもやする", kana:"もやもやする", zh:"悶悶不樂、卡卡的"},
+
+      {cat:"人際・社交", no:29, jp:"顔を立てる", kana:"かおをたてる", zh:"給面子"},
+      {cat:"人際・社交", no:30, jp:"顔が広い", kana:"かおがひろい", zh:"人脈廣、交際廣"},
+      {cat:"人際・社交", no:31, jp:"顔を出す", kana:"かおをだす", zh:"露個臉、現身一下"},
+      {cat:"人際・社交", no:32, jp:"水を差す", kana:"みずをさす", zh:"潑冷水、掃興"},
+      {cat:"人際・社交", no:33, jp:"場を読む", kana:"ばをよむ", zh:"看場合"},
+      {cat:"人際・社交", no:34, jp:"空気を読む", kana:"くうきをよむ", zh:"讀空氣、看氣氛行事"},
+      {cat:"人際・社交", no:35, jp:"話を盛る", kana:"はなしをもる", zh:"誇大、加油添醋"},
+      {cat:"人際・社交", no:36, jp:"話をそらす", kana:"はなしをそらす", zh:"轉移話題"},
+      {cat:"人際・社交", no:37, jp:"話がかみ合う", kana:"はなしがかみあう", zh:"談得來、話題接得上"},
+      {cat:"人際・社交", no:38, jp:"話がこじれる", kana:"はなしがこじれる", zh:"談崩、越談越糟"},
+      {cat:"人際・社交", no:39, jp:"一言多い", kana:"ひとことおおい", zh:"多嘴、多講一句"},
+
+      {cat:"工作・學習", no:40, jp:"手を抜く", kana:"てをぬく", zh:"偷工減料、敷衍"},
+      {cat:"工作・學習", no:41, jp:"手を打つ", kana:"てをうつ", zh:"採取對策、出手處理"},
+      {cat:"工作・學習", no:42, jp:"手が回らない", kana:"てがまわらない", zh:"顧不到、忙不過來"},
+      {cat:"工作・學習", no:43, jp:"手が空く", kana:"てがあく", zh:"手頭空下來、有空檔"},
+      {cat:"工作・學習", no:44, jp:"手を貸す", kana:"てをかす", zh:"幫一把、搭把手"},
+      {cat:"工作・學習", no:45, jp:"手間を食う", kana:"てまをくう", zh:"費工、耗工夫"},
+      {cat:"工作・學習", no:46, jp:"段取りを組む", kana:"だんどりをくむ", zh:"做好流程安排、排程"},
+      {cat:"工作・學習", no:47, jp:"詰めが甘い", kana:"つめがあまい", zh:"收尾不嚴謹、細節鬆散"},
+      {cat:"工作・學習", no:48, jp:"抜け漏れがある", kana:"ぬけもれがある", zh:"有遺漏、疏漏"},
+      {cat:"工作・學習", no:49, jp:"すり合わせる", kana:"すりあわせる", zh:"互相調整、對齊"},
+      {cat:"工作・學習", no:50, jp:"ボールを持つ", kana:"ぼーるをもつ", zh:"（專案）負責跟進"},
+      {cat:"工作・學習", no:51, jp:"ボールを返す", kana:"ぼーるをかえす", zh:"交還責任、回覆"},
+      {cat:"工作・學習", no:52, jp:"根拠を示す", kana:"こんきょをしめす", zh:"提出依據"},
+      {cat:"工作・學習", no:53, jp:"腰を据える", kana:"こしをすえる", zh:"沉住氣、專心投入"},
+
+      {cat:"生活常見比喻", no:54, jp:"ツボにはまる", kana:"つぼにはまる", zh:"正中要點、對味"},
+      {cat:"生活常見比喻", no:55, jp:"コツをつかむ", kana:"こつをつかむ", zh:"抓到訣竅"},
+      {cat:"生活常見比喻", no:56, jp:"クセが強い", kana:"くせがつよい", zh:"個性很強烈"},
+      {cat:"生活常見比喻", no:57, jp:"地雷を踏む", kana:"じらいをふむ", zh:"踩到地雷"},
+      {cat:"生活常見比喻", no:58, jp:"波に乗る", kana:"なみにのる", zh:"乘勢而上"},
+      {cat:"生活常見比喻", no:59, jp:"追い風になる", kana:"おいかぜになる", zh:"成為順風"},
+      {cat:"生活常見比喻", no:60, jp:"逆風を受ける", kana:"ぎゃくふうをうける", zh:"處境不利"},
+      {cat:"生活常見比喻", no:61, jp:"すき間を狙う", kana:"すきまをねらう", zh:"鑽縫隙、找利基"},
+      {cat:"生活常見比喻", no:62, jp:"話の腰を折る", kana:"はなしのこしをおる", zh:"打斷說話"},
+      {cat:"生活常見比喻", no:63, jp:"骨が折れる", kana:"ほねがおれる", zh:"費力、吃力"},
+      {cat:"生活常見比喻", no:64, jp:"首が回らない", kana:"くびがまわらない", zh:"忙不過來／周轉不靈"},
+
+      {cat:"成功・失敗・風險", no:65, jp:"先手を打つ", kana:"せんてをうつ", zh:"先發制人"},
+      {cat:"成功・失敗・風險", no:66, jp:"一手打つ", kana:"いってうつ", zh:"採取一步對策"},
+      {cat:"成功・失敗・風險", no:67, jp:"一枚上手", kana:"いちまいうわて", zh:"技高一籌"},
+      {cat:"成功・失敗・風險", no:68, jp:"裏目に出る", kana:"うらめにでる", zh:"適得其反"},
+      {cat:"成功・失敗・風險", no:69, jp:"火に油を注ぐ", kana:"ひにあぶらをそそぐ", zh:"火上加油"},
+      {cat:"成功・失敗・風險", no:70, jp:"火消しに走る", kana:"ひけしにはしる", zh:"趕緊滅火"},
+      {cat:"成功・失敗・風險", no:71, jp:"取り返しがつかない", kana:"とりかえしがつかない", zh:"無法挽回"},
+      {cat:"成功・失敗・風險", no:72, jp:"首を突っ込む", kana:"くびをつっこむ", zh:"插手、介入"},
+      {cat:"成功・失敗・風險", no:73, jp:"引き際をわきまえる", kana:"ひきぎわをわきまえる", zh:"懂得適時收手"},
+
+      {cat:"說話・表達力", no:74, jp:"腹を割って話す", kana:"はらをわってはなす", zh:"開誠布公地談"},
+      {cat:"說話・表達力", no:75, jp:"オブラートに包む", kana:"おぶらーとにつつむ", zh:"委婉包裝"},
+      {cat:"說話・表達力", no:76, jp:"角が立つ", kana:"かどがたつ", zh:"引人不快"},
+      {cat:"說話・表達力", no:77, jp:"的を射る", kana:"まとをいる", zh:"命中要點"},
+      {cat:"說話・表達力", no:78, jp:"ニュアンスを汲む", kana:"にゅあんすをくむ", zh:"體會語感"},
+
+      {cat:"情境反射", no:79, jp:"顔をしかめる", kana:"かおをしかめる", zh:"皺眉"},
+      {cat:"情境反射", no:80, jp:"口を挟む", kana:"くちをはさむ", zh:"插嘴"},
+      {cat:"情境反射", no:81, jp:"首をかしげる", kana:"くびをかしげる", zh:"表示疑惑"},
+      {cat:"情境反射", no:82, jp:"肩をすくめる", kana:"かたをすくめる", zh:"聳肩（無奈）"},
+      {cat:"情境反射", no:83, jp:"手を焼く", kana:"てをやく", zh:"難以應付"},
+      {cat:"情境反射", no:84, jp:"気を回す", kana:"きをまわす", zh:"多想、顧慮"},
+      {cat:"情境反射", no:85, jp:"気を利かせる", kana:"きをきかせる", zh:"機靈配合"},
+      {cat:"情境反射", no:86, jp:"気を落とす", kana:"きをおとす", zh:"灰心"},
+      {cat:"情境反射", no:87, jp:"気が済む", kana:"きがすむ", zh:"心裡過得去"},
+      {cat:"情境反射", no:88, jp:"腹をくくる", kana:"はらをくくる", zh:"下定決心"},
+      {cat:"情境反射", no:89, jp:"腹が立つ", kana:"はらがたつ", zh:"生氣"},
+      {cat:"情境反射", no:90, jp:"胸がいっぱい", kana:"むねがいっぱい", zh:"感慨滿懷"},
+      {cat:"情境反射", no:91, jp:"腰が重い", kana:"こしがおもい", zh:"懶得動"},
+      {cat:"情境反射", no:92, jp:"水に流す", kana:"みずにながす", zh:"既往不咎"},
+      {cat:"情境反射", no:93, jp:"根に持つ", kana:"ねにもつ", zh:"記恨"},
+
+      {cat:"思考表態", no:94, jp:"そういう手もある", kana:"そういうてもある", zh:"也是個辦法"},
+      {cat:"思考表態", no:95, jp:"それはそれで", kana:"それはそれで", zh:"那樣也有那樣的好"},
+      {cat:"思考表態", no:96, jp:"一理ある", kana:"いちりある", zh:"有道理"},
+      {cat:"思考表態", no:97, jp:"なんとも言えない", kana:"なんともいえない", zh:"很難說"},
+      {cat:"思考表態", no:98, jp:"さすがに…", kana:"さすがに…", zh:"再怎麼說也…"},
+      {cat:"思考表態", no:99, jp:"どちらかと言えば…", kana:"どちらかといえば…", zh:"如果要說的話"},
+      {cat:"思考表態", no:100, jp:"どの口が言う", kana:"どのくちがいう", zh:"你也好意思說"},
+      {cat:"思考表態", no:101, jp:"そこまでは…", kana:"そこまでは…", zh:"也沒到那程度"},
+      {cat:"思考表態", no:102, jp:"ありがち", kana:"ありがち", zh:"常見的"},
+      {cat:"思考表態", no:103, jp:"ありえる話", kana:"ありえるはなし", zh:"可能發生的事"},
+
+      {cat:"輕吐槽／婉拒", no:104, jp:"それは違う気がする", kana:"それはちがうきがする", zh:"我覺得不太對"},
+      {cat:"輕吐槽／婉拒", no:105, jp:"その発想はなかった", kana:"そのはっそうはなかった", zh:"沒想到這種想法"},
+      {cat:"輕吐槽／婉拒", no:106, jp:"今はちょっと…", kana:"いまはちょっと…", zh:"現在不方便"},
+      {cat:"輕吐槽／婉拒", no:107, jp:"さすがに無理", kana:"さすがにむり", zh:"再怎麼說也不行"},
+      {cat:"輕吐槽／婉拒", no:108, jp:"それはさすがに…", kana:"それはさすがに…", zh:"那樣有點過分"},
+      {cat:"輕吐槽／婉拒", no:109, jp:"どっちでもいい", kana:"どっちでもいい", zh:"都可以"},
+      {cat:"輕吐槽／婉拒", no:110, jp:"ほどほどに", kana:"ほどほどに", zh:"適可而止"},
+      {cat:"輕吐槽／婉拒", no:111, jp:"空気読んで", kana:"くうきよんで", zh:"看氣氛"},
+      {cat:"輕吐槽／婉拒", no:112, jp:"それは置いといて", kana:"それはおいといて", zh:"先擱一邊"},
+
+      {cat:"決策與推進", no:113, jp:"腕を上げる", kana:"うでをあげる", zh:"提升本事"},
+      {cat:"決策與推進", no:114, jp:"腕を振るう", kana:"うでをふるう", zh:"大展身手"},
+      {cat:"決策與推進", no:115, jp:"話を詰める", kana:"はなしをつめる", zh:"敲定細節"},
+      {cat:"決策與推進", no:116, jp:"話を通す", kana:"はなしをとおす", zh:"取得同意"},
+      {cat:"決策與推進", no:117, jp:"根回しをする", kana:"ねまわしをする", zh:"事前打點"},
+      {cat:"決策與推進", no:118, jp:"方向性を合わせる", kana:"ほうこうせいをあわせる", zh:"對齊方向"},
+      {cat:"決策與推進", no:119, jp:"見通しを立てる", kana:"みとおしをたてる", zh:"預估走向"},
+      {cat:"決策與推進", no:120, jp:"見当をつける", kana:"けんとうをつける", zh:"抓概略"},
+
+      {cat:"品質與感受", no:121, jp:"仕上がりがいい", kana:"しあがりがいい", zh:"完成度高"},
+      {cat:"品質與感受", no:122, jp:"収まりがいい", kana:"おさまりがいい", zh:"貼合得體"},
+      {cat:"品質與感受", no:123, jp:"使い勝手がいい", kana:"つかいがってがいい", zh:"好用"},
+      {cat:"品質與感受", no:124, jp:"もったいない", kana:"もったいない", zh:"可惜"},
+      {cat:"品質與感受", no:125, jp:"腑に落ちる", kana:"ふにおちる", zh:"想通"},
+      {cat:"品質與感受", no:126, jp:"しっくり来ない", kana:"しっくりこない", zh:"不太對勁"},
+      {cat:"品質與感受", no:127, jp:"雰囲気がある", kana:"ふんいきがある", zh:"有氛圍"},
+      {cat:"品質與感受", no:128, jp:"こだわりがある", kana:"こだわりがある", zh:"有講究"},
+
+      {cat:"進度與狀況", no:129, jp:"目処が立つ", kana:"めどがたつ", zh:"有眉目"},
+      {cat:"進度與狀況", no:130, jp:"手応えがある", kana:"てごたえがある", zh:"有效果"},
+      {cat:"進度與狀況", no:131, jp:"先が見える", kana:"さきがみえる", zh:"看得見前景"},
+      {cat:"進度與狀況", no:132, jp:"行き当たりばったり", kana:"いきあたりばったり", zh:"沒計畫"},
+      {cat:"進度與狀況", no:133, jp:"空回りする", kana:"からまわりする", zh:"白忙"},
+      {cat:"進度與狀況", no:134, jp:"バタバタしている", kana:"ばたばたしている", zh:"忙亂"},
+      {cat:"進度與狀況", no:135, jp:"ぼちぼちやる", kana:"ぼちぼちやる", zh:"慢慢來"},
+      {cat:"進度與狀況", no:136, jp:"詰まり気味", kana:"つまりぎみ", zh:"有點卡"},
+      {cat:"進度與狀況", no:137, jp:"ひと段落つく", kana:"ひとだんらくつく", zh:"告一段落"},
+      {cat:"進度與狀況", no:138, jp:"埋まってる", kana:"うまってる", zh:"已滿"},
+      {cat:"進度與狀況", no:139, jp:"空いてる", kana:"あいてる", zh:"有空"},
+      {cat:"進度與狀況", no:140, jp:"押してる", kana:"おしてる", zh:"延誤"},
+      {cat:"進度與狀況", no:141, jp:"遅れてる", kana:"おくれてる", zh:"落後"},
+      {cat:"進度與狀況", no:142, jp:"詰まってる", kana:"つまってる", zh:"卡住"},
+      {cat:"進度與狀況", no:143, jp:"回ってない", kana:"まわってない", zh:"運作不良"},
+      {cat:"進度與狀況", no:144, jp:"ひとまず落ち着いた", kana:"ひとまずおちついた", zh:"暫時穩下來"},
+      {cat:"進度與狀況", no:145, jp:"立て直す", kana:"たてなおす", zh:"拉回正軌"},
+    ];
+
+    const byCat = () => {
+      const m = new Map();
+      for (const item of DATA){
+        if (!m.has(item.cat)) m.set(item.cat, []);
+        m.get(item.cat).push(item);
+      }
+      return m;
+    };
+
+    // =========================
+    // UI helpers
+    // =========================
+    const $ = (sel) => document.querySelector(sel);
+    const app = $("#app");
+    const q = $("#q");
+    const toggleAllBtn = $("#toggleAll");
+    const clearBtn = $("#clear");
+    const countEl = $("#count");
+    const toast = $("#toast");
+
+    function showToast(msg){
+      toast.textContent = msg;
+      toast.classList.add("show");
+      clearTimeout(showToast._t);
+      showToast._t = setTimeout(()=>toast.classList.remove("show"), 900);
+    }
+
+    function escapeHtml(s){
+      return s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    }
+
+    function cardHTML(item){
+      const jp = escapeHtml(item.jp);
+      const kana = escapeHtml(item.kana);
+      const zh = escapeHtml(item.zh);
+      return `
+        <div class="card" data-no="${item.no}" data-jp="${jp}" data-kana="${kana}" data-zh="${zh}">
+          <div class="topRow">
+            <div style="min-width:0">
+              <div class="jp">${jp}</div>
+              <div class="kana">${kana}</div>
+            </div>
+            <button class="btn" type="button" data-copy="${jp}">Copy</button>
+          </div>
+          <div class="zh">${zh}</div>
+        </div>
+      `;
+    }
+
+    function groupHTML(cat, items, open=false){
+      return `
+        <details class="group" ${open ? "open" : ""} data-cat="${escapeHtml(cat)}">
+          <summary>
+            <div class="groupTitle">
+              <div class="name">${escapeHtml(cat)}</div>
+              <div class="meta"><span data-catcount>${items.length}</span> items</div>
+            </div>
+            <div class="chev" aria-hidden="true">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                <path d="M6 9l6 6 6-6" stroke="rgba(255,255,255,.65)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+          </summary>
+          <div class="cards">
+            ${items.map(cardHTML).join("")}
+          </div>
+        </details>
+      `;
+    }
+
+    // =========================
+    // Render + Search
+    // =========================
+    function render(filter=""){
+      const needle = filter.trim().toLowerCase();
+      const m = byCat();
+
+      let totalShown = 0;
+      let html = "";
+
+      for (const [cat, items] of m.entries()){
+        const filtered = !needle ? items : items.filter(it => {
+          const s = `${it.jp} ${it.kana} ${it.zh}`.toLowerCase();
+          return s.includes(needle);
+        });
+
+        if (filtered.length === 0) continue;
+        totalShown += filtered.length;
+
+        // open groups by default when searching
+        html += groupHTML(cat, filtered, Boolean(needle));
+      }
+
+      app.innerHTML = html || `<div style="color:var(--muted);padding:16px;border:1px solid var(--line);border-radius:16px;background:rgba(255,255,255,.03)">沒有符合的結果。</div>`;
+      countEl.textContent = `${totalShown} / ${DATA.length} items`;
+
+      // bind copy buttons
+      app.querySelectorAll("[data-copy]").forEach(btn=>{
+        btn.addEventListener("click", async (e)=>{
+          const text = e.currentTarget.getAttribute("data-copy");
+          try{
+            await navigator.clipboard.writeText(text);
+            showToast("Copied: " + text);
+          }catch{
+            // fallback
+            const ta = document.createElement("textarea");
+            ta.value = text;
+            document.body.appendChild(ta);
+            ta.select();
+            document.execCommand("copy");
+            document.body.removeChild(ta);
+            showToast("Copied: " + text);
+          }
+        });
+      });
+
+      // set toggleAll button state based on details open states (when not searching)
+      if (!needle){
+        const groups = [...app.querySelectorAll("details.group")];
+        const allOpen = groups.length > 0 && groups.every(d => d.open);
+        toggleAllBtn.setAttribute("aria-pressed", String(allOpen));
+        toggleAllBtn.textContent = allOpen ? "收合全部" : "展開全部";
+      }else{
+        toggleAllBtn.setAttribute("aria-pressed","true");
+        toggleAllBtn.textContent = "收合全部";
+      }
+    }
+
+    // initial render
+    render("");
+
+    // search events
+    q.addEventListener("input", () => render(q.value));
+
+    // clear
+    clearBtn.addEventListener("click", ()=>{
+      q.value = "";
+      render("");
+      q.focus();
+    });
+
+    // toggle all
+    toggleAllBtn.addEventListener("click", ()=>{
+      const details = [...app.querySelectorAll("details.group")];
+      if (details.length === 0) return;
+      const shouldOpen = !details.every(d => d.open);
+      for (const d of details) d.open = shouldOpen;
+      toggleAllBtn.setAttribute("aria-pressed", String(shouldOpen));
+      toggleAllBtn.textContent = shouldOpen ? "收合全部" : "展開全部";
+    });
+
+    // keyboard shortcuts
+    window.addEventListener("keydown", (e)=>{
+      if (e.key === "/" && document.activeElement !== q){
+        e.preventDefault();
+        q.focus();
+      }
+      if (e.key === "Escape"){
+        if (document.activeElement === q && q.value){
+          q.value = "";
+          render("");
+        }
+      }
+    });
+  </script>
+</body>
+</html>
