@@ -2,7 +2,7 @@
 <html lang="zh-Hant">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
   <title>形容詞大全</title>
   <style>
     :root{
@@ -12,121 +12,126 @@
       --text:#e0e0e0;
       --muted:#a0a0a0;
       --accent:#cfb53b;
-      --accentHover:#eecf5b;
-      --shadow:0 10px 25px rgba(0,0,0,.35);
-      --radius:12px;
+      --shadow:0 10px 20px rgba(0,0,0,.3);
+      --radius:10px;
       --maxw:1100px;
-      --gap:20px;
-      --h1:2rem;
-      --cardTitle:1.2rem;
-      --body:0.95rem;
-      --small:0.85rem;
     }
-    *{ box-sizing:border-box; }
-    body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Microsoft JhengHei", "Meiryo", sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  line-height: 1.6;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-    .wrap{ max-width:var(--maxw); margin:0 auto; padding:24px 16px 40px; }
-    header{ text-align:center; padding:10px 0 18px; }
-    h1{ margin:0 0 10px; font-size:var(--h1); color:var(--accent); }
-    .sub{ color:var(--muted); font-size:var(--small); }
-    .controls{
-      margin:18px auto; display:flex; gap:10px;
-      justify-content:center; flex-wrap:wrap;
+    *{ box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+    body{
+      margin:0; 
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Microsoft JhengHei", "Meiryo", sans-serif;
+      background:var(--bg); color:var(--text); line-height:1.5;
+      -webkit-font-smoothing: antialiased;
     }
-    .input, .select{
-      background:var(--card); border:1px solid var(--border);
-      color:var(--text); border-radius:10px; padding:10px;
-      font-size:var(--body); outline:none; min-height:40px;
+    .wrap{ max-width:var(--maxw); margin:0 auto; padding:16px; }
+    
+    header{ text-align:center; padding:10px 0; }
+    h1{ margin:0; font-size:1.6rem; color:var(--accent); letter-spacing:-0.02em; }
+    
+    /* 搜尋與選單控制區優化 */
+    .controls {
+      margin: 15px 0;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
     }
-    .input{ width:min(520px, 92vw); }
-    .select{ width:min(210px, 45vw); cursor:pointer; }
-    .input:focus, .select:focus{ border-color:var(--accent); }
-    .chips{ display:flex; gap:8px; flex-wrap:wrap; justify-content:center; margin-bottom:12px; }
-    .chip{ border:1px solid var(--border); padding:6px 12px; border-radius:999px; font-size:var(--small); color:var(--muted); }
-    .chip strong{ color:var(--accent); }
-    .grid{ display:grid; grid-template-columns:repeat(auto-fill, minmax(320px, 1fr)); gap:var(--gap); }
-    @media (max-width:600px){ .grid{ grid-template-columns:1fr; } }
-    .card{
-      background:var(--card); border:1px solid var(--border); border-radius:var(--radius);
-      padding:16px; transition:transform .18s ease;
+    .input {
+      width: 100%;
+      background: var(--card); border: 1px solid var(--border);
+      color: var(--text); border-radius: 8px; padding: 12px;
+      font-size: 1rem; outline: none;
     }
-    .card:hover{ transform:translateY(-3px); border-color:var(--accent); box-shadow:var(--shadow); }
-    .cardHead{ display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:10px; }
+    .select-group {
+      display: flex;
+      gap: 8px;
+    }
+    .select {
+      flex: 1; /* 讓兩個選單平分寬度 */
+      background: var(--card); border: 1px solid var(--border);
+      color: var(--text); border-radius: 8px; padding: 10px;
+      font-size: 0.9rem; cursor: pointer; outline: none;
+      min-width: 0; /* 防止內容撐開 */
+    }
+    .input:focus, .select:focus { border-color: var(--accent); }
+
+    /* 資訊條 (Chips) 優化：不換行，支援左右滑動 */
+    .chips {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      padding-bottom: 8px;
+      margin-bottom: 10px;
+      scrollbar-width: none; /* Firefox */
+    }
+    .chips::-webkit-scrollbar { display: none; } /* Chrome/Safari */
+    .chip {
+      white-space: nowrap;
+      background: #252525;
+      border: 1px solid var(--border);
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+    .chip strong { color: var(--accent); }
+
+    /* 卡片佈局 */
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; }
+    @media (max-width: 600px) { .grid { grid-template-columns: 1fr; } }
+
+    .card {
+      background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 16px; position: relative;
+    }
+    .cardHead { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; }
     .term {
-  /* 移除 letter-spacing 或設為 0，確保字間距回歸字體原始設計 */
-  letter-spacing: 0; 
-  
-  /* 字重設為 600，這是 Meiryo 或正黑體最清晰且緊湊的粗度 */
-  font-weight: 600; 
-  
-  /* 縮小行高能讓標題文字在視覺上更凝聚 */
-  line-height: 1.2; 
-  
-  /* 確保使用系統字體順序 */
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Microsoft JhengHei", "Meiryo", sans-serif;
-  
-  font-size: 1.1rem;
-  color: var(--accent);
-  margin: 0;
-}
-    .tags{ display:flex; flex-direction:column; align-items:flex-end; gap:4px; }
-    .tag{ font-size:0.7rem; color:var(--muted); border:1px solid var(--border); padding:2px 8px; border-radius:4px; white-space:nowrap; }
-    .sec{ margin-top:12px; }
-    .secTitle{ display:flex; align-items:center; gap:8px; font-size:0.75rem; color:var(--muted); text-transform:uppercase; margin-bottom:5px; }
-    .secTitle::before{ content:""; width:3px; height:12px; background:var(--accent); border-radius:2px; }
-    .meaning, .example{ margin:0; font-size:var(--body); }
-    .muted{ color:var(--muted); font-size:var(--small); margin-top:5px; }
-    .empty{ text-align:center; margin-top:40px; color:var(--muted); }
+      font-size: 1.15rem; font-weight: 600; color: var(--accent);
+      margin: 0; letter-spacing: 0; line-height: 1.2;
+    }
+    .tags { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; }
+    .tag { font-size: 0.65rem; color: var(--muted); border: 1px solid var(--border); padding: 1px 6px; border-radius: 4px; }
+
+    .sec { margin-top: 10px; }
+    .secTitle { font-size: 0.7rem; font-weight: 600; color: var(--muted); margin-bottom: 4px; text-transform: uppercase; }
+    .meaning { margin: 0; font-size: 0.95rem; }
+    
+    /* 例文色塊優化 */
     .example {
-  margin: 0;
-  padding: 12px 14px;      /* 內距讓色塊有空間感 */
-  background: #2a2a2a;     /* 深灰色背景色塊 */
-  border-radius: 8px;      /* 圓角 */
-  font-size: 0.9rem;
-  font-weight: 400;        /* 確保例句本身不加粗 */
-  color: #d0d0d0;          /* 稍微柔和的文字顏色 */
-  line-height: 1.6;
-  white-space: pre-wrap;
-  /*border-left: 3px solid var(--accent); /* 左側點綴一條金色的邊線，增加辨識度 */
-}
-    .secTitle {
-  font-size: 0.7rem;
-  font-weight: 600;
-  color: var(--muted);
-  margin-bottom: 6px;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
+      margin: 4px 0 0;
+      padding: 10px 12px;
+      background: #262626;
+      border-radius: 6px;
+      font-size: 0.88rem;
+      font-weight: 400;
+      color: #ccc;
+      line-height: 1.5;
+      /* border-left: 3px solid var(--accent); */
+      white-space: pre-wrap;
+    }
+    .empty { text-align: center; padding: 40px; color: var(--muted); }
   </style>
 </head>
 <body>
   <div class="wrap">
     <header>
       <h1 id="pageTitle">Loading...</h1>
-      <p class="sub" id="pageSub"></p>
     </header>
 
     <div class="controls">
-      <input id="q" class="input" placeholder="搜尋：日文 / 意義 / 例句" />
-      <select id="cat" class="select"></select>
-      <select id="type" class="select"></select>
+      <input id="q" class="input" placeholder="搜尋日文、意義或例句..." />
+      <div class="select-group">
+        <select id="cat" class="select"></select>
+        <select id="type" class="select"></select>
+      </div>
     </div>
 
     <div class="chips" id="chips"></div>
     <div class="grid" id="grid"></div>
-    <div id="empty" class="empty" style="display:none;">找不到符合條件的條目</div>
+    <div id="empty" class="empty" style="display:none;">找不到搜尋結果</div>
   </div>
 
   <script>
-    // 請將你的資料貼回此處
+    // 資料段（請將您原本的 RAW_DATA 貼在此處）
     const RAW_DATA = `
 日文超高頻形容詞
 
@@ -431,48 +436,41 @@
 ぴくぴく：微微抽動：緊張で、まぶたがぴくぴくしてる。
 }
 }
-
 `.trim();
 
-    /**
-     * 解析邏輯：處理嵌套結構
-     */
     function parseDataset(raw) {
       const lines = raw.split('\n').map(l => l.trim()).filter(l => l);
       const title = lines[0] || "Japanese Cards";
       const flat = [];
-      const structure = {}; // 大類 -> [子類]
+      const structure = {}; 
 
-      let currentMainCat = null;
-      let currentSubCat = null;
+      let currentMain = null;
+      let currentSub = null;
 
       lines.slice(1).forEach(line => {
         if (line.endsWith('{')) {
-          const catName = line.replace('{', '').trim();
-          if (!currentMainCat) {
-            currentMainCat = catName;
-            structure[currentMainCat] = [];
+          const name = line.replace('{', '').trim();
+          if (!currentMain) {
+            currentMain = name;
+            structure[currentMain] = [];
           } else {
-            currentSubCat = catName;
-            if (!structure[currentMainCat].includes(currentSubCat)) {
-              structure[currentMainCat].push(currentSubCat);
-            }
+            currentSub = name;
+            if (!structure[currentMain].includes(currentSub)) structure[currentMain].push(currentSub);
           }
         } else if (line === '}') {
-          if (currentSubCat) currentSubCat = null;
-          else currentMainCat = null;
+          if (currentSub) currentSub = null;
+          else currentMain = null;
         } else if (line.includes('：')) {
-          const parts = line.split('：');
+          const p = line.split('：');
           flat.push({
-            mainCat: currentMainCat,
-            subCat: currentSubCat || currentMainCat, // 若無子類則等於大類
-            term: parts[0].trim(),
-            meaning: (parts[1] || "").trim(),
-            example: parts.slice(2).join('：').trim() || null
+            mainCat: currentMain,
+            subCat: currentSub || currentMain,
+            term: p[0].trim(),
+            meaning: (p[1] || "").trim(),
+            example: p.slice(2).join('：').trim() || null
           });
         }
       });
-
       return { title, flat, structure };
     }
 
@@ -480,7 +478,6 @@
     const state = { q: "", cat: "ALL", type: "ALL" };
     const els = {
       title: document.getElementById("pageTitle"),
-      sub: document.getElementById("pageSub"),
       q: document.getElementById("q"),
       cat: document.getElementById("cat"),
       type: document.getElementById("type"),
@@ -496,23 +493,23 @@
       render();
     }
 
-    function buildSelect(el, options, allLabel) {
+    function buildSelect(el, opts, allLabel) {
       el.innerHTML = `<option value="ALL">${allLabel}</option>`;
-      options.forEach(opt => {
-        const o = document.createElement("option");
-        o.value = o.textContent = opt;
-        el.appendChild(o);
+      opts.forEach(o => {
+        const opt = document.createElement("option");
+        opt.value = opt.textContent = o;
+        el.appendChild(opt);
       });
     }
 
     function updateTypeSelect() {
       if (state.cat === "ALL") {
-        els.type.innerHTML = `<option value="ALL">全部子類/型態</option>`;
+        els.type.innerHTML = `<option value="ALL">全部型態</option>`;
         els.type.disabled = true;
       } else {
-        const subCats = ds.structure[state.cat] || [];
-        buildSelect(els.type, subCats, "全部子類");
-        els.type.disabled = subCats.length === 0;
+        const subs = ds.structure[state.cat] || [];
+        buildSelect(els.type, subs, "全部型態");
+        els.type.disabled = subs.length === 0;
       }
       state.type = "ALL";
     }
@@ -522,8 +519,8 @@
         if (state.cat !== "ALL" && item.mainCat !== state.cat) return false;
         if (state.type !== "ALL" && item.subCat !== state.type) return false;
         if (state.q) {
-          const searchSpace = `${item.term} ${item.meaning} ${item.example}`.toLowerCase();
-          if (!state.q.toLowerCase().split(' ').every(k => searchSpace.includes(k))) return false;
+          const s = `${item.term} ${item.meaning} ${item.example}`.toLowerCase();
+          if (!state.q.toLowerCase().split(' ').every(k => s.includes(k))) return false;
         }
         return true;
       });
@@ -543,7 +540,7 @@
           </div>
           <div class="sec">
             <h3 class="secTitle">Example</h3>
-            <p class="example">${item.example || '<span class="muted">（暫無例句）</span>'}</p>
+            ${item.example ? `<p class="example">${item.example}</p>` : `<div class="tag" style="border:none; color:#555; padding:0;">（暫無例句）</div>`}
           </div>
         </article>
       `).join('');
@@ -554,29 +551,17 @@
 
     function renderChips(count) {
       els.chips.innerHTML = `
-        <div class="chip">顯示 <strong>${count}</strong> / ${ds.flat.length} 條</div>
-        <div class="chip">類別: <strong>${state.cat}</strong></div>
-        ${state.type !== "ALL" ? `<div class="chip">子類: <strong>${state.type}</strong></div>` : ""}
+        <div class="chip">顯示 <strong>${count}</strong></div>
+        <div class="chip">大類: <strong>${state.cat}</strong></div>
+        ${state.type !== "ALL" ? `<div class="chip">型態: <strong>${state.type}</strong></div>` : ""}
       `;
     }
 
     els.q.addEventListener("input", e => { state.q = e.target.value; render(); });
-    els.cat.addEventListener("change", e => { 
-      state.cat = e.target.value; 
-      updateTypeSelect(); 
-      render(); 
-    });
+    els.cat.addEventListener("change", e => { state.cat = e.target.value; updateTypeSelect(); render(); });
     els.type.addEventListener("change", e => { state.type = e.target.value; render(); });
 
     init();
   </script>
 </body>
-
 </html>
-
-
-
-
-
-
-
