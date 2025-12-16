@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
+  <title>Japanese Cards - Mobile Optimized</title>
+  <style>
+    :root{
+      --bg:#121212;
+      --card:#1e1e1e;
+      --border:#333;
+      --text:#e0e0e0;
+      --muted:#a0a0a0;
+      --accent:#cfb53b;
+      --shadow:0 10px 20px rgba(0,0,0,.3);
+      --radius:10px;
+      --maxw:1100px;
+    }
+    *{ box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+    body{
+      margin:0; 
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Microsoft JhengHei", "Meiryo", sans-serif;
+      background:var(--bg); color:var(--text); line-height:1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+    .wrap{ max-width:var(--maxw); margin:0 auto; padding:16px; }
+    
+    header{ text-align:center; padding:10px 0; }
+    h1{ margin:0; font-size:1.6rem; color:var(--accent); letter-spacing:-0.02em; }
+    
+    /* 搜尋與選單控制區優化 */
+    .controls {
+      margin: 15px 0;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .input {
+      width: 100%;
+      background: var(--card); border: 1px solid var(--border);
+      color: var(--text); border-radius: 8px; padding: 12px;
+      font-size: 1rem; outline: none;
+    }
+    .select-group {
+      display: flex;
+      gap: 8px;
+    }
+    .select {
+      flex: 1; /* 讓兩個選單平分寬度 */
+      background: var(--card); border: 1px solid var(--border);
+      color: var(--text); border-radius: 8px; padding: 10px;
+      font-size: 0.9rem; cursor: pointer; outline: none;
+      min-width: 0; /* 防止內容撐開 */
+    }
+    .input:focus, .select:focus { border-color: var(--accent); }
+
+    /* 資訊條 (Chips) 優化：不換行，支援左右滑動 */
+    .chips {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      padding-bottom: 8px;
+      margin-bottom: 10px;
+      scrollbar-width: none; /* Firefox */
+    }
+    .chips::-webkit-scrollbar { display: none; } /* Chrome/Safari */
+    .chip {
+      white-space: nowrap;
+      background: #252525;
+      border: 1px solid var(--border);
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+    .chip strong { color: var(--accent); }
+
+    /* 卡片佈局 */
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; }
+    @media (max-width: 600px) { .grid { grid-template-columns: 1fr; } }
+
+    .card {
+      background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 16px; position: relative;
+    }
+    .cardHead { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; }
+    .term {
+      font-size: 1.15rem; font-weight: 600; color: var(--accent);
+      margin: 0; letter-spacing: 0; line-height: 1.2;
+    }
+    .tags { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; }
+    .tag { font-size: 0.65rem; color: var(--muted); border: 1px solid var(--border); padding: 1px 6px; border-radius: 4px; }
+
+    .sec { margin-top: 10px; }
+    .secTitle { font-size: 0.7rem; font-weight: 600; color: var(--muted); margin-bottom: 4px; text-transform: uppercase; }
+    .meaning { margin: 0; font-size: 0.95rem; }
+    
+    /* 例文色塊優化 */
+    .example {
+      margin: 4px 0 0;
+      padding: 10px 12px;
+      background: #262626;
+      border-radius: 6px;
+      font-size: 0.88rem;
+      font-weight: 400;
+      color: #ccc;
+      line-height: 1.5;
+      border-left: 3px solid var(--accent);
+      white-space: pre-wrap;
+    }
+    .empty { text-align: center; padding: 40px; color: var(--muted); }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1 id="pageTitle">Loading...</h1>
+    </header>
+
+    <div class="controls">
+      <input id="q" class="input" placeholder="搜尋日文、意義或例句..." />
+      <div class="select-group">
+        <select id="cat" class="select"></select>
+        <select id="type" class="select"></select>
+      </div>
+    </div>
+
+    <div class="chips" id="chips"></div>
+    <div class="grid" id="grid"></div>
+    <div id="empty" class="empty" style="display:none;">找不到搜尋結果</div>
+  </div>
+
+  <script>
+    // 資料段（請將您原本的 RAW_DATA 貼在此處）
+    const RAW_DATA = `
+日文單字筆記
+
+い形容詞{
+うまい：好吃的：このラーメンは本当にうまい。
+}
+な形容詞{
+きれい：漂亮的：この花はとてもきれいです。
+}
+オノマトペ{
+心理・情緒{
+もやもや：悶悶不樂：昨日のことがあって、まだ心がもやもやする。
+}
+狀態{
+ぴかぴか：閃亮亮：靴をぴかぴかに磨きました。
+}
+}
+`.trim();
+
+    function parseDataset(raw) {
+      const lines = raw.split('\n').map(l => l.trim()).filter(l => l);
+      const title = lines[0] || "Japanese Cards";
+      const flat = [];
+      const structure = {}; 
+
+      let currentMain = null;
+      let currentSub = null;
+
+      lines.slice(1).forEach(line => {
+        if (line.endsWith('{')) {
+          const name = line.replace('{', '').trim();
+          if (!currentMain) {
+            currentMain = name;
+            structure[currentMain] = [];
+          } else {
+            currentSub = name;
+            if (!structure[currentMain].includes(currentSub)) structure[currentMain].push(currentSub);
+          }
+        } else if (line === '}') {
+          if (currentSub) currentSub = null;
+          else currentMain = null;
+        } else if (line.includes('：')) {
+          const p = line.split('：');
+          flat.push({
+            mainCat: currentMain,
+            subCat: currentSub || currentMain,
+            term: p[0].trim(),
+            meaning: (p[1] || "").trim(),
+            example: p.slice(2).join('：').trim() || null
+          });
+        }
+      });
+      return { title, flat, structure };
+    }
+
+    const ds = parseDataset(RAW_DATA);
+    const state = { q: "", cat: "ALL", type: "ALL" };
+    const els = {
+      title: document.getElementById("pageTitle"),
+      q: document.getElementById("q"),
+      cat: document.getElementById("cat"),
+      type: document.getElementById("type"),
+      grid: document.getElementById("grid"),
+      chips: document.getElementById("chips"),
+      empty: document.getElementById("empty")
+    };
+
+    function init() {
+      els.title.textContent = ds.title;
+      buildSelect(els.cat, Object.keys(ds.structure), "所有大類");
+      updateTypeSelect();
+      render();
+    }
+
+    function buildSelect(el, opts, allLabel) {
+      el.innerHTML = `<option value="ALL">${allLabel}</option>`;
+      opts.forEach(o => {
+        const opt = document.createElement("option");
+        opt.value = opt.textContent = o;
+        el.appendChild(opt);
+      });
+    }
+
+    function updateTypeSelect() {
+      if (state.cat === "ALL") {
+        els.type.innerHTML = `<option value="ALL">全部型態</option>`;
+        els.type.disabled = true;
+      } else {
+        const subs = ds.structure[state.cat] || [];
+        buildSelect(els.type, subs, "全部型態");
+        els.type.disabled = subs.length === 0;
+      }
+      state.type = "ALL";
+    }
+
+    function render() {
+      const filtered = ds.flat.filter(item => {
+        if (state.cat !== "ALL" && item.mainCat !== state.cat) return false;
+        if (state.type !== "ALL" && item.subCat !== state.type) return false;
+        if (state.q) {
+          const s = `${item.term} ${item.meaning} ${item.example}`.toLowerCase();
+          if (!state.q.toLowerCase().split(' ').every(k => s.includes(k))) return false;
+        }
+        return true;
+      });
+
+      els.grid.innerHTML = filtered.map(item => `
+        <article class="card">
+          <div class="cardHead">
+            <h2 class="term">${item.term}</h2>
+            <div class="tags">
+              <span class="tag">${item.mainCat}</span>
+              ${item.subCat !== item.mainCat ? `<span class="tag">${item.subCat}</span>` : ''}
+            </div>
+          </div>
+          <div class="sec">
+            <h3 class="secTitle">Meaning</h3>
+            <p class="meaning">${item.meaning}</p>
+          </div>
+          <div class="sec">
+            <h3 class="secTitle">Example</h3>
+            ${item.example ? `<p class="example">${item.example}</p>` : `<div class="tag" style="border:none; color:#555; padding:0;">（暫無例句）</div>`}
+          </div>
+        </article>
+      `).join('');
+
+      els.empty.style.display = filtered.length ? "none" : "block";
+      renderChips(filtered.length);
+    }
+
+    function renderChips(count) {
+      els.chips.innerHTML = `
+        <div class="chip">顯示 <strong>${count}</strong></div>
+        <div class="chip">大類: <strong>${state.cat}</strong></div>
+        ${state.type !== "ALL" ? `<div class="chip">型態: <strong>${state.type}</strong></div>` : ""}
+      `;
+    }
+
+    els.q.addEventListener("input", e => { state.q = e.target.value; render(); });
+    els.cat.addEventListener("change", e => { state.cat = e.target.value; updateTypeSelect(); render(); });
+    els.type.addEventListener("change", e => { state.type = e.target.value; render(); });
+
+    init();
+  </script>
+</body>
+</html>
