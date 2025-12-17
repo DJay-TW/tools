@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>日語學習工具箱 | Premium Hub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500&display=swap');
+
+        :root {
+            --bg-color: #050505;
+        }
+
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            background-color: var(--bg-color);
+            margin: 0;
+            overflow-x: hidden;
+            min-height: 100vh;
+            color: #ffffff; /* 強制全域白色 */
+        }
+
+        /* 動態流動背景 */
+        .background-glow {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            z-index: -1;
+            background: var(--bg-color);
+            overflow: hidden;
+        }
+
+        .blob {
+            position: absolute;
+            width: 700px;
+            height: 700px;
+            background: radial-gradient(circle, rgba(63, 94, 251, 0.2) 0%, rgba(252, 70, 107, 0) 70%);
+            filter: blur(60px);
+            border-radius: 50%;
+            animation: move 25s infinite alternate ease-in-out;
+        }
+
+        .blob-2 {
+            background: radial-gradient(circle, rgba(0, 212, 255, 0.15) 0%, rgba(154, 102, 255, 0) 70%);
+            width: 800px;
+            height: 800px;
+            right: -10%;
+            top: -10%;
+            animation-duration: 30s;
+            animation-delay: -5s;
+        }
+
+        @keyframes move {
+            0% { transform: translate(-10%, -10%) scale(1); }
+            50% { transform: translate(15%, 10%) scale(1.1); }
+            100% { transform: translate(-5%, 20%) scale(1); }
+        }
+
+        /* 強化毛玻璃卡片 */
+        .app-card {
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+            color: #ffffff !important; /* 強制卡片文字為白色 */
+            text-decoration: none !important;
+        }
+
+        .app-card:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.4);
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+        }
+
+        /* 圖示設計 */
+        .icon-large {
+            font-size: 3.8rem; 
+            margin-bottom: 1.5rem;
+            background: linear-gradient(180deg, #ffffff 0%, #a1a1a1 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline-block;
+        }
+
+        /* 特別標記 JLPT */
+        .jlpt-special .icon-large {
+            background: linear-gradient(180deg, #ffe08a 0%, #d4a017 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .jlpt-text {
+            color: #ffe08a !important;
+            font-weight: 500;
+        }
+
+        .card-text {
+            font-size: 1.15rem;
+            letter-spacing: 0.1em;
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center py-16 px-6">
+
+    <div class="background-glow">
+        <div class="blob"></div>
+        <div class="blob blob-2"></div>
+    </div>
+
+    <div class="max-w-6xl w-full">
+        <header class="text-center mb-16">
+            <h1 class="text-4xl font-light tracking-[0.6em] text-white opacity-90 mb-6">DJAY HUB</h1>
+            <div class="h-[2px] w-20 bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 mx-auto opacity-60"></div>
+        </header>
+
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-6 md:gap-10">
+            
+            <a href="https://djay-tw.github.io/tools/50on.html" class="app-card rounded-[2.5rem] p-10 flex flex-col items-center justify-center aspect-square">
+                <i class="las la-sync-alt icon-large"></i>
+                <span class="card-text">動詞活用規則</span>
+            </a>
+
+            <a href="https://djay-tw.github.io/tools/adj.html" class="app-card rounded-[2.5rem] p-10 flex flex-col items-center justify-center aspect-square">
+                <i class="las la-shapes icon-large"></i>
+                <span class="card-text">形容詞活用規則</span>
+            </a>
+
+            <a href="https://djay-tw.github.io/tools/mono.html" class="app-card rounded-[2.5rem] p-10 flex flex-col items-center justify-center aspect-square">
+                <i class="las la-list-ul icon-large"></i>
+                <span class="card-text">形容詞大全</span>
+            </a>
+
+            <a href="https://djay-tw.github.io/tools/iv.html" class="app-card rounded-[2.5rem] p-10 flex flex-col items-center justify-center aspect-square">
+                <i class="las la-exclamation-circle icon-large"></i>
+                <span class="card-text">不規則動詞</span>
+            </a>
+
+            <a href="https://djay-tw.github.io/tools/kw130.html" class="app-card rounded-[2.5rem] p-10 flex flex-col items-center justify-center aspect-square">
+                <i class="las la-quote-left icon-large"></i>
+                <span class="card-text">經典諺語 130+</span>
+            </a>
+
+            <a href="#" class="app-card rounded-[2.5rem] p-10 flex flex-col items-center justify-center aspect-square">
+                <i class="las la-book-open icon-large"></i>
+                <span class="card-text">慣用語 300+</span>
+            </a>
+
+            <a href="https://djay-tw.github.io/tools/s300.html" class="app-card rounded-[2.5rem] p-10 flex flex-col items-center justify-center aspect-square">
+                <i class="las la-link icon-large"></i>
+                <span class="card-text">高頻搭配語</span>
+            </a>
+
+            <a href="https://djay-tw.github.io/tools/end.html" class="app-card rounded-[2.5rem] p-10 flex flex-col items-center justify-center aspect-square">
+                <i class="las la-puzzle-piece icon-large"></i>
+                <span class="card-text">句尾功能模組</span>
+            </a>
+
+            <a href="https://djay-tw.github.io/tools/jg.html" class="app-card jlpt-special rounded-[2.5rem] p-10 flex flex-col items-center justify-center aspect-square">
+                <i class="las la-award icon-large"></i>
+                <span class="card-text jlpt-text">JLPT 文法大全</span>
+            </a>
+
+        </div>
+
+        <footer class="mt-20 text-center opacity-30 text-[10px] tracking-[0.4em] uppercase">
+            System Online • 2025 Jay's Laboratory
+        </footer>
+    </div>
+
+</body>
+</html>
