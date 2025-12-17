@@ -1,4 +1,6 @@
 
+
+
 <!doctype html>
 <html lang="zh-Hant">
 <head>
@@ -86,7 +88,16 @@
       line-height: 1.2;
     }
     
-    .tags { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; }
+    .reading {
+  display: block;          /* ← 關鍵：強制換行 */
+  margin-top: 2px;
+
+  font-size: 14px;       /* ← 跟 kw130 接近 */
+  color: #9aa0a6;          /* 灰階輔助資訊色 */
+  font-weight: 400;
+  letter-spacing: 0.04em;
+}
+.tags { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; }
     .tag { font-size: 0.65rem; color: var(--muted); border: 1px solid var(--border); padding: 1px 6px; border-radius: 4px; }
 
     .sec { margin-top: 10px; }
@@ -446,6 +457,15 @@ border-left: 3px solid #444;
 `.trim();
     // ---------------------------------
 
+    function escapeHTML(str) {
+      return String(str ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+    }
+
     function parseDataset(raw) {
       const lines = raw.split('\n').map(l => l.trim()).filter(l => l);
       const title = lines[0] || "Japanese Cards";
@@ -470,10 +490,22 @@ border-left: 3px solid #444;
           else currentMain = null;
         } else if (line.includes('：')) {
           const p = line.split('：');
+          // Extract reading in parentheses like 「目を通す（めをとおす）」
+          const termRaw = p[0].trim();
+          let term = termRaw;
+          let reading = null;
+          const tm = termRaw.match(/^(.+?)（(.+?)）$/);
+          if (tm) {
+            term = tm[1].trim();
+            reading = tm[2].trim();
+          }
+
           flat.push({
             mainCat: currentMain,
             subCat: currentSub || currentMain,
-            term: p[0].trim(),
+            term,
+            reading,
+            termRaw,
             meaning: (p[1] || "").trim(),
             example: p.slice(2).join('：').trim() || null
           });
@@ -527,7 +559,7 @@ border-left: 3px solid #444;
         if (state.cat !== "ALL" && item.mainCat !== state.cat) return false;
         if (state.type !== "ALL" && item.subCat !== state.type) return false;
         if (state.q) {
-          const s = `${item.term} ${item.meaning} ${item.example}`.toLowerCase();
+          const s = `${item.termRaw || item.term} ${item.reading || ''} ${item.meaning} ${item.example || ''}`.toLowerCase();
           if (!state.q.toLowerCase().split(' ').every(k => s.includes(k))) return false;
         }
         return true;
@@ -536,7 +568,7 @@ border-left: 3px solid #444;
       els.grid.innerHTML = filtered.map(item => `
         <article class="card">
           <div class="cardHead">
-            <h2 class="term">${item.term}</h2>
+            <h2 class="term">${escapeHTML(item.term)}${item.reading ? '<span class="reading">（' + escapeHTML(item.reading) + '）</span>' : ''}</h2>
             <div class="tags">
               <span class="tag">${item.mainCat}</span>
               ${item.subCat !== item.mainCat ? `<span class="tag">${item.subCat}</span>` : ''}
@@ -544,11 +576,11 @@ border-left: 3px solid #444;
           </div>
           <div class="sec">
             <h3 class="secTitle">涵義</h3>
-            <p class="meaning">${item.meaning}</p>
+            <p class="meaning">${escapeHTML(item.meaning)}</p>
           </div>
           <div class="sec">
             <h3 class="secTitle">用法</h3>
-            ${item.example ? `<p class="example">${item.example}</p>` : `<div class="muted-text">（暫無例句）</div>`}
+            ${item.example ? `<p class="example">${escapeHTML(item.example)}</p>` : `<div class="muted-text">（暫無例句）</div>`}
           </div>
         </article>
       `).join('');
@@ -573,6 +605,8 @@ border-left: 3px solid #444;
   </script>
 </body>
 </html>
+
+
 
 
 
