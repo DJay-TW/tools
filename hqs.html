@@ -1,697 +1,482 @@
+
+
 <!doctype html>
 <html lang="zh-Hant">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>超高頻搭配詞</title>
-  <meta name="color-scheme" content="dark" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
+  <title>搭配詞大全</title>
   <style>
-
-    :root{
-      --bg-color:#121212;
-      --card-bg:#1e1e1e;
-      --text-primary:#e0e0e0;
-      --text-secondary:#a0a0a0;
-      --accent-color:#cfb53b;
-      --accent-hover:#eecf5b;
-      --border-color:#333;
-      --shadow-hover: 0 8px 16px rgba(0,0,0,.25);
-      --radius-card: 12px;
-      --radius-chip: 999px;
-      --font-main: "Helvetica Neue", Helvetica, "PingFang TC", "Hiragino Sans GB", "Microsoft JhengHei", Arial, sans-serif;
-      --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    :root {
+      --bg: #121212;
+      --card: #1e1e1e;
+      --border: #333;
+      --text: #e0e0e0;
+      --muted: #a0a0a0;
+      --accent: #cfb53b;
+      --radius: 8px;
+      --maxw: 1100px;
+      
+      /* 同步 kw130 字級：緊湊型工具書比例 */
+      --h1: 2.5rem;
+      --cardTitle: 1.4rem;
+      --body: 0.95rem;
+      --small: 0.85rem;
     }
-    *{ box-sizing:border-box; }
-    html,body{ height:100%; }
-    body{
-      margin:0;
-      background: var(--bg-color);
-      color: var(--text-primary);
-      font-family: var(--font-main);
-      line-height:1.6;
-      padding: 20px;
+
+    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+    
+    body {
+      margin: 0;
+      /* 同步 kw130 字體順序：移除手動字距，讓 Meiryo 原生緊湊感發揮 */
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Microsoft JhengHei", "Meiryo", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      letter-spacing: 0;
       -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      letter-spacing: .1px;
-      font-size: 17px; /* mobile-friendly */
     }
 
-    .wrap{
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 10px 0 56px;
+    .wrap { max-width: var(--maxw); margin: 0 auto; padding: 16px; }
+    header { text-align: center; padding: 8px 0; }
+    h1 { margin: 0; font-size: var(--h1); color: var(--accent); letter-spacing: -0.01em; }
+
+    /* 手機版優化：控制列排版 */
+    .controls { margin: 15px 0; display: flex; flex-direction: column; gap: 8px; }
+    .input {
+      width: 100%; background: var(--card); border: 1px solid var(--border);
+      color: var(--text); border-radius: 6px; padding: 10px 12px;
+      font-size: 0.95rem; outline: none; transition: border-color 0.2s;
+    }
+    .select-group { display: flex; gap: 8px; }
+    .select {
+      flex: 1; background: var(--card); border: 1px solid var(--border);
+      color: var(--text); border-radius: 6px; padding: 8px 10px;
+      font-size: 0.85rem; cursor: pointer; outline: none; min-width: 0;
+    }
+    .input:focus, .select:focus { border-color: var(--accent); }
+
+    /* 資訊條優化：水平滑動不換行 */
+    .chips {
+      display: flex; gap: 6px; overflow-x: auto; padding-bottom: 8px;
+      margin-bottom: 10px; scrollbar-width: none;
+    }
+    .chips::-webkit-scrollbar { display: none; }
+    .chip {
+      white-space: nowrap; background: #252525; border: 1px solid var(--border);
+      padding: 3px 10px; border-radius: 4px; font-size: 0.72rem; color: var(--muted);
+    }
+    .chip strong { color: var(--accent); }
+
+    /* 卡片設計 */
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; }
+    @media (max-width: 600px) { .grid { grid-template-columns: 1fr; } }
+
+    .card {
+      background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 14px; transition: transform 0.15s ease;
+    }
+    .cardHead { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+    
+    .term {
+      font-size: var(--cardTitle); 
+      font-weight: 600; /* 同步 kw130 字重 */
+      color: var(--accent);
+      margin: 0;
+      letter-spacing: 0; /* 微調標題字距，讓日文更紮實 */
+      line-height: 1.2;
+    }
+    
+    .reading {
+  display: block;          /* ← 關鍵：強制換行 */
+  margin-top: 2px;
+
+  font-size: 12px;       /* ← 跟 kw130 接近 */
+  color: #9aa0a6;          /* 灰階輔助資訊色 */
+  font-weight: 400;
+  letter-spacing: 0.04em;
+}
+.tags { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; }
+    .tag { font-size: 0.65rem; color: var(--muted); border: 1px solid var(--border); padding: 1px 6px; border-radius: 4px; }
+
+    .sec { margin-top: 10px; }
+    
+    /* 回歸的小色塊裝飾 */
+    .secTitle {
+      font-size: 0.72rem; font-weight: 700; color: var(--muted);
+      margin-bottom: 6px; display: flex; align-items: center; gap: 6px;
+      text-transform: uppercase;
+    }
+    .secTitle::before {
+      content: ""; width: 3px; height: 11px; background: var(--accent);
+      border-radius: 1px; display: inline-block;
     }
 
-    header{
-      text-align:center;
-      margin-bottom: 18px;
+    .meaning { margin: 0 0 0 2px; font-size: var(--body); line-height: 1.5; color: #ddd; }
+    
+    /* 例文色塊優化 */
+    .example {
+      margin: 4px 0 0; padding: 10px 12px; background: #262626;
+      border-radius: 6px; font-size: var(--body); font-weight: 400;      
+      color: #ccc; line-height: 1.6; 
+/*      
+border-left: 3px solid #444;
+      */
+      white-space: pre-wrap;
+      font-style: italic;
     }
 
-    h1{
-      margin:0 0 8px 0;
-      font-size: 2.5rem;
-      color: var(--accent-color);
-      letter-spacing: 1px;
-      font-weight: 800;
-    }
-    .sub{
-      color: var(--text-secondary);
-      font-size: .95rem;
-      line-height: 1.5;
-    }
-
-    /* Controls -> keep but visually calm */
-    .controls{
-      max-width: 900px;
-      margin: 18px auto 0;
-      display:flex;
-      gap: 10px;
-      align-items:center;
-      flex-wrap: wrap;
-      justify-content:center;
-    }
-
-    .input{
-      flex: 1 1 360px;
-      min-width: min(520px, 100%);
-      display:flex;
-      align-items:center;
-      padding: 10px 12px;
-      border-radius: var(--radius-card);
-      border: 1px solid var(--border-color);
-      background: #181818;
-      color: var(--text-primary);
-    }
-    .input input{
-      width:100%;
-      border:0;
-      outline:0;
-      background:transparent;
-      color: var(--text-primary);
-      font-size: 1rem;
-    }
-    .input input::placeholder{ color: var(--text-secondary); }
-
-    .pill{
-      font-size: .9rem;
-      padding: 8px 12px;
-      border-radius: var(--radius-chip);
-      border: 1px solid var(--border-color);
-      background: #181818;
-      color: var(--text-secondary);
-      cursor:pointer;
-      user-select:none;
-      transition: transform .08s ease, border-color .12s ease, color .12s ease;
-    }
-    .pill:hover{
-      border-color: var(--accent-color);
-      color: var(--text-primary);
-      transform: translateY(-1px);
-    }
-    .pill[aria-pressed="true"]{
-      border-color: var(--accent-color);
-      color: var(--text-primary);
-    }
-
-    .stats{
-      max-width: 900px;
-      margin: 12px auto 18px;
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap: 12px;
-      color: var(--text-secondary);
-      font-size: .85rem;
-      flex-wrap: wrap;
-    }
-    kbd{
-      font-family: var(--font-mono);
-      font-size: .85rem;
-      padding: 2px 7px;
-      border: 1px solid var(--border-color);
-      border-radius: 8px;
-      background: rgba(0,0,0,.18);
-      color: var(--text-secondary);
-    }
-
-    .grid{
-      display:flex;
-      flex-direction:column;
-      gap: 14px;
-      max-width: 1100px;
-      margin: 0 auto;
-    }
-
-    /* Group container (details) */
-    details.group{
-      background: var(--card-bg);
-      border: 1px solid var(--border-color);
-      border-radius: var(--radius-card);
-      overflow:hidden;
-    }
-    details.group:hover{
-      border-color: var(--accent-color);
-    }
-
-    summary{
-      list-style:none;
-      cursor:pointer;
-      padding: 16px 16px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap: 10px;
-      user-select:none;
-      border-bottom: 1px solid transparent;
-    }
-    summary::-webkit-details-marker{ display:none; }
-    .group[open] summary{
-      border-bottom-color: var(--border-color);
-      background: rgba(255,255,255,.02);
-    }
-
-    .groupTitle{ display:flex; flex-direction:column; gap: 4px; min-width:0; }
-    .groupTitle .name{ font-weight: 800; font-size: 1.4rem; letter-spacing: .2px; color: var(--text-primary); }
-    .groupTitle .meta{ color: var(--text-secondary); font-size: .95rem; }
-
-    .chev{
-      width: 34px; height: 34px;
-      border-radius: 12px;
-      display:grid; place-items:center;
-      border: 1px solid var(--border-color);
-      background: #181818;
-      flex: 0 0 auto;
-      transition: transform .14s ease, border-color .12s ease;
-    }
-    details[open] .chev{ transform: rotate(180deg); }
-    details.group:hover .chev{ border-color: var(--accent-color); }
-
-    .cards{
-      padding: 14px;
-      display:grid;
-      grid-template-columns: repeat(2, minmax(0,1fr));
-      gap: 12px;
-    }
-
-    .card{
-      background: var(--card-bg);
-      border: 1px solid var(--border-color);
-      border-radius: var(--radius-card);
-      padding: 16px;
-      display:flex;
-      flex-direction:column;
-      gap: 10px;
-      transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
-    }
-    .card:hover{
-      transform: translateY(-3px);
-      box-shadow: var(--shadow-hover);
-      border-color: var(--accent-color);
-    }
-
-    .topRow{
-      display:flex;
-      align-items:flex-start;
-      justify-content:space-between;
-      gap: 10px;
-    }
-
-    .jp{
-      font-size: 1.4rem;
-      font-weight: 800;
-      letter-spacing: .2px;
-      line-height: 1.25;
-      word-break: break-word;
-      color: var(--accent-color);
-    }
-    .kana{
-      color: var(--text-secondary);
-      font-size: .9rem;
-      font-family: var(--font-mono);
-      letter-spacing: .2px;
-      margin-top: 2px;
-    }
-    .zh{
-      color: #fff;
-      font-size: 1rem;
-      line-height: 1.5;
-    }
-
-    .example{
-      margin-top: 2px;
-      padding-top: 10px;
-      border-top: 1px solid var(--border-color);
-      display:flex;
-      flex-direction:column;
-      gap: 6px;
-    }
-    .exjp{
-      font-size: .95rem;
-      color: var(--text-primary);
-      line-height: 1.55;
-      word-break: break-word;
-    }
-    .exzh{
-      font-size: .9rem;
-      color: var(--text-secondary);
-      line-height: 1.55;
-      word-break: break-word;
-    }
-
-    .btn{
-      flex: 0 0 auto;
-      border: 1px solid var(--border-color);
-      background: #181818;
-      color: var(--text-secondary);
-      font-size: .9rem;
-      padding: 8px 12px;
-      border-radius: 12px;
-      cursor:pointer;
-      transition: background .12s ease, border-color .12s ease, color .12s ease, transform .08s ease;
-    }
-    .btn:hover{
-      border-color: var(--accent-color);
-      color: var(--text-primary);
-      transform: translateY(-1px);
-    }
-    .btn:active{ transform: translateY(0px); }
-
-    .toast{
-      position: fixed;
-      left: 50%;
-      bottom: 18px;
-      transform: translateX(-50%);
-      background: var(--card-bg);
-      border: 1px solid var(--border-color);
-      border-radius: 14px;
-      padding: 12px 14px;
-      color: var(--text-secondary);
-      font-size: .9rem;
-      box-shadow: var(--shadow-hover);
-      opacity: 0;
-      pointer-events:none;
-      transition: opacity .16s ease, transform .16s ease;
-      max-width: min(92vw, 540px);
-      text-align: center;
-    }
-    .toast.show{
-      opacity: 1;
-      transform: translateX(-50%) translateY(-4px);
-    }
-
-    footer{
-      max-width: 1100px;
-      margin: 22px auto 0;
-      color: var(--text-secondary);
-      font-size: .85rem;
-      display:flex;
-      justify-content:space-between;
-      gap: 12px;
-      flex-wrap:wrap;
-      border-top: 1px solid var(--border-color);
-      padding-top: 14px;
-    }
-
-    @media (max-width: 860px){
-      .cards{ grid-template-columns: 1fr; }
-      .input{ min-width: 100%; }
-      h1{ font-size: 1.7rem; }
-    }
-
+    .empty { text-align: center; padding: 40px; color: var(--muted); font-size: var(--body); }
+    .muted-text { font-size: 0.75rem; color: #555; padding-left: 2px; }
   </style>
 </head>
-
 <body>
   <div class="wrap">
-    <header>
-      <div class="title">
-        <h1>超高頻搭配詞</h1>
-        <div class="sub">｜分類展開｜搜尋｜日常例句</div>
-      </div>
-      <div class="controls">
-        <div class="input" role="search">
-          <input id="q" placeholder="搜尋：日文 / 假名 / 中文（例如：落ちる、きが、忙、對齊）" autocomplete="off" />
-        </div>
-        <button class="pill" id="toggleAll" aria-pressed="false" type="button">展開全部</button>
-        <button class="pill" id="clear" type="button">清除</button>
-      </div>
-    </header>
+    <header><h1 id="pageTitle">Loading...</h1></header>
 
-    <div class="stats">
-      <div id="count">—</div>
-      <div>快捷：<kbd>/</kbd> 聚焦搜尋　<kbd>Esc</kbd> 清除</div>
+    <div class="controls">
+      <input id="q" class="input" placeholder="搜尋：日文 / 意義 / 例句" />
+      <div class="select-group">
+        <select id="cat" class="select"></select>
+        <select id="type" class="select"></select>
+      </div>
     </div>
 
-    <main id="app" class="grid"></main>
-
-    <footer>
-      <div>Data: 145 items · Minimal dark UI</div>
-      <div>Single-file static HTML</div>
-    </footer>
+    <div class="chips" id="chips"></div>
+    <div class="grid" id="grid"></div>
+    <div id="empty" class="empty" style="display:none;">找不到符合條件的條目</div>
   </div>
 
-  <div id="toast" class="toast" aria-live="polite"></div>
-
   <script>
-    const DATA = [
-      // 心智・思考與記憶
-      {cat:"心智・思考與記憶", no:1, jp:"目を通す", kana:"めをとおす", zh:"過目、瀏覽", ex:"この資料、あとで目を通しておくね。", ex_zh:"這份資料我晚點會先過目一下。"},
-      {cat:"心智・思考與記憶", no:2, jp:"頭に入れる", kana:"あたまにいれる", zh:"記住、放進腦袋", ex:"今日中に手順を頭に入れておきたい。", ex_zh:"我想在今天之內把流程記起來。"},
-      {cat:"心智・思考與記憶", no:3, jp:"腑に落ちない", kana:"ふにおちない", zh:"無法理解、想不通", ex:"説明は分かるけど、なんか腑に落ちない。", ex_zh:"說明我懂，但總覺得哪裡想不通。"},
-      {cat:"心智・思考與記憶", no:4, jp:"目に焼き付く", kana:"めにやきつく", zh:"刻印在眼裡、難以忘懷", ex:"あの景色が目に焼き付いて離れない。", ex_zh:"那個景色刻在我腦海裡揮之不去。"},
-      {cat:"心智・思考與記憶", no:5, jp:"耳に残る", kana:"みみにのこる", zh:"縈繞在耳邊、聽了難忘", ex:"その一言が耳に残って、ずっと気になる。", ex_zh:"那句話一直在耳邊迴盪，讓我很在意。"},
-      {cat:"心智・思考與記憶", no:6, jp:"ピンとくる", kana:"ぴんとくる", zh:"馬上理解、有靈感", ex:"それ聞いてピンときた。原因それだ。", ex_zh:"聽你一說我就有感覺了，原因就是那個。"},
-      {cat:"心智・思考與記憶", no:7, jp:"見当がつく", kana:"けんとうがつく", zh:"大致推測、心裡有數", ex:"だいたい見当がつく。たぶん設定の問題だよ。", ex_zh:"我大概有數了，應該是設定的問題。"},
-      {cat:"心智・思考與記憶", no:8, jp:"見当違い", kana:"けんとうちがい", zh:"離題、完全搞錯", ex:"それは見当違いかも。方向が違う気がする。", ex_zh:"那可能是搞錯方向了，我覺得路線不對。"},
-      {cat:"心智・思考與記憶", no:9, jp:"気に留める", kana:"きにとめる", zh:"放在心上、留意", ex:"その点は気に留めておく。あとで確認するね。", ex_zh:"那點我會記著，晚點再確認。"},
-      {cat:"心智・思考與記憶", no:10, jp:"気に留めない", kana:"きにとめない", zh:"不放在心上、不在意", ex:"細かいことは気に留めないで。大丈夫。", ex_zh:"小事別放在心上，沒問題。"},
-      {cat:"心智・思考與記憶", no:11, jp:"心に響く", kana:"こころにひびく", zh:"觸動人心、打動心弦", ex:"その言葉、心に響いた。助かったよ。", ex_zh:"那句話很打動我，真的幫到我了。"},
-      {cat:"心智・思考與記憶", no:12, jp:"胸に刻む", kana:"むねにきざむ", zh:"銘記在心", ex:"言われたことを胸に刻んで、次に活かす。", ex_zh:"我會把你說的話記在心裡，下次改進。"},
-      {cat:"心智・思考與記憶", no:13, jp:"先が読める", kana:"さきがよめる", zh:"看得出後勢、看得見前景", ex:"この流れだと、先が読めるね。もう少しで終わる。", ex_zh:"照這個走向，我大概看得出來了，快結束了。"},
-      {cat:"心智・思考與記憶", no:14, jp:"先が見えない", kana:"さきがみえない", zh:"前景不明、看不見未來", ex:"今の状況だと、先が見えなくて不安。", ex_zh:"以現在狀況來看，看不到後續有點不安。"},
+    // --- 資料區：請將您的資料貼回此處 ---
+    const RAW_DATA = `
+超高頻搭配詞
 
-      // 態度・情緒
-      {cat:"態度・情緒", no:15, jp:"気が重い", kana:"きがおもい", zh:"覺得沈重、提不起勁", ex:"行かなきゃだけど、気が重いな…。", ex_zh:"雖然得去，但心情很沉重…。"},
-      {cat:"態度・情緒", no:16, jp:"気が楽だ", kana:"きがらくだ", zh:"輕鬆、無壓力", ex:"話せて気が楽になった。ありがとう。", ex_zh:"聊完心裡輕鬆多了，謝謝。"},
-      {cat:"態度・情緒", no:17, jp:"気が利く", kana:"きがきく", zh:"機靈周到、貼心", ex:"それ用意してくれるの、気が利くね。", ex_zh:"你連那個都先準備好，真貼心。"},
-      {cat:"態度・情緒", no:18, jp:"気が回る", kana:"きがまわる", zh:"想得周全、細膩", ex:"そこまで気が回るのすごい。助かった。", ex_zh:"你連那種細節都想到，太強了，幫大忙。"},
-      {cat:"態度・情緒", no:19, jp:"気が短い", kana:"きがみじかい", zh:"急性子、沒耐性", ex:"自分でも気が短いって分かってる。", ex_zh:"我自己也知道我很沒耐性。"},
-      {cat:"態度・情緒", no:20, jp:"気が長い", kana:"きがながい", zh:"有耐性、慢性子", ex:"待てるのは気が長い人だよね。", ex_zh:"能等的人真的很有耐心。"},
-      {cat:"態度・情緒", no:21, jp:"気が散る", kana:"きがちる", zh:"心不在焉、分心", ex:"通知が多くて、気が散る。", ex_zh:"通知一直跳出來，超分心。"},
-      {cat:"態度・情緒", no:22, jp:"気を遣う", kana:"きをつかう", zh:"顧慮、費心", ex:"そんなに気を遣わなくていいよ。", ex_zh:"你不用那麼費心啦。"},
-      {cat:"態度・情緒", no:23, jp:"気を抜く", kana:"きをぬく", zh:"放鬆警戒、鬆懈", ex:"ここで気を抜くとミスるからね。", ex_zh:"這裡一鬆懈就會出錯喔。"},
-      {cat:"態度・情緒", no:24, jp:"気を張る", kana:"きをはる", zh:"繃緊神經、打起精神", ex:"今日は気を張っていこう。大事な日だ。", ex_zh:"今天要打起精神，因為很重要。"},
-      {cat:"態度・情緒", no:25, jp:"ムッとする", kana:"むっとする", zh:"一肚子氣、悶怒", ex:"その言い方はちょっとムッとした。", ex_zh:"你那種講法我有點不爽。"},
-      {cat:"態度・情緒", no:26, jp:"カチンとくる", kana:"かちんとくる", zh:"被激到、火冒三丈", ex:"今の一言、さすがにカチンときた。", ex_zh:"剛那句我真的被激到。"},
-      {cat:"態度・情緒", no:27, jp:"しっくりくる", kana:"しっくりくる", zh:"合拍、合適、順心", ex:"この表現が一番しっくりくる。", ex_zh:"這個說法最貼切。"},
-      {cat:"態度・情緒", no:28, jp:"もやもやする", kana:"もやもやする", zh:"悶悶不樂、卡卡的", ex:"理由は分からないけど、もやもやする。", ex_zh:"理由說不上來，但就是很悶。"},
-      // 人際・社交
-      {cat:"人際・社交", no:29, jp:"顔を立てる", kana:"かおをたてる", zh:"給面子", ex:"今日は相手の顔を立てて、こちらは引いたほうがいい。", ex_zh:"今天先給對方面子，我們這邊退一步比較好。"},
-      {cat:"人際・社交", no:30, jp:"顔が広い", kana:"かおがひろい", zh:"人脈廣、交際廣", ex:"あの人、顔が広いから相談してみよう。", ex_zh:"那個人交際廣，找他問看看吧。"},
-      {cat:"人際・社交", no:31, jp:"顔を出す", kana:"かおをだす", zh:"露個臉、現身一下", ex:"時間があれば、会にちょっと顔を出すよ。", ex_zh:"有時間的話，我會去聚會露個臉。"},
-      {cat:"人際・社交", no:32, jp:"水を差す", kana:"みずをさす", zh:"潑冷水、掃興", ex:"盛り上がってるところに水を差すのはやめよう。", ex_zh:"大家正嗨的時候別潑冷水。"},
-      {cat:"人際・社交", no:33, jp:"場を読む", kana:"ばをよむ", zh:"看場合", ex:"まず場を読んでから話そう。", ex_zh:"先看場合再開口吧。"},
-      {cat:"人際・社交", no:34, jp:"空気を読む", kana:"くうきをよむ", zh:"讀空氣、看氣氛行事", ex:"今は空気を読んで、余計なことは言わない。", ex_zh:"現在就讀空氣，別多說。"},
-      {cat:"人際・社交", no:35, jp:"話を盛る", kana:"はなしをもる", zh:"誇大、加油添醋", ex:"それ、ちょっと話を盛ってない？", ex_zh:"你是不是有點加油添醋？"},
-      {cat:"人際・社交", no:36, jp:"話をそらす", kana:"はなしをそらす", zh:"轉移話題", ex:"都合が悪いとすぐ話をそらすよね。", ex_zh:"你一不方便就立刻轉移話題耶。"},
-      {cat:"人際・社交", no:37, jp:"話がかみ合う", kana:"はなしがかみあう", zh:"談得來、話題接得上", ex:"この人とは話がかみ合うから楽だ。", ex_zh:"跟這個人聊得來，很輕鬆。"},
-      {cat:"人際・社交", no:38, jp:"話がこじれる", kana:"はなしがこじれる", zh:"談崩、越談越糟", ex:"ここで言い方を間違えると話がこじれる。", ex_zh:"這裡講法一錯，事情就會越談越糟。"},
-      {cat:"人際・社交", no:39, jp:"一言多い", kana:"ひとことおおい", zh:"多嘴、多講一句", ex:"ごめん、今のは一言多かった。", ex_zh:"抱歉，剛剛那句我多嘴了。"},
+心智・思考{
+目を通す（めをとおす）：過目、瀏覽：この資料、あとで目を通しておくね。這份資料我晚點會先過目一下。
+頭に入れる（あたまにいれる）：記住、放進腦袋：今日中に手順を頭に入れておきたい。我想在今天之內把流程記起來。
+腑に落ちない（ふにおちない）：無法理解、想不通：説明は分かるけど、なんか腑に落ちない。說明我懂，但總覺得哪裡想不通。
+目に焼き付く（めにやきつく）：刻印在眼裡、難以忘懷：あの景色が目に焼き付いて離れない。那個景色刻在我腦海裡揮之不去。
+耳に残る（みみにのこる）：縈繞在耳邊、聽了難忘：その一言が耳に残って、ずっと気になる。那句話一直在耳邊迴盪，讓我很在意。
+ピンとくる（ぴんとくる）：馬上理解、有靈感：それ聞いてピンときた。原因それだ。聽你一說我就有感覺了，原因就是那個。
+見当がつく（けんとうがつく）：大致推測、心裡有數：だいたい見当がつく。たぶん設定の問題だよ。我大概有數了，應該是設定的問題。
+見当違い（けんとうちがい）：離題、完全搞錯：それは見当違いかも。方向が違う気がする。那可能是搞錯方向了，我覺得路線不對。
+気に留める（きにとめる）：放在心上、留意：その点は気に留めておく。あとで確認するね。那點我會記著，晚點再確認。
+気に留めない（きにとめない）：不放在心上、不在意：細かいことは気に留めないで。大丈夫。小事別放在心上，沒問題。
+心に響く（こころにひびく）：觸動人心、打動心弦：その言葉、心に響いた。助かったよ。那句話很打動我，真的幫到我了。
+胸に刻む（むねにきざむ）：銘記在心：言われたことを胸に刻んで、次に活かす。我會把你說的話記在心裡，下次改進。
+先が読める（さきがよめる）：看得出後勢、看得見前景：この流れだと、先が読めるね。もう少しで終わる。照這個走向，我大概看得出來了，快結束了。
+先が見えない（さきがみえない）：前景不明、看不見未來：今の状況だと、先が見えなくて不安。以現在狀況來看，看不到後續有點不安。
+}
+態度・情緒{
+気が重い（きがおもい）：覺得沈重、提不起勁：行かなきゃだけど、気が重いな…。雖然得去，但心情很沉重…。
+気が楽だ（きがらくだ）：輕鬆、無壓力：話せて気が楽になった。ありがとう。聊完心裡輕鬆多了，謝謝。
+気が利く（きがきく）：機靈周到、貼心：それ用意してくれるの、気が利くね。你連那個都先準備好，真貼心。
+気が回る（きがまわる）：想得周全、細膩：そこまで気が回るのすごい。助かった。你連那種細節都想到，太強了，幫大忙。
+気が短い（きがみじかい）：急性子、沒耐性：自分でも気が短いって分かってる。我自己也知道我很沒耐性。
+気が長い（きがながい）：有耐性、慢性子：待てるのは気が長い人だよね。能等的人真的很有耐心。
+気が散る（きがちる）：心不在焉、分心：通知が多くて、気が散る。通知一直跳出來，超分心。
+気を遣う（きをつかう）：顧慮、費心：そんなに気を遣わなくていいよ。你不用那麼費心啦。
+気を抜く（きをぬく）：放鬆警戒、鬆懈：ここで気を抜くとミスるからね。這裡一鬆懈就會出錯喔。
+気を張る（きをはる）：繃緊神經、打起精神：今日は気を張っていこう。大事な日だ。今天要打起精神，因為很重要。
+ムッとする（むっとする）：一肚子氣、悶怒：その言い方はちょっとムッとした。你那種講法我有點不爽。
+カチンとくる（かちんとくる）：被激到、火冒三丈：今の一言、さすがにカチンときた。剛那句我真的被激到。
+しっくりくる（しっくりくる）：合拍、合適、順心：この表現が一番しっくりくる。這個說法最貼切。
+もやもやする（もやもやする）：悶悶不樂、卡卡的：理由は分からないけど、もやもやする。理由說不上來，但就是很悶。
+}
+人際・社交{
+顔を立てる（かおをたてる）：給面子：今日は相手の顔を立てて、こちらは引いたほうがいい。今天先給對方面子，我們這邊退一步比較好。
+顔が広い（かおがひろい）：人脈廣、交際廣：あの人、顔が広いから相談してみよう。那個人交際廣，找他問看看吧。
+顔を出す（かおをだす）：露個臉、現身一下：時間があれば、会にちょっと顔を出すよ。有時間的話，我會去聚會露個臉。
+水を差す（みずをさす）：潑冷水、掃興：盛り上がってるところに水を差すのはやめよう。大家正嗨的時候別潑冷水。
+場を読む（ばをよむ）：看場合：まず場を読んでから話そう。先看場合再開口吧。
+空気を読む（くうきをよむ）：讀空氣、看氣氛行事：今は空気を読んで、余計なことは言わない。現在就讀空氣，別多說。
+話を盛る（はなしをもる）：誇大、加油添醋：それ、ちょっと話を盛ってない？你是不是有點加油添醋？
+話をそらす（はなしをそらす）：轉移話題：都合が悪いとすぐ話をそらすよね。你一不方便就立刻轉移話題耶。
+話がかみ合う（はなしがかみあう）：談得來、話題接得上：この人とは話がかみ合うから楽だ。跟這個人聊得來，很輕鬆。
+話がこじれる（はなしがこじれる）：談崩、越談越糟：ここで言い方を間違えると話がこじれる。這裡講法一錯，事情就會越談越糟。
+一言多い（ひとことおおい）：多嘴、多講一句：ごめん、今のは一言多かった。抱歉，剛剛那句我多嘴了。
+}
+工作・學習{
+手を抜く（てをぬく）：偷工減料、敷衍：ここは手を抜くと後で痛い目を見る。這裡偷懶的話，之後會吃苦頭。
+手を打つ（てをうつ）：採取對策、出手處理：問題が大きくなる前に手を打とう。在問題變大前先出手處理。
+手が回らない（てがまわらない）：顧不到、忙不過來：今週は手が回らないから、来週でいい？這週忙不過來，可以下週再弄嗎？
+手が空く（てがあく）：手頭空下來、有空檔：手が空いたら、これも見てくれる？你有空檔的時候，也能幫我看這個嗎？
+手を貸す（てをかす）：幫一把、搭把手：ちょっと手を貸して。5分で終わる。幫我一下，五分鐘就好。
+手間を食う（てまをくう）：費工、耗工夫：この作業、思ったより手間を食うな。這工作比想像中更費工。
+段取りを組む（だんどりをくむ）：做好流程安排、排程：先に段取りを組んでおくと早い。先把流程安排好會比較快。
+詰めが甘い（つめがあまい）：收尾不嚴謹、細節鬆散：全体はいいけど、最後の詰めが甘い。整體不錯，但最後收尾不夠嚴謹。
+抜け漏れがある（ぬけもれがある）：有遺漏、疏漏：チェックしたけど、まだ抜け漏れがあるかも。我檢查過了，但可能還有遺漏。
+すり合わせる（すりあわせる）：互相調整、對齊：要件を一回すり合わせてから進めよう。先把需求對齊一次再往下做。
+ボールを持つ（ぼーるをもつ）：（專案）負責跟進：この件は私がボールを持つね。這件事我來負責跟進。
+ボールを返す（ぼーるをかえす）：交還責任、回覆：確認したのでボール返します。次お願いします。我確認過了，把球丟回去，下一步麻煩你。
+根拠を示す（こんきょをしめす）：提出依據：その判断の根拠を示してもらえる？可以給我那個判斷的依據嗎？
+腰を据える（こしをすえる）：沉住氣、專心投入：腰を据えて取り組まないと終わらない。不沉住氣專心做，這件事做不完。
+}
+生活・比喻{
+ツボにはまる（つぼにはまる）：正中要點、對味：その例え、完全にツボにはまった。那個比喻完全打中要點。
+コツをつかむ（こつをつかむ）：抓到訣竅：一回コツをつかむと一気に楽になる。一抓到訣竅就會一下子輕鬆很多。
+クセが強い（くせがつよい）：個性很強烈：この店、味のクセが強いけどハマる人はハマる。這家店味道個性很強，但會中毒的人就會很愛。
+地雷を踏む（じらいをふむ）：踩到地雷：その話題は地雷だから触れないほうがいい。那個話題是地雷，最好別碰。
+波に乗る（なみにのる）：乘勢而上：今は波に乗ってるから、このまま進めよう。現在正在順風上，就照這勢頭推進吧。
+追い風になる（おいかぜになる）：成為順風：このニュースは追い風になるはず。這個消息應該會成為順風。
+逆風を受ける（ぎゃくふうをうける）：處境不利：今は逆風を受けてるけど、耐えよう。現在處境不利，但先撐住。
+すき間を狙う（すきまをねらう）：鑽縫隙、找利基：大手と正面から戦わず、すき間を狙おう。別正面硬碰大公司，找利基切入。
+話の腰を折る（はなしのこしをおる）：打斷說話：ごめん、話の腰を折っちゃった。続けて。抱歉我打斷你了，你繼續。
+骨が折れる（ほねがおれる）：費力、吃力：この作業は骨が折れるけど、やるしかない。這工作很吃力，但只能做。
+首が回らない（くびがまわらない）：忙不過來／周轉不靈：今月は支払いが多くて首が回らない。這個月支出太多，周轉不靈。
+}
+成敗・風險{
+先手を打つ（せんてをうつ）：先發制人：トラブルになる前に先手を打っておこう。在變成麻煩之前先發制人。
+一手打つ（いってうつ）：採取一步對策：この状況を変えるには、こちらも一手打つ必要がある。要改變現況，我們也得出一招。
+一枚上手（いちまいうわて）：技高一籌：相手が一枚上手だった。完敗。對方技高一籌，完全輸了。
+裏目に出る（うらめにでる）：適得其反：良かれと思ったのに裏目に出た。明明是為了好，結果適得其反。
+火に油を注ぐ（ひにあぶらをそそぐ）：火上加油：そこで反論すると火に油を注ぐだけだよ。你現在反駁只會火上加油。
+火消しに走る（ひけしにはしる）：趕緊滅火：炎上しそうだから、早めに火消しに走ったほうがいい。看起來要炎上了，最好趕快去滅火。
+取り返しがつかない（とりかえしがつかない）：無法挽回：今ここでミスると取り返しがつかない。現在這裡出錯就無法挽回了。
+首を突っ込む（くびをつっこむ）：插手、介入：関係ないなら首を突っ込まないほうがいい。如果沒關係就別插手。
+引き際をわきまえる（ひきぎわをわきまえる）：懂得適時收手：勝ち負けより、引き際をわきまえるのが大事。比起輸贏，懂得適時收手更重要。
+}
+說話・表達{
+腹を割って話す（はらをわってはなす）：開誠布公地談：一回、腹を割って話そう。我們乾脆開誠布公談一次吧。
+オブラートに包む（おぶらーとにつつむ）：委婉包裝：言い方をオブラートに包んでくれると助かる。你如果能委婉一點講，我會比較好接。
+角が立つ（かどがたつ）：引人不快：その言い方だと角が立つよ。你那樣講會刺到人。
+的を射る（まとをいる）：命中要點：その指摘は的を射てる。你的指摘很到位。
+ニュアンスを汲む（にゅあんすをくむ）：體會語感：言葉そのものより、ニュアンスを汲んでほしい。比起字面，我希望你抓到語氣。
+}
+情境・反射{
+顔をしかめる（かおをしかめる）：皺眉：彼は一瞬、顔をしかめた。他一瞬間皺了眉。
+口を挟む（くちをはさむ）：插嘴：話してる途中で口を挟まないで。別在我講到一半插嘴。
+首をかしげる（くびをかしげる）：表示疑惑：その説明に、みんな首をかしげてた。大家對那個說明都一臉疑惑。
+肩をすくめる（かたをすくめる）：聳肩（無奈）：どうしようもなくて、肩をすくめた。沒辦法了，只能無奈聳肩。
+手を焼く（てをやく）：難以應付：この件は本当に手を焼いてる。這件事真的很難搞。
+気を回す（きをまわす）：多想、顧慮：そんなに気を回さなくて大丈夫だよ。不用想那麼多，沒事。
+気を利かせる（きをきかせる）：機靈配合：ここは気を利かせて、先に動こう。這裡機靈點，我們先動起來。
+気を落とす（きをおとす）：灰心：そんなに気を落とさないで。まだいける。別那麼灰心，還有機會。
+気が済む（きがすむ）：心裡過得去：それで気が済むなら、そうしていいよ。如果那樣你心裡過得去，就那樣做吧。
+腹をくくる（はらをくくる）：下定決心：もう腹をくくった。やるしかない。我已經下定決心了，只能做。
+腹が立つ（はらがたつ）：生氣：その態度はさすがに腹が立つ。那種態度我真的會火大。
+胸がいっぱい（むねがいっぱい）：感慨滿懷：みんなの言葉で胸がいっぱいになった。大家的話讓我感動到滿滿的。
+腰が重い（こしがおもい）：懶得動：やらなきゃと思うけど、腰が重い。知道該做，但就是懶得動。
+水に流す（みずにながす）：既往不咎：今回のことは水に流そう。這次的事就算了吧。
+根に持つ（ねにもつ）：記恨：そんなの根に持たないでよ。別把那種事記恨啦。
+}
+思考・表態{
+そういう手もある（そういうてもある）：也是個辦法：なるほど、そういう手もあるね。原來如此，也有那一招啊。
+それはそれで（それはそれで）：那樣也有那樣的好：それはそれでアリだと思う。那樣我覺得也可以。
+一理ある（いちりある）：有道理：言ってることは一理ある。你說的確有道理。
+なんとも言えない（なんともいえない）：很難說：良い悪いは、なんとも言えないな。好不好真的很難說。
+さすがに…（さすがに…）：再怎麼說也…：さすがにそれは無理だと思う。再怎麼說我覺得那不行。
+どちらかと言えば…（どちらかといえば…）：如果要說的話：どちらかと言えば、Aのほうが好き。如果要說的話，我比較喜歡A。
+どの口が言う（どのくちがいう）：你也好意思說：どの口が言うの？さっきと言ってること違うよ。你也好意思說？你剛剛講的跟現在不一樣。
+そこまでは…（そこまでは…）：也沒到那程度：いや、そこまでは気にしてない。沒有啦，也沒那麼在意。
+ありがち（ありがち）：常見的：それ、ありがちなミスだよ。那是很常見的錯誤。
+ありえる話（ありえるはなし）：可能發生的事：それはありえる話だね。念のため確認しよう。那確實有可能，以防萬一確認一下。
+}
+吐槽・婉拒{
+それは違う気がする（それはちがうきがする）：我覺得不太對：うーん、それは違う気がする。嗯…我覺得不太對。
+その発想はなかった（そのはっそうはなかった）：沒想到這種想法：その発想はなかった。面白いね。沒想到這招，蠻有趣的。
+今はちょっと…（いまはちょっと…）：現在不方便：ごめん、今はちょっと…。また今度。抱歉，我現在有點不方便…下次。
+さすがに無理（さすがにむり）：再怎麼說也不行：それはさすがに無理。今日は帰る。那真的不行，我今天要回了。
+それはさすがに…（それはさすがに…）：那樣有點過分：それはさすがに…。言い過ぎじゃない？那有點過分了吧…你是不是講太重？
+どっちでもいい（どっちでもいい）：都可以：私はどっちでもいいよ。任せる。我都可以，你決定。
+ほどほどに（ほどほどに）：適可而止：無理しないで、ほどほどにね。別太勉強，適可而止。
+空気読んで（くうきよんで）：看氣氛：お願い、空気読んで今はやめて。拜託看氣氛，現在先別。
+それは置いといて（それはおいといて）：先擱一邊：それは置いといて、今の優先はこっち。那先放一邊，現在優先的是這個。
+}
+決策・推進{
+腕を上げる（うでをあげる）：提升本事：最近、腕を上げたね。仕上がりが違う。你最近功力提升了，完成度不一樣。
+腕を振るう（うでをふるう）：大展身手：ここで腕を振るってもらおう。這裡就讓你大展身手吧。
+話を詰める（はなしをつめる）：敲定細節：時間ある？今日中に話を詰めたい。有空嗎？我想今天之內把細節談定。
+話を通す（はなしをとおす）：取得同意：先に上に話を通しておくね。我先跟上面打個招呼取得同意。
+根回しをする（ねまわしをする）：事前打點：通したいなら、先に根回しをしたほうが早い。想推過的話，先私下打點會比較快。
+方向性を合わせる（ほうこうせいをあわせる）：對齊方向：まず方向性を合わせてから細部を決めよう。先把方向對齊，再決定細節。
+見通しを立てる（みとおしをたてる）：預估走向：ざっくりでいいから見通しを立てよう。大概就好，先把走向估出來。
+見当をつける（けんとうをつける）：抓概略：まずは予算の見当をつけよう。先抓一下預算的大概範圍。
+}
+品質・感受{
+仕上がりがいい（しあがりがいい）：完成度高：今回のは仕上がりがいいね。這次的成品完成度很高。
+収まりがいい（おさまりがいい）：貼合得體：この配置だと収まりがいい。這樣排版／擺放很服貼、很得體。
+使い勝手がいい（つかいがってがいい）：好用：これ、使い勝手がいいから手放せない。這個很好用，用了就離不開。
+もったいない（もったいない）：可惜：捨てるのはもったいないよ。まだ使える。丟掉太可惜了，還能用。
+腑に落ちる（ふにおちる）：想通：その説明で腑に落ちた。なるほど。那樣解釋我就想通了，原來如此。
+しっくり来ない（しっくりこない）：不太對勁：悪くないけど、なんかしっくり来ない。不差，但總覺得不太對勁。
+雰囲気がある（ふんいきがある）：有氛圍：この写真、雰囲気があるね。這張照片很有氛圍。
+こだわりがある（こだわりがある）：有講究：細部にこだわりがあるのが分かる。看得出你對細節很講究。
+}
+進度・狀況{
+目処が立つ（めどがたつ）：有眉目：だいぶ目処が立ってきた。あと少し。大致有眉目了，再一下。
+手応えがある（てごたえがある）：有效果：今回は手応えがある。いけそう。這次有手感、有成效，感覺行。
+先が見える（さきがみえる）：看得見前景：ここまで来ると先が見えるね。到這裡就看得到終點了。
+行き当たりばったり（いきあたりばったり）：沒計畫：行き当たりばったりだと、あとで詰むよ。走一步算一步的話，之後會卡死。
+空回りする（からまわりする）：白忙：頑張ってるのに空回りしてる感じ。明明很努力，卻有種白忙的感覺。
+バタバタしている（ばたばたしている）：忙亂：今日は朝からバタバタしてる。我今天從早上就忙亂到不行。
+ぼちぼちやる（ぼちぼちやる）：慢慢來：焦らず、ぼちぼちやろう。別急，慢慢來就好。
+詰まり気味（つまりぎみ）：有點卡：処理が詰まり気味だから、一回整理しよう。流程有點卡，先整理一下。
+ひと段落つく（ひとだんらくつく）：告一段落：この件、ようやくひと段落ついた。這件事終於告一段落了。
+埋まってる（うまってる）：已滿：その時間はもう埋まってる。別の枠にしよう。那個時間已經滿了，換別的時段。
+空いてる（あいてる）：有空：明日の午後なら空いてるよ。明天下午我有空。
+押してる（おしてる）：延誤：ごめん、ちょっと押してる。10分遅れる。抱歉有點延誤，我會晚10分鐘。
+遅れてる（おくれてる）：落後：進捗、少し遅れてる。巻き返す。進度有點落後，我會追上。
+詰まってる（つまってる）：卡住：今ここで詰まってる。原因見てくれる？我卡在這裡了，可以幫我看原因嗎？
+回ってない（まわってない）：運作不良：体制が回ってないから、まず立て直そう。整個體制沒在運作，先把它拉回正軌。
+ひとまず落ち着いた（ひとまずおちついた）：暫時穩下來：ひとまず落ち着いたから、次の手を考えよう。暫時穩下來了，來想下一步。
+立て直す（たてなおす）：拉回正軌：ここから立て直せば、まだ間に合う。從這裡拉回正軌的話，還來得及。
+}
 
-      // 工作・學習
-      {cat:"工作・學習", no:40, jp:"手を抜く", kana:"てをぬく", zh:"偷工減料、敷衍", ex:"ここは手を抜くと後で痛い目を見る。", ex_zh:"這裡偷懶的話，之後會吃苦頭。"},
-      {cat:"工作・學習", no:41, jp:"手を打つ", kana:"てをうつ", zh:"採取對策、出手處理", ex:"問題が大きくなる前に手を打とう。", ex_zh:"在問題變大前先出手處理。"},
-      {cat:"工作・學習", no:42, jp:"手が回らない", kana:"てがまわらない", zh:"顧不到、忙不過來", ex:"今週は手が回らないから、来週でいい？", ex_zh:"這週忙不過來，可以下週再弄嗎？"},
-      {cat:"工作・學習", no:43, jp:"手が空く", kana:"てがあく", zh:"手頭空下來、有空檔", ex:"手が空いたら、これも見てくれる？", ex_zh:"你有空檔的時候，也能幫我看這個嗎？"},
-      {cat:"工作・學習", no:44, jp:"手を貸す", kana:"てをかす", zh:"幫一把、搭把手", ex:"ちょっと手を貸して。5分で終わる。", ex_zh:"幫我一下，五分鐘就好。"},
-      {cat:"工作・學習", no:45, jp:"手間を食う", kana:"てまをくう", zh:"費工、耗工夫", ex:"この作業、思ったより手間を食うな。", ex_zh:"這工作比想像中更費工。"},
-      {cat:"工作・學習", no:46, jp:"段取りを組む", kana:"だんどりをくむ", zh:"做好流程安排、排程", ex:"先に段取りを組んでおくと早い。", ex_zh:"先把流程安排好會比較快。"},
-      {cat:"工作・學習", no:47, jp:"詰めが甘い", kana:"つめがあまい", zh:"收尾不嚴謹、細節鬆散", ex:"全体はいいけど、最後の詰めが甘い。", ex_zh:"整體不錯，但最後收尾不夠嚴謹。"},
-      {cat:"工作・學習", no:48, jp:"抜け漏れがある", kana:"ぬけもれがある", zh:"有遺漏、疏漏", ex:"チェックしたけど、まだ抜け漏れがあるかも。", ex_zh:"我檢查過了，但可能還有遺漏。"},
-      {cat:"工作・學習", no:49, jp:"すり合わせる", kana:"すりあわせる", zh:"互相調整、對齊", ex:"要件を一回すり合わせてから進めよう。", ex_zh:"先把需求對齊一次再往下做。"},
-      {cat:"工作・學習", no:50, jp:"ボールを持つ", kana:"ぼーるをもつ", zh:"（專案）負責跟進", ex:"この件は私がボールを持つね。", ex_zh:"這件事我來負責跟進。"},
-      {cat:"工作・學習", no:51, jp:"ボールを返す", kana:"ぼーるをかえす", zh:"交還責任、回覆", ex:"確認したのでボール返します。次お願いします。", ex_zh:"我確認過了，把球丟回去，下一步麻煩你。"},
-      {cat:"工作・學習", no:52, jp:"根拠を示す", kana:"こんきょをしめす", zh:"提出依據", ex:"その判断の根拠を示してもらえる？", ex_zh:"可以給我那個判斷的依據嗎？"},
-      {cat:"工作・學習", no:53, jp:"腰を据える", kana:"こしをすえる", zh:"沉住氣、專心投入", ex:"腰を据えて取り組まないと終わらない。", ex_zh:"不沉住氣專心做，這件事做不完。"},
 
-      // 生活常見比喻
-      {cat:"生活常見比喻", no:54, jp:"ツボにはまる", kana:"つぼにはまる", zh:"正中要點、對味", ex:"その例え、完全にツボにはまった。", ex_zh:"那個比喻完全打中要點。"},
-      {cat:"生活常見比喻", no:55, jp:"コツをつかむ", kana:"こつをつかむ", zh:"抓到訣竅", ex:"一回コツをつかむと一気に楽になる。", ex_zh:"一抓到訣竅就會一下子輕鬆很多。"},
-      {cat:"生活常見比喻", no:56, jp:"クセが強い", kana:"くせがつよい", zh:"個性很強烈", ex:"この店、味のクセが強いけどハマる人はハマる。", ex_zh:"這家店味道個性很強，但會中毒的人就會很愛。"},
-      {cat:"生活常見比喻", no:57, jp:"地雷を踏む", kana:"じらいをふむ", zh:"踩到地雷", ex:"その話題は地雷だから触れないほうがいい。", ex_zh:"那個話題是地雷，最好別碰。"},
-      {cat:"生活常見比喻", no:58, jp:"波に乗る", kana:"なみにのる", zh:"乘勢而上", ex:"今は波に乗ってるから、このまま進めよう。", ex_zh:"現在正在順風上，就照這勢頭推進吧。"},
-      {cat:"生活常見比喻", no:59, jp:"追い風になる", kana:"おいかぜになる", zh:"成為順風", ex:"このニュースは追い風になるはず。", ex_zh:"這個消息應該會成為順風。"},
-      {cat:"生活常見比喻", no:60, jp:"逆風を受ける", kana:"ぎゃくふうをうける", zh:"處境不利", ex:"今は逆風を受けてるけど、耐えよう。", ex_zh:"現在處境不利，但先撐住。"},
-      {cat:"生活常見比喻", no:61, jp:"すき間を狙う", kana:"すきまをねらう", zh:"鑽縫隙、找利基", ex:"大手と正面から戦わず、すき間を狙おう。", ex_zh:"別正面硬碰大公司，找利基切入。"},
-      {cat:"生活常見比喻", no:62, jp:"話の腰を折る", kana:"はなしのこしをおる", zh:"打斷說話", ex:"ごめん、話の腰を折っちゃった。続けて。", ex_zh:"抱歉我打斷你了，你繼續。"},
-      {cat:"生活常見比喻", no:63, jp:"骨が折れる", kana:"ほねがおれる", zh:"費力、吃力", ex:"この作業は骨が折れるけど、やるしかない。", ex_zh:"這工作很吃力，但只能做。"},
-      {cat:"生活常見比喻", no:64, jp:"首が回らない", kana:"くびがまわらない", zh:"忙不過來／周轉不靈", ex:"今月は支払いが多くて首が回らない。", ex_zh:"這個月支出太多，周轉不靈。"},
+`.trim();
+    // ---------------------------------
 
-      // 成功・失敗・風險
-      {cat:"成功・失敗・風險", no:65, jp:"先手を打つ", kana:"せんてをうつ", zh:"先發制人", ex:"トラブルになる前に先手を打っておこう。", ex_zh:"在變成麻煩之前先發制人。"},
-      {cat:"成功・失敗・風險", no:66, jp:"一手打つ", kana:"いってうつ", zh:"採取一步對策", ex:"この状況を変えるには、こちらも一手打つ必要がある。", ex_zh:"要改變現況，我們也得出一招。"},
-      {cat:"成功・失敗・風險", no:67, jp:"一枚上手", kana:"いちまいうわて", zh:"技高一籌", ex:"相手が一枚上手だった。完敗。", ex_zh:"對方技高一籌，完全輸了。"},
-      {cat:"成功・失敗・風險", no:68, jp:"裏目に出る", kana:"うらめにでる", zh:"適得其反", ex:"良かれと思ったのに裏目に出た。", ex_zh:"明明是為了好，結果適得其反。"},
-      {cat:"成功・失敗・風險", no:69, jp:"火に油を注ぐ", kana:"ひにあぶらをそそぐ", zh:"火上加油", ex:"そこで反論すると火に油を注ぐだけだよ。", ex_zh:"你現在反駁只會火上加油。"},
-      {cat:"成功・失敗・風險", no:70, jp:"火消しに走る", kana:"ひけしにはしる", zh:"趕緊滅火", ex:"炎上しそうだから、早めに火消しに走ったほうがいい。", ex_zh:"看起來要炎上了，最好趕快去滅火。"},
-      {cat:"成功・失敗・風險", no:71, jp:"取り返しがつかない", kana:"とりかえしがつかない", zh:"無法挽回", ex:"今ここでミスると取り返しがつかない。", ex_zh:"現在這裡出錯就無法挽回了。"},
-      {cat:"成功・失敗・風險", no:72, jp:"首を突っ込む", kana:"くびをつっこむ", zh:"插手、介入", ex:"関係ないなら首を突っ込まないほうがいい。", ex_zh:"如果沒關係就別插手。"},
-      {cat:"成功・失敗・風險", no:73, jp:"引き際をわきまえる", kana:"ひきぎわをわきまえる", zh:"懂得適時收手", ex:"勝ち負けより、引き際をわきまえるのが大事。", ex_zh:"比起輸贏，懂得適時收手更重要。"},
+    function escapeHTML(str) {
+      return String(str ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+    }
 
-      // 說話・表達力
-      {cat:"說話・表達力", no:74, jp:"腹を割って話す", kana:"はらをわってはなす", zh:"開誠布公地談", ex:"一回、腹を割って話そう。", ex_zh:"我們乾脆開誠布公談一次吧。"},
-      {cat:"說話・表達力", no:75, jp:"オブラートに包む", kana:"おぶらーとにつつむ", zh:"委婉包裝", ex:"言い方をオブラートに包んでくれると助かる。", ex_zh:"你如果能委婉一點講，我會比較好接。"},
-      {cat:"說話・表達力", no:76, jp:"角が立つ", kana:"かどがたつ", zh:"引人不快", ex:"その言い方だと角が立つよ。", ex_zh:"你那樣講會刺到人。"},
-      {cat:"說話・表達力", no:77, jp:"的を射る", kana:"まとをいる", zh:"命中要點", ex:"その指摘は的を射てる。", ex_zh:"你的指摘很到位。"},
-      {cat:"說話・表達力", no:78, jp:"ニュアンスを汲む", kana:"にゅあんすをくむ", zh:"體會語感", ex:"言葉そのものより、ニュアンスを汲んでほしい。", ex_zh:"比起字面，我希望你抓到語氣。"},
+    function parseDataset(raw) {
+      const lines = raw.split('\n').map(l => l.trim()).filter(l => l);
+      const title = lines[0] || "Japanese Cards";
+      const flat = [];
+      const structure = {}; 
 
+      let currentMain = null;
+      let currentSub = null;
 
-      // 情境反射
-      {cat:"情境反射", no:79, jp:"顔をしかめる", kana:"かおをしかめる", zh:"皺眉", ex:"彼は一瞬、顔をしかめた。", ex_zh:"他一瞬間皺了眉。"},
-      {cat:"情境反射", no:80, jp:"口を挟む", kana:"くちをはさむ", zh:"插嘴", ex:"話してる途中で口を挟まないで。", ex_zh:"別在我講到一半插嘴。"},
-      {cat:"情境反射", no:81, jp:"首をかしげる", kana:"くびをかしげる", zh:"表示疑惑", ex:"その説明に、みんな首をかしげてた。", ex_zh:"大家對那個說明都一臉疑惑。"},
-      {cat:"情境反射", no:82, jp:"肩をすくめる", kana:"かたをすくめる", zh:"聳肩（無奈）", ex:"どうしようもなくて、肩をすくめた。", ex_zh:"沒辦法了，只能無奈聳肩。"},
-      {cat:"情境反射", no:83, jp:"手を焼く", kana:"てをやく", zh:"難以應付", ex:"この件は本当に手を焼いてる。", ex_zh:"這件事真的很難搞。"},
-      {cat:"情境反射", no:84, jp:"気を回す", kana:"きをまわす", zh:"多想、顧慮", ex:"そんなに気を回さなくて大丈夫だよ。", ex_zh:"不用想那麼多，沒事。"},
-      {cat:"情境反射", no:85, jp:"気を利かせる", kana:"きをきかせる", zh:"機靈配合", ex:"ここは気を利かせて、先に動こう。", ex_zh:"這裡機靈點，我們先動起來。"},
-      {cat:"情境反射", no:86, jp:"気を落とす", kana:"きをおとす", zh:"灰心", ex:"そんなに気を落とさないで。まだいける。", ex_zh:"別那麼灰心，還有機會。"},
-      {cat:"情境反射", no:87, jp:"気が済む", kana:"きがすむ", zh:"心裡過得去", ex:"それで気が済むなら、そうしていいよ。", ex_zh:"如果那樣你心裡過得去，就那樣做吧。"},
-      {cat:"情境反射", no:88, jp:"腹をくくる", kana:"はらをくくる", zh:"下定決心", ex:"もう腹をくくった。やるしかない。", ex_zh:"我已經下定決心了，只能做。"},
-      {cat:"情境反射", no:89, jp:"腹が立つ", kana:"はらがたつ", zh:"生氣", ex:"その態度はさすがに腹が立つ。", ex_zh:"那種態度我真的會火大。"},
-      {cat:"情境反射", no:90, jp:"胸がいっぱい", kana:"むねがいっぱい", zh:"感慨滿懷", ex:"みんなの言葉で胸がいっぱいになった。", ex_zh:"大家的話讓我感動到滿滿的。"},
-      {cat:"情境反射", no:91, jp:"腰が重い", kana:"こしがおもい", zh:"懶得動", ex:"やらなきゃと思うけど、腰が重い。", ex_zh:"知道該做，但就是懶得動。"},
-      {cat:"情境反射", no:92, jp:"水に流す", kana:"みずにながす", zh:"既往不咎", ex:"今回のことは水に流そう。", ex_zh:"這次的事就算了吧。"},
-      {cat:"情境反射", no:93, jp:"根に持つ", kana:"ねにもつ", zh:"記恨", ex:"そんなの根に持たないでよ。", ex_zh:"別把那種事記恨啦。"},
+      lines.slice(1).forEach(line => {
+        if (line.endsWith('{')) {
+          const name = line.replace('{', '').trim();
+          if (!currentMain) {
+            currentMain = name;
+            structure[currentMain] = [];
+          } else {
+            currentSub = name;
+            if (!structure[currentMain].includes(currentSub)) structure[currentMain].push(currentSub);
+          }
+        } else if (line === '}') {
+          if (currentSub) currentSub = null;
+          else currentMain = null;
+        } else if (line.includes('：')) {
+          const p = line.split('：');
+          // Extract reading in parentheses like 「目を通す（めをとおす）」
+          const termRaw = p[0].trim();
+          let term = termRaw;
+          let reading = null;
+          const tm = termRaw.match(/^(.+?)（(.+?)）$/);
+          if (tm) {
+            term = tm[1].trim();
+            reading = tm[2].trim();
+          }
 
-      // 思考表態
-      {cat:"思考表態", no:94, jp:"そういう手もある", kana:"そういうてもある", zh:"也是個辦法", ex:"なるほど、そういう手もあるね。", ex_zh:"原來如此，也有那一招啊。"},
-      {cat:"思考表態", no:95, jp:"それはそれで", kana:"それはそれで", zh:"那樣也有那樣的好", ex:"それはそれでアリだと思う。", ex_zh:"那樣我覺得也可以。"},
-      {cat:"思考表態", no:96, jp:"一理ある", kana:"いちりある", zh:"有道理", ex:"言ってることは一理ある。", ex_zh:"你說的確有道理。"},
-      {cat:"思考表態", no:97, jp:"なんとも言えない", kana:"なんともいえない", zh:"很難說", ex:"良い悪いは、なんとも言えないな。", ex_zh:"好不好真的很難說。"},
-      {cat:"思考表態", no:98, jp:"さすがに…", kana:"さすがに…", zh:"再怎麼說也…", ex:"さすがにそれは無理だと思う。", ex_zh:"再怎麼說我覺得那不行。"},
-      {cat:"思考表態", no:99, jp:"どちらかと言えば…", kana:"どちらかといえば…", zh:"如果要說的話", ex:"どちらかと言えば、Aのほうが好き。", ex_zh:"如果要說的話，我比較喜歡A。"},
-      {cat:"思考表態", no:100, jp:"どの口が言う", kana:"どのくちがいう", zh:"你也好意思說", ex:"どの口が言うの？さっきと言ってること違うよ。", ex_zh:"你也好意思說？你剛剛講的跟現在不一樣。"},
-      {cat:"思考表態", no:101, jp:"そこまでは…", kana:"そこまでは…", zh:"也沒到那程度", ex:"いや、そこまでは気にしてない。", ex_zh:"沒有啦，也沒那麼在意。"},
-      {cat:"思考表態", no:102, jp:"ありがち", kana:"ありがち", zh:"常見的", ex:"それ、ありがちなミスだよ。", ex_zh:"那是很常見的錯誤。"},
-      {cat:"思考表態", no:103, jp:"ありえる話", kana:"ありえるはなし", zh:"可能發生的事", ex:"それはありえる話だね。念のため確認しよう。", ex_zh:"那確實有可能，以防萬一確認一下。"},
+          flat.push({
+            mainCat: currentMain,
+            subCat: currentSub || currentMain,
+            term,
+            reading,
+            termRaw,
+            meaning: (p[1] || "").trim(),
+            example: p.slice(2).join('：').trim() || null
+          });
+        }
+      });
+      return { title, flat, structure };
+    }
 
-      // 輕吐槽／婉拒
-      {cat:"輕吐槽／婉拒", no:104, jp:"それは違う気がする", kana:"それはちがうきがする", zh:"我覺得不太對", ex:"うーん、それは違う気がする。", ex_zh:"嗯…我覺得不太對。"},
-      {cat:"輕吐槽／婉拒", no:105, jp:"その発想はなかった", kana:"そのはっそうはなかった", zh:"沒想到這種想法", ex:"その発想はなかった。面白いね。", ex_zh:"沒想到這招，蠻有趣的。"},
-      {cat:"輕吐槽／婉拒", no:106, jp:"今はちょっと…", kana:"いまはちょっと…", zh:"現在不方便", ex:"ごめん、今はちょっと…。また今度。", ex_zh:"抱歉，我現在有點不方便…下次。"},
-      {cat:"輕吐槽／婉拒", no:107, jp:"さすがに無理", kana:"さすがにむり", zh:"再怎麼說也不行", ex:"それはさすがに無理。今日は帰る。", ex_zh:"那真的不行，我今天要回了。"},
-      {cat:"輕吐槽／婉拒", no:108, jp:"それはさすがに…", kana:"それはさすがに…", zh:"那樣有點過分", ex:"それはさすがに…。言い過ぎじゃない？", ex_zh:"那有點過分了吧…你是不是講太重？"},
-      {cat:"輕吐槽／婉拒", no:109, jp:"どっちでもいい", kana:"どっちでもいい", zh:"都可以", ex:"私はどっちでもいいよ。任せる。", ex_zh:"我都可以，你決定。"},
-      {cat:"輕吐槽／婉拒", no:110, jp:"ほどほどに", kana:"ほどほどに", zh:"適可而止", ex:"無理しないで、ほどほどにね。", ex_zh:"別太勉強，適可而止。"},
-      {cat:"輕吐槽／婉拒", no:111, jp:"空気読んで", kana:"くうきよんで", zh:"看氣氛", ex:"お願い、空気読んで今はやめて。", ex_zh:"拜託看氣氛，現在先別。"},
-      {cat:"輕吐槽／婉拒", no:112, jp:"それは置いといて", kana:"それはおいといて", zh:"先擱一邊", ex:"それは置いといて、今の優先はこっち。", ex_zh:"那先放一邊，現在優先的是這個。"},
-
-      // 決策與推進
-      {cat:"決策與推進", no:113, jp:"腕を上げる", kana:"うでをあげる", zh:"提升本事", ex:"最近、腕を上げたね。仕上がりが違う。", ex_zh:"你最近功力提升了，完成度不一樣。"},
-      {cat:"決策與推進", no:114, jp:"腕を振るう", kana:"うでをふるう", zh:"大展身手", ex:"ここで腕を振るってもらおう。", ex_zh:"這裡就讓你大展身手吧。"},
-      {cat:"決策與推進", no:115, jp:"話を詰める", kana:"はなしをつめる", zh:"敲定細節", ex:"時間ある？今日中に話を詰めたい。", ex_zh:"有空嗎？我想今天之內把細節談定。"},
-      {cat:"決策與推進", no:116, jp:"話を通す", kana:"はなしをとおす", zh:"取得同意", ex:"先に上に話を通しておくね。", ex_zh:"我先跟上面打個招呼取得同意。"},
-      {cat:"決策與推進", no:117, jp:"根回しをする", kana:"ねまわしをする", zh:"事前打點", ex:"通したいなら、先に根回しをしたほうが早い。", ex_zh:"想推過的話，先私下打點會比較快。"},
-      {cat:"決策與推進", no:118, jp:"方向性を合わせる", kana:"ほうこうせいをあわせる", zh:"對齊方向", ex:"まず方向性を合わせてから細部を決めよう。", ex_zh:"先把方向對齊，再決定細節。"},
-      {cat:"決策與推進", no:119, jp:"見通しを立てる", kana:"みとおしをたてる", zh:"預估走向", ex:"ざっくりでいいから見通しを立てよう。", ex_zh:"大概就好，先把走向估出來。"},
-      {cat:"決策與推進", no:120, jp:"見当をつける", kana:"けんとうをつける", zh:"抓概略", ex:"まずは予算の見当をつけよう。", ex_zh:"先抓一下預算的大概範圍。"},
-
-      // 品質與感受
-      {cat:"品質與感受", no:121, jp:"仕上がりがいい", kana:"しあがりがいい", zh:"完成度高", ex:"今回のは仕上がりがいいね。", ex_zh:"這次的成品完成度很高。"},
-      {cat:"品質與感受", no:122, jp:"収まりがいい", kana:"おさまりがいい", zh:"貼合得體", ex:"この配置だと収まりがいい。", ex_zh:"這樣排版/擺放很服貼、很得體。"},
-      {cat:"品質與感受", no:123, jp:"使い勝手がいい", kana:"つかいがってがいい", zh:"好用", ex:"これ、使い勝手がいいから手放せない。", ex_zh:"這個很好用，用了就離不開。"},
-      {cat:"品質與感受", no:124, jp:"もったいない", kana:"もったいない", zh:"可惜", ex:"捨てるのはもったいないよ。まだ使える。", ex_zh:"丟掉太可惜了，還能用。"},
-      {cat:"品質與感受", no:125, jp:"腑に落ちる", kana:"ふにおちる", zh:"想通", ex:"その説明で腑に落ちた。なるほど。", ex_zh:"那樣解釋我就想通了，原來如此。"},
-      {cat:"品質與感受", no:126, jp:"しっくり来ない", kana:"しっくりこない", zh:"不太對勁", ex:"悪くないけど、なんかしっくり来ない。", ex_zh:"不差，但總覺得不太對勁。"},
-      {cat:"品質與感受", no:127, jp:"雰囲気がある", kana:"ふんいきがある", zh:"有氛圍", ex:"この写真、雰囲気があるね。", ex_zh:"這張照片很有氛圍。"},
-      {cat:"品質與感受", no:128, jp:"こだわりがある", kana:"こだわりがある", zh:"有講究", ex:"細部にこだわりがあるのが分かる。", ex_zh:"看得出你對細節很講究。"},
-
-      // 進度與狀況
-      {cat:"進度與狀況", no:129, jp:"目処が立つ", kana:"めどがたつ", zh:"有眉目", ex:"だいぶ目処が立ってきた。あと少し。", ex_zh:"大致有眉目了，再一下。"},
-      {cat:"進度與狀況", no:130, jp:"手応えがある", kana:"てごたえがある", zh:"有效果", ex:"今回は手応えがある。いけそう。", ex_zh:"這次有手感、有成效，感覺行。"},
-      {cat:"進度與狀況", no:131, jp:"先が見える", kana:"さきがみえる", zh:"看得見前景", ex:"ここまで来ると先が見えるね。", ex_zh:"到這裡就看得到終點了。"},
-      {cat:"進度與狀況", no:132, jp:"行き当たりばったり", kana:"いきあたりばったり", zh:"沒計畫", ex:"行き当たりばったりだと、あとで詰むよ。", ex_zh:"走一步算一步的話，之後會卡死。"},
-      {cat:"進度與狀況", no:133, jp:"空回りする", kana:"からまわりする", zh:"白忙", ex:"頑張ってるのに空回りしてる感じ。", ex_zh:"明明很努力，卻有種白忙的感覺。"},
-      {cat:"進度與狀況", no:134, jp:"バタバタしている", kana:"ばたばたしている", zh:"忙亂", ex:"今日は朝からバタバタしてる。", ex_zh:"我今天從早上就忙亂到不行。"},
-      {cat:"進度與狀況", no:135, jp:"ぼちぼちやる", kana:"ぼちぼちやる", zh:"慢慢來", ex:"焦らず、ぼちぼちやろう。", ex_zh:"別急，慢慢來就好。"},
-      {cat:"進度與狀況", no:136, jp:"詰まり気味", kana:"つまりぎみ", zh:"有點卡", ex:"処理が詰まり気味だから、一回整理しよう。", ex_zh:"流程有點卡，先整理一下。"},
-      {cat:"進度與狀況", no:137, jp:"ひと段落つく", kana:"ひとだんらくつく", zh:"告一段落", ex:"この件、ようやくひと段落ついた。", ex_zh:"這件事終於告一段落了。"},
-      {cat:"進度與狀況", no:138, jp:"埋まってる", kana:"うまってる", zh:"已滿", ex:"その時間はもう埋まってる。別の枠にしよう。", ex_zh:"那個時間已經滿了，換別的時段。"},
-      {cat:"進度與狀況", no:139, jp:"空いてる", kana:"あいてる", zh:"有空", ex:"明日の午後なら空いてるよ。", ex_zh:"明天下午我有空。"},
-      {cat:"進度與狀況", no:140, jp:"押してる", kana:"おしてる", zh:"延誤", ex:"ごめん、ちょっと押してる。10分遅れる。", ex_zh:"抱歉有點延誤，我會晚10分鐘。"},
-      {cat:"進度與狀況", no:141, jp:"遅れてる", kana:"おくれてる", zh:"落後", ex:"進捗、少し遅れてる。巻き返す。", ex_zh:"進度有點落後，我會追上。"},
-      {cat:"進度與狀況", no:142, jp:"詰まってる", kana:"つまってる", zh:"卡住", ex:"今ここで詰まってる。原因見てくれる？", ex_zh:"我卡在這裡了，可以幫我看原因嗎？"},
-      {cat:"進度與狀況", no:143, jp:"回ってない", kana:"まわってない", zh:"運作不良", ex:"体制が回ってないから、まず立て直そう。", ex_zh:"整個體制沒在運作，先把它拉回正軌。"},
-      {cat:"進度與狀況", no:144, jp:"ひとまず落ち着いた", kana:"ひとまずおちついた", zh:"暫時穩下來", ex:"ひとまず落ち着いたから、次の手を考えよう。", ex_zh:"暫時穩下來了，來想下一步。"},
-      {cat:"進度與狀況", no:145, jp:"立て直す", kana:"たてなおす", zh:"拉回正軌", ex:"ここから立て直せば、まだ間に合う。", ex_zh:"從這裡拉回正軌的話，還來得及。"},
-
-
-      /* 下面為了避免你捲到天荒地老，我先把「全部 145 條」都做完了。
-         但訊息長度限制很容易炸掉。
-         所以我用同樣格式，先示範到 28 條讓你確認 UI/UX + 呈現方式。
-         你回我一句「繼續補完」我就把剩下 29～145 的 DATA 區塊一次貼完（不改 UI）。 */
-    ];
-
-    const byCat = () => {
-      const m = new Map();
-      for (const item of DATA){
-        if (!m.has(item.cat)) m.set(item.cat, []);
-        m.get(item.cat).push(item);
-      }
-      return m;
+    const ds = parseDataset(RAW_DATA);
+    const state = { q: "", cat: "ALL", type: "ALL" };
+    const els = {
+      title: document.getElementById("pageTitle"),
+      q: document.getElementById("q"),
+      cat: document.getElementById("cat"),
+      type: document.getElementById("type"),
+      grid: document.getElementById("grid"),
+      chips: document.getElementById("chips"),
+      empty: document.getElementById("empty")
     };
 
-    const $ = (sel) => document.querySelector(sel);
-    const app = $("#app");
-    const q = $("#q");
-    const toggleAllBtn = $("#toggleAll");
-    const clearBtn = $("#clear");
-    const countEl = $("#count");
-    const toast = $("#toast");
-
-    function showToast(msg){
-      toast.textContent = msg;
-      toast.classList.add("show");
-      clearTimeout(showToast._t);
-      showToast._t = setTimeout(()=>toast.classList.remove("show"), 900);
+    function init() {
+      els.title.textContent = ds.title;
+      buildSelect(els.cat, Object.keys(ds.structure), "所有大類");
+      updateTypeSelect();
+      render();
     }
 
-    function escapeHtml(s){
-      return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    function buildSelect(el, opts, allLabel) {
+      el.innerHTML = `<option value="ALL">${allLabel}</option>`;
+      opts.forEach(o => {
+        const opt = document.createElement("option");
+        opt.value = opt.textContent = o;
+        el.appendChild(opt);
+      });
     }
 
-    function cardHTML(item){
-      const jp = escapeHtml(item.jp);
-      const kana = escapeHtml(item.kana);
-      const zh = escapeHtml(item.zh);
-      const ex = escapeHtml(item.ex || "");
-      const exzh = escapeHtml(item.ex_zh || "");
-      return `
-        <div class="card" data-no="${item.no}">
-          <div class="topRow">
-            <div style="min-width:0">
-              <div class="jp">${jp}</div>
-              <div class="kana">${kana}</div>
-            </div>
-            <button class="btn" type="button" data-copy="${jp}">Copy</button>
-          </div>
-
-          <div class="zh">${zh}</div>
-
-          ${ex ? `
-            <div class="example">
-              <div class="exjp">${ex}</div>
-              <div class="exzh">${exzh}</div>
-            </div>
-          ` : ``}
-        </div>
-      `;
-    }
-
-    function groupHTML(cat, items, open=false){
-      return `
-        <details class="group" ${open ? "open" : ""}>
-          <summary>
-            <div class="groupTitle">
-              <div class="name">${escapeHtml(cat)}</div>
-              <div class="meta">${items.length} items</div>
-            </div>
-            <div class="chev" aria-hidden="true">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
-                <path d="M6 9l6 6 6-6" stroke="rgba(255,255,255,.70)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </div>
-          </summary>
-          <div class="cards">
-            ${items.map(cardHTML).join("")}
-          </div>
-        </details>
-      `;
-    }
-
-    function render(filter=""){
-      const needle = filter.trim().toLowerCase();
-      const m = byCat();
-
-      let totalShown = 0;
-      let html = "";
-
-      for (const [cat, items] of m.entries()){
-        const filtered = !needle ? items : items.filter(it => {
-          const s = `${it.jp} ${it.kana} ${it.zh} ${it.ex||""} ${it.ex_zh||""}`.toLowerCase();
-          return s.includes(needle);
-        });
-
-        if (filtered.length === 0) continue;
-        totalShown += filtered.length;
-        html += groupHTML(cat, filtered, Boolean(needle));
+    function updateTypeSelect() {
+      if (state.cat === "ALL") {
+        els.type.innerHTML = `<option value="ALL">全部型態</option>`;
+        els.type.disabled = true;
+      } else {
+        const subs = ds.structure[state.cat] || [];
+        buildSelect(els.type, subs, "全部型態");
+        els.type.disabled = subs.length === 0;
       }
+      state.type = "ALL";
+    }
 
-      app.innerHTML = html || `<div style="color:var(--muted);padding:16px;border:1px solid var(--line);border-radius:16px;background:rgba(255,255,255,.03)">沒有符合的結果。</div>`;
-      countEl.textContent = `${totalShown} / ${DATA.length} items`;
-
-      app.querySelectorAll("[data-copy]").forEach(btn=>{
-        btn.addEventListener("click", async (e)=>{
-          const text = e.currentTarget.getAttribute("data-copy");
-          try{
-            await navigator.clipboard.writeText(text);
-            showToast("Copied: " + text);
-          }catch{
-            const ta = document.createElement("textarea");
-            ta.value = text;
-            document.body.appendChild(ta);
-            ta.select();
-            document.execCommand("copy");
-            document.body.removeChild(ta);
-            showToast("Copied: " + text);
-          }
-        });
+    function render() {
+      const filtered = ds.flat.filter(item => {
+        if (state.cat !== "ALL" && item.mainCat !== state.cat) return false;
+        if (state.type !== "ALL" && item.subCat !== state.type) return false;
+        if (state.q) {
+          const s = `${item.termRaw || item.term} ${item.reading || ''} ${item.meaning} ${item.example || ''}`.toLowerCase();
+          if (!state.q.toLowerCase().split(' ').every(k => s.includes(k))) return false;
+        }
+        return true;
       });
 
-      if (!needle){
-        const groups = [...app.querySelectorAll("details.group")];
-        const allOpen = groups.length > 0 && groups.every(d => d.open);
-        toggleAllBtn.setAttribute("aria-pressed", String(allOpen));
-        toggleAllBtn.textContent = allOpen ? "收合全部" : "展開全部";
-      }else{
-        toggleAllBtn.setAttribute("aria-pressed","true");
-        toggleAllBtn.textContent = "收合全部";
-      }
+      els.grid.innerHTML = filtered.map(item => `
+        <article class="card">
+          <div class="cardHead">
+            <h2 class="term">${escapeHTML(item.term)}${item.reading ? '<span class="reading">（' + escapeHTML(item.reading) + '）</span>' : ''}</h2>
+            <div class="tags">
+              <span class="tag">${item.mainCat}</span>
+              ${item.subCat !== item.mainCat ? `<span class="tag">${item.subCat}</span>` : ''}
+            </div>
+          </div>
+          <div class="sec">
+            <h3 class="secTitle">涵義</h3>
+            <p class="meaning">${escapeHTML(item.meaning)}</p>
+          </div>
+          <div class="sec">
+            <h3 class="secTitle">用法</h3>
+            ${item.example ? `<p class="example">${escapeHTML(item.example)}</p>` : `<div class="muted-text">（暫無例句）</div>`}
+          </div>
+        </article>
+      `).join('');
+
+      els.empty.style.display = filtered.length ? "none" : "block";
+      renderChips(filtered.length);
     }
 
-    render("");
+    function renderChips(count) {
+      els.chips.innerHTML = `
+        <div class="chip">顯示 <strong>${count}</strong></div>
+        <div class="chip">大類: <strong>${state.cat}</strong></div>
+        ${state.type !== "ALL" ? `<div class="chip">型態: <strong>${state.type}</strong></div>` : ""}
+      `;
+    }
 
-    q.addEventListener("input", () => render(q.value));
+    els.q.addEventListener("input", e => { state.q = e.target.value; render(); });
+    els.cat.addEventListener("change", e => { state.cat = e.target.value; updateTypeSelect(); render(); });
+    els.type.addEventListener("change", e => { state.type = e.target.value; render(); });
 
-    clearBtn.addEventListener("click", ()=>{
-      q.value = "";
-      render("");
-      q.focus();
-    });
-
-    toggleAllBtn.addEventListener("click", ()=>{
-      const details = [...app.querySelectorAll("details.group")];
-      if (details.length === 0) return;
-      const shouldOpen = !details.every(d => d.open);
-      for (const d of details) d.open = shouldOpen;
-      toggleAllBtn.setAttribute("aria-pressed", String(shouldOpen));
-      toggleAllBtn.textContent = shouldOpen ? "收合全部" : "展開全部";
-    });
-
-    window.addEventListener("keydown", (e)=>{
-      if (e.key === "/" && document.activeElement !== q){
-        e.preventDefault();
-        q.focus();
-      }
-      if (e.key === "Escape"){
-        if (document.activeElement === q && q.value){
-          q.value = "";
-          render("");
-        }
-      }
-    });
+    init();
   </script>
 </body>
 </html>
+
+
 
 
