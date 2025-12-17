@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
-  <title>Japanese Cards - Professional Edition</title>
+  <title>形容詞大全</title>
   <style>
     :root {
       --bg: #121212;
@@ -106,7 +106,8 @@
     /* 例文色塊優化 */
     .example {
       margin: 4px 0 0; padding: 10px 12px; background: #262626;
-      border-radius: 6px; font-size: var(--body); font-weight: 400;
+      /*      /*order-radius: 6px; font-size: var(--body); font-weight: 400;
+      */
       color: #ccc; line-height: 1.6; border-left: 3px solid #444;
       white-space: pre-wrap;
     }
@@ -538,11 +539,11 @@
             </div>
           </div>
           <div class="sec">
-            <h3 class="secTitle">Meaning</h3>
+            <h3 class="secTitle">涵義</h3>
             <p class="meaning">${item.meaning}</p>
           </div>
           <div class="sec">
-            <h3 class="secTitle">Example</h3>
+            <h3 class="secTitle">用法</h3>
             ${item.example ? `<p class="example">${item.example}</p>` : `<div class="muted-text">（暫無例句）</div>`}
           </div>
         </article>
