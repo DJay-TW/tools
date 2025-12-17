@@ -5,136 +5,122 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
   <title>形容詞大全</title>
   <style>
-    :root{
-      --bg:#121212;
-      --card:#1e1e1e;
-      --border:#333;
-      --text:#e0e0e0;
-      --muted:#a0a0a0;
-      --accent:#cfb53b;
-      --shadow:0 10px 20px rgba(0,0,0,.3);
-      --radius:10px;
-      --maxw:1100px;
+    :root {
+      --bg: #121212;
+      --card: #1e1e1e;
+      --border: #333;
+      --text: #e0e0e0;
+      --muted: #a0a0a0;
+      --accent: #cfb53b;
+      --radius: 8px;
+      --maxw: 1100px;
+      
+      /* 同步 kw130 字級：緊湊型工具書比例 */
+      --h1: 1.5rem;
+      --cardTitle: 1.1rem;
+      --body: 0.88rem;
+      --small: 0.75rem;
     }
-    *{ box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
-    body{
-      margin:0; 
+
+    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+    
+    body {
+      margin: 0;
+      /* 同步 kw130 字體順序：移除手動字距，讓 Meiryo 原生緊湊感發揮 */
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Microsoft JhengHei", "Meiryo", sans-serif;
-      background:var(--bg); color:var(--text); line-height:1.5;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      letter-spacing: 0;
       -webkit-font-smoothing: antialiased;
     }
-    .wrap{ max-width:var(--maxw); margin:0 auto; padding:16px; }
-    
-    header{ text-align:center; padding:10px 0; }
-    h1{ margin:0; font-size:1.6rem; color:var(--accent); letter-spacing:-0.02em; }
-    
-    /* 搜尋與選單控制區優化 */
-    .controls {
-      margin: 15px 0;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
+
+    .wrap { max-width: var(--maxw); margin: 0 auto; padding: 16px; }
+    header { text-align: center; padding: 8px 0; }
+    h1 { margin: 0; font-size: var(--h1); color: var(--accent); letter-spacing: -0.01em; }
+
+    /* 手機版優化：控制列排版 */
+    .controls { margin: 15px 0; display: flex; flex-direction: column; gap: 8px; }
     .input {
-      width: 100%;
-      background: var(--card); border: 1px solid var(--border);
-      color: var(--text); border-radius: 8px; padding: 12px;
-      font-size: 1rem; outline: none;
+      width: 100%; background: var(--card); border: 1px solid var(--border);
+      color: var(--text); border-radius: 6px; padding: 10px 12px;
+      font-size: 0.95rem; outline: none; transition: border-color 0.2s;
     }
-    .select-group {
-      display: flex;
-      gap: 8px;
-    }
+    .select-group { display: flex; gap: 8px; }
     .select {
-      flex: 1; /* 讓兩個選單平分寬度 */
-      background: var(--card); border: 1px solid var(--border);
-      color: var(--text); border-radius: 8px; padding: 10px;
-      font-size: 0.9rem; cursor: pointer; outline: none;
-      min-width: 0; /* 防止內容撐開 */
+      flex: 1; background: var(--card); border: 1px solid var(--border);
+      color: var(--text); border-radius: 6px; padding: 8px 10px;
+      font-size: 0.85rem; cursor: pointer; outline: none; min-width: 0;
     }
     .input:focus, .select:focus { border-color: var(--accent); }
 
-    /* 資訊條 (Chips) 優化：不換行，支援左右滑動 */
+    /* 資訊條優化：水平滑動不換行 */
     .chips {
-      display: flex;
-      gap: 6px;
-      overflow-x: auto;
-      padding-bottom: 8px;
-      margin-bottom: 10px;
-      scrollbar-width: none; /* Firefox */
+      display: flex; gap: 6px; overflow-x: auto; padding-bottom: 8px;
+      margin-bottom: 10px; scrollbar-width: none;
     }
-    .chips::-webkit-scrollbar { display: none; } /* Chrome/Safari */
+    .chips::-webkit-scrollbar { display: none; }
     .chip {
-      white-space: nowrap;
-      background: #252525;
-      border: 1px solid var(--border);
-      padding: 4px 10px;
-      border-radius: 6px;
-      font-size: 0.75rem;
-      color: var(--muted);
+      white-space: nowrap; background: #252525; border: 1px solid var(--border);
+      padding: 3px 10px; border-radius: 4px; font-size: 0.72rem; color: var(--muted);
     }
     .chip strong { color: var(--accent); }
 
-    /* 卡片佈局 */
+    /* 卡片設計 */
     .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; }
     @media (max-width: 600px) { .grid { grid-template-columns: 1fr; } }
 
     .card {
       background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
-      padding: 16px; position: relative;
+      padding: 14px; transition: transform 0.15s ease;
     }
-    .cardHead { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; }
+    .cardHead { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+    
     .term {
-      font-size: 1.15rem; font-weight: 600; color: var(--accent);
-      margin: 0; letter-spacing: 0; line-height: 1.2;
+      font-size: var(--cardTitle); 
+      font-weight: 600; /* 同步 kw130 字重 */
+      color: var(--accent);
+      margin: 0;
+      letter-spacing: -0.01em; /* 微調標題字距，讓日文更紮實 */
+      line-height: 1.2;
     }
+    
     .tags { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; }
     .tag { font-size: 0.65rem; color: var(--muted); border: 1px solid var(--border); padding: 1px 6px; border-radius: 4px; }
-.term {
-  /* 移除 letter-spacing 或設為 0，確保字間距回歸字體原始設計 */
-  letter-spacing: 0; 
-  
-  /* 字重設為 600，這是 Meiryo 或正黑體最清晰且緊湊的粗度 */
-  font-weight: 600; 
-  
-  /* 縮小行高能讓標題文字在視覺上更凝聚 */
-  line-height: 1.2; 
-  
-  /* 確保使用系統字體順序 */
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Microsoft JhengHei", "Meiryo", sans-serif;
-  
-  font-size: 1.1rem;
-  color: var(--accent);
-  margin: 0;
-}
+
     .sec { margin-top: 10px; }
-    .secTitle { font-size: 0.7rem; font-weight: 600; color: var(--muted); margin-bottom: 4px; text-transform: uppercase; }
-    .meaning { margin: 0; font-size: 0.95rem; }
+    
+    /* 回歸的小色塊裝飾 */
+    .secTitle {
+      font-size: 0.72rem; font-weight: 700; color: var(--muted);
+      margin-bottom: 6px; display: flex; align-items: center; gap: 6px;
+      text-transform: uppercase;
+    }
+    .secTitle::before {
+      content: ""; width: 3px; height: 11px; background: var(--accent);
+      border-radius: 1px; display: inline-block;
+    }
+
+    .meaning { margin: 0 0 0 2px; font-size: var(--body); line-height: 1.5; color: #ddd; }
     
     /* 例文色塊優化 */
     .example {
-      margin: 4px 0 0;
-      padding: 10px 12px;
-      background: #262626;
-      border-radius: 6px;
-      font-size: 0.88rem;
-      font-weight: 400;
-      color: #ccc;
-      line-height: 1.5;
-      /* border-left: 3px solid var(--accent); */
+      margin: 4px 0 0; padding: 10px 12px; background: #262626;
+      border-radius: 6px; font-size: var(--body); font-weight: 400;      
+      color: #ccc; line-height: 1.6; border-left: 3px solid #444;
       white-space: pre-wrap;
     }
-    .empty { text-align: center; padding: 40px; color: var(--muted); }
+
+    .empty { text-align: center; padding: 40px; color: var(--muted); font-size: var(--body); }
+    .muted-text { font-size: 0.75rem; color: #555; padding-left: 2px; }
   </style>
 </head>
 <body>
   <div class="wrap">
-    <header>
-      <h1 id="pageTitle">Loading...</h1>
-    </header>
+    <header><h1 id="pageTitle">Loading...</h1></header>
 
     <div class="controls">
-      <input id="q" class="input" placeholder="搜尋日文、意義或例句..." />
+      <input id="q" class="input" placeholder="搜尋：日文 / 意義 / 例句" />
       <div class="select-group">
         <select id="cat" class="select"></select>
         <select id="type" class="select"></select>
@@ -143,11 +129,11 @@
 
     <div class="chips" id="chips"></div>
     <div class="grid" id="grid"></div>
-    <div id="empty" class="empty" style="display:none;">找不到搜尋結果</div>
+    <div id="empty" class="empty" style="display:none;">找不到符合條件的條目</div>
   </div>
 
   <script>
-    // 資料段（請將您原本的 RAW_DATA 貼在此處）
+    // --- 資料區：請將您的資料貼回此處 ---
     const RAW_DATA = `
 日文超高頻形容詞
 
@@ -453,6 +439,7 @@
 }
 }
 `.trim();
+    // ---------------------------------
 
     function parseDataset(raw) {
       const lines = raw.split('\n').map(l => l.trim()).filter(l => l);
@@ -556,7 +543,7 @@
           </div>
           <div class="sec">
             <h3 class="secTitle">用法</h3>
-            ${item.example ? `<p class="example">${item.example}</p>` : `<div class="tag" style="border:none; color:#555; padding:0;">（暫無例句）</div>`}
+            ${item.example ? `<p class="example">${item.example}</p>` : `<div class="muted-text">（暫無例句）</div>`}
           </div>
         </article>
       `).join('');
@@ -581,6 +568,3 @@
   </script>
 </body>
 </html>
-
-
-
