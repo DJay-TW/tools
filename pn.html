@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>日語長音教學：長音 & 拍的概念</title>
+    <style>
+        :root {
+            --bg-color: #121212;
+            --card-bg: #1e1e1e;
+            --text-primary: #e0e0e0;
+            --text-secondary: #a0a0a0;
+            --accent-color: #cfb53b;
+            --accent-hover: #eecf5b;
+            --border-color: #333;
+            --font-main: "Helvetica Neue", Helvetica, "PingFang TC", "Hiragino Sans GB", "Microsoft JhengHei", Arial, sans-serif;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            font-family: var(--font-main);
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 32px;
+            padding-top: 10px;
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            color: var(--accent-color);
+            margin-bottom: 8px;
+            letter-spacing: 2px;
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 1rem;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        /* 卡片樣式 */
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+        }
+
+        .card-header {
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 12px;
+        }
+
+        .japanese-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--accent-color);
+        }
+
+        /* 模仿黑板表格樣式 */
+        .chalkboard-table-container {
+            overflow-x: auto;
+        }
+
+        .chalkboard-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 1.2rem;
+            text-align: center;
+            letter-spacing: 2px;
+        }
+
+        .chalkboard-table td {
+            padding: 12px 5px;
+            border-bottom: 1px solid #333;
+        }
+
+        .row-label {
+            color: var(--accent-color);
+            font-weight: bold;
+            font-size: 0.9rem;
+            width: 80px;
+            text-align: left;
+            border-right: 1px solid #444;
+        }
+
+        /* 標記長音的部分 */
+        .vowel-main { color: #fff; }
+        .vowel-long { color: var(--accent-hover); font-weight: bold; }
+
+        /* 例外區塊 */
+        .exception-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .exception-item {
+            background: #252525;
+            padding: 12px;
+            border-radius: 8px;
+            border-left: 4px solid var(--accent-color);
+        }
+
+        .ex-word { font-size: 1.1rem; color: #fff; display: block; }
+        .ex-kana { font-size: 0.9rem; color: var(--text-secondary); }
+
+        .highlight-o { color: #ffaa00; }
+        .highlight-e { color: #00ffaa; }
+
+        @media (max-width: 600px) {
+            h1 { font-size: 1.8rem; }
+            .chalkboard-table { font-size: 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>長音＆拍的概念</h1>
+    <div class="subtitle">長音（ちょうおん）：佔滿一拍時長的發音規則</div>
+</header>
+
+<div class="container">
+
+    <div class="card">
+        <div class="card-header">
+            <div class="japanese-title">基礎長音對照表</div>
+        </div>
+        <div class="chalkboard-table-container">
+            <table class="chalkboard-table">
+                <tr>
+                    <td class="row-label">あ段 + あ</td>
+                    <td>わ<span class="vowel-long">あ</span></td>
+                    <td>ら<span class="vowel-long">あ</span></td>
+                    <td>や<span class="vowel-long">あ</span></td>
+                    <td>ま<span class="vowel-long">あ</span></td>
+                    <td>は<span class="vowel-long">あ</span></td>
+                    <td>な<span class="vowel-long">あ</span></td>
+                    <td>た<span class="vowel-long">あ</span></td>
+                    <td>さ<span class="vowel-long">あ</span></td>
+                    <td>か<span class="vowel-long">あ</span></td>
+                    <td>あ<span class="vowel-long">あ</span></td>
+                </tr>
+                <tr>
+                    <td class="row-label">い段 + い</td>
+                    <td>り<span class="vowel-long">い</span></td>
+                    <td></td>
+                    <td>み<span class="vowel-long">い</span></td>
+                    <td>ひ<span class="vowel-long">い</span></td>
+                    <td>に<span class="vowel-long">い</span></td>
+                    <td>ち<span class="vowel-long">い</span></td>
+                    <td>し<span class="vowel-long">い</span></td>
+                    <td>き<span class="vowel-long">い</span></td>
+                    <td>い<span class="vowel-long">い</span></td>
+                </tr>
+                <tr>
+                    <td class="row-label">う段 + う</td>
+                    <td>る<span class="vowel-long">う</span></td>
+                    <td>ゆ<span class="vowel-long">う</span></td>
+                    <td>む<span class="vowel-long">う</span></td>
+                    <td>ふ<span class="vowel-long">う</span></td>
+                    <td>ぬ<span class="vowel-long">う</span></td>
+                    <td>つ<span class="vowel-long">う</span></td>
+                    <td>す<span class="vowel-long">う</span></td>
+                    <td>く<span class="vowel-long">う</span></td>
+                    <td>う<span class="vowel-long">う</span></td>
+                </tr>
+                <tr>
+                    <td class="row-label">え段 + い</td>
+                    <td>れ<span class="vowel-long">い</span></td>
+                    <td></td>
+                    <td>め<span class="vowel-long">い</span></td>
+                    <td>へ<span class="vowel-long">い</span></td>
+                    <td>ね<span class="vowel-long">い</span></td>
+                    <td>て<span class="vowel-long">い</span></td>
+                    <td>せ<span class="vowel-long">い</span></td>
+                    <td>け<span class="vowel-long">い</span></td>
+                    <td>え<span class="vowel-long">い</span></td>
+                </tr>
+                <tr>
+                    <td class="row-label">お段 + う</td>
+                    <td>ろ<span class="vowel-long">う</span></td>
+                    <td>よ<span class="vowel-long">う</span></td>
+                    <td>も<span class="vowel-long">う</span></td>
+                    <td>ほ<span class="vowel-long">う</span></td>
+                    <td>の<span class="vowel-long">う</span></td>
+                    <td>ど<span class="vowel-long">う</span></td>
+                    <td>そ<span class="vowel-long">う</span></td>
+                    <td>こ<span class="vowel-long">う</span></td>
+                    <td>お<span class="vowel-long">う</span></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <div class="japanese-title">拗音長音規則</div>
+        </div>
+        <div class="chalkboard-table-container">
+            <table class="chalkboard-table">
+                <tr>
+                    <td class="row-label">ゃ段 + あ</td>
+                    <td>き<span class="vowel-main">ゃ</span><span class="vowel-long">あ</span></td>
+                    <td>し<span class="vowel-main">ゃ</span><span class="vowel-long">あ</span></td>
+                    <td>ち<span class="vowel-main">ゃ</span><span class="vowel-long">あ</span></td>
+                    <td>に<span class="vowel-main">ゃ</span><span class="vowel-long">あ</span></td>
+                    <td>り<span class="vowel-main">ゃ</span><span class="vowel-long">あ</span></td>
+                </tr>
+                <tr>
+                    <td class="row-label">ゅ段 + う</td>
+                    <td>き<span class="vowel-main">ゅ</span><span class="vowel-long">う</span></td>
+                    <td>し<span class="vowel-main">ゅ</span><span class="vowel-long">う</span></td>
+                    <td>ち<span class="vowel-main">ゅ</span><span class="vowel-long">う</span></td>
+                    <td>に<span class="vowel-main">ゅ</span><span class="vowel-long">う</span></td>
+                    <td>り<span class="vowel-main">ゅ</span><span class="vowel-long">う</span></td>
+                </tr>
+                <tr>
+                    <td class="row-label">ょ段 + う</td>
+                    <td>き<span class="vowel-main">ょ</span><span class="vowel-long">う</span></td>
+                    <td>し<span class="vowel-main">ょ</span><span class="vowel-long">う</span></td>
+                    <td>ち<span class="vowel-main">ょ</span><span class="vowel-long">う</span></td>
+                    <td>に<span class="vowel-main">ょ</span><span class="vowel-long">う</span></td>
+                    <td>り<span class="vowel-main">ょ</span><span class="vowel-long">う</span></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <div class="japanese-title">例外規則單字</div>
+        </div>
+        
+        <p style="color:var(--accent-color); margin-bottom:10px;">◎ お段長音卻加上「お」的單字：</p>
+        <div class="exception-grid">
+            <div class="exception-item">
+                <span class="ex-word">氷 (こおり)</span>
+                <span class="ex-kana">Ko-o-ri</span>
+            </div>
+            <div class="exception-item">
+                <span class="ex-word">通る (とおる)</span>
+                <span class="ex-kana">To-o-ru</span>
+            </div>
+            <div class="exception-item">
+                <span class="ex-word">炎 (ほのお)</span>
+                <span class="ex-kana">Ho-no-o</span>
+            </div>
+            <div class="exception-item">
+                <span class="ex-word">頬 (ほお / ほほ)</span>
+                <span class="ex-kana">Ho-o / Ho-ho</span>
+            </div>
+            <div class="exception-item">
+                <span class="ex-word">十 (とお)</span>
+                <span class="ex-kana">To-o</span>
+            </div>
+            <div class="exception-item">
+                <span class="ex-word">多い (おおい)</span>
+                <span class="ex-kana">O-o-i</span>
+            </div>
+        </div>
+
+        <p style="color:var(--accent-color); margin: 20px 0 10px 0;">◎ え段長音卻加上「え」的單字：</p>
+        <div class="exception-grid">
+            <div class="exception-item">
+                <span class="ex-word">お姉さん</span>
+                <span class="ex-kana">O-ne-<span class="highlight-e">e</span>-san</span>
+            </div>
+            <div class="exception-item">
+                <span class="ex-word">ええ</span>
+                <span class="ex-kana">(是的) E-e</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="card" style="margin-bottom: 50px;">
+        <div class="card-header">
+            <div class="japanese-title">外來語長音</div>
+        </div>
+        <p>片假名統一使用長音符號 <b class="vowel-long">「ー」</b>。在發音上同樣佔滿一拍。</p>
+        <div class="exception-grid" style="margin-top:15px;">
+            <div class="exception-item">コーラ (Co-la)</div>
+            <div class="exception-item">ケーキ (Cake)</div>
+            <div class="exception-item">スーパー (Super)</div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>
